@@ -1,6 +1,5 @@
 
-name: Deploy R51 Pro to Cloudflare
-
+name: Deploy R55 Pro to Cloudflare
 on:
   workflow_dispatch:
 
@@ -13,10 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Extract R51
+      - name: Extract R55
         run: |
           mkdir deploy
-          unzip -q R51_FINAL_TESTED_3X.zip -d deploy
+          unzip -q Keo_R55_FULL_FROM_R46.zip -d deploy
 
       - name: Deploy to Cloudflare
         run: |
