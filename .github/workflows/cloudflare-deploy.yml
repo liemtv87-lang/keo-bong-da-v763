@@ -1,5 +1,6 @@
 
 name: Deploy R55 Pro to Cloudflare
+
 on:
   workflow_dispatch:
 
@@ -10,17 +11,20 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Extract R55
         run: |
-          mkdir deploy
+          rm -rf deploy
+          mkdir -p deploy
           unzip -q Keo_R55_FULL_FROM_R46.zip -d deploy
+          echo "=== R55 FILES ==="
+          find deploy -maxdepth 2 -type f | sort
 
-      - name: Deploy to Cloudflare
-        run: |
-          cd deploy
-          npx wrangler@latest deploy
+      - name: Deploy R55 to Cloudflare
+        working-directory: deploy
+        run: npx wrangler@latest deploy --config wrangler.jsonc
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
