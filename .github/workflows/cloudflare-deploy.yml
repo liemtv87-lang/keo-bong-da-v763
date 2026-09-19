@@ -19,11 +19,9 @@ jobs:
           rm -rf deploy
           mkdir -p deploy
           unzip -q Keo_R55_FULL_FROM_R46.zip -d deploy
-          echo "=== R55 FILES ==="
-          find deploy -maxdepth 2 -type f | sort
 
       - name: Deploy R55 to Cloudflare
-        working-directory: deploy
+        working-directory: deploy/R55_FULL_FROM_R46
         run: npx wrangler@latest deploy --config wrangler.jsonc
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
