@@ -15,7 +15,7 @@ jobs:
       - name: Extract R49
         run: |
           mkdir deploy
-          unzip -q R49_PRO_GITHUB_CLOUDFLARE.zip -d deploy
+          unzip -q R49_PRO_FIXED_MORNING_19_09.zip -d deploy
 
       - name: Deploy to Cloudflare
         run: |
