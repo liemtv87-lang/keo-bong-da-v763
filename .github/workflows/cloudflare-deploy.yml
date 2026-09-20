@@ -18,10 +18,11 @@ jobs:
           rm -rf deploy
           mkdir -p deploy
           unzip -q Keo_R55_FULL_FROM_R46-12.zip -d deploy
-          APP_DIR="$(find deploy -mindepth 1 -maxdepth 1 -type d | head -n 1)"
-          test -n "$APP_DIR"
-          test -f "$APP_DIR/wrangler.jsonc"
+          WRANGLER_FILE="$(find deploy -type f -name wrangler.jsonc -print -quit)"
+          test -n "$WRANGLER_FILE"
+          APP_DIR="$(dirname "$WRANGLER_FILE")"
           echo "APP_DIR=$APP_DIR" >> "$GITHUB_ENV"
+          echo "Detected R55 app directory: $APP_DIR"
 
       - name: Deploy R55 to Cloudflare
         run: |
