@@ -17,7 +17,7 @@ jobs:
         run: |
           rm -rf deploy
           mkdir -p deploy
-          unzip -q Keo_R55_FULL_FROM_R46-5.zip -d deploy
+          unzip -q Keo_R55_FULL_FROM_R46-6.zip -d deploy
 
       - name: Deploy R55 to Cloudflare
         working-directory: deploy/R55_FIXED
