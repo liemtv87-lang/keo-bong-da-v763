@@ -6,6 +6,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
 
@@ -13,21 +14,44 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Extract R55
+      - name: Find and Extract R55
+        shell: bash
         run: |
+          set -euo pipefail
+
+          echo "=== DANH SÁCH FILE TRONG REPO ==="
+          ls -lah
+
           rm -rf deploy
           mkdir -p deploy
-          unzip -q Keo_R55_FULL_FROM_R46-17.zip -d deploy
-          WRANGLER_FILE="$(find deploy -type f -name wrangler.jsonc -print -quit)"
-          test -n "$WRANGLER_FILE"
-          APP_DIR="$(dirname "$WRANGLER_FILE")"
-          echo "APP_DIR=$APP_DIR" >> "$GITHUB_ENV"
-          echo "Detected R55 app directory: $APP_DIR"
 
-      - name: Deploy R55 to Cloudflare
-        run: |
-          cd "$APP_DIR"
-          npx wrangler@latest deploy --config wrangler.jsonc
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PREFERRED_ZIP="Keo_R55_FULL_FROM_R46-17_CACHE_AUTO_BACKGROUND.zip"
+
+          if [ -f "$PREFERRED_ZIP" ]; then
+            ZIP_FILE="$PREFERRED_ZIP"
+          else
+            ZIP_FILE="$(find . -maxdepth 1 -type f -name 'Keo_R55_FULL_FROM_R46-17*.zip' | sort | head -n 1)"
+          fi
+
+          if [ -z "${ZIP_FILE:-}" ] || [ ! -f "$ZIP_FILE" ]; then
+            echo "ERROR: Không tìm thấy file Keo_R55_FULL_FROM_R46-17*.zip"
+            exit 1
+          fi
+
+          echo "Đang dùng ZIP: $ZIP_FILE"
+
+          unzip -q "$ZIP_FILE" -d deploy
+
+          echo "=== FILE SAU KHI GIẢI NÉN ==="
+          find deploy -maxdepth 4 -type f | head -n 100
+
+          WRANGLER_FILE="$(find deploy -type f -name 'wrangler.jsonc' -print -quit)"
+
+          if [ -z "$WRANGLER_FILE" ]; then
+            echo "ERROR: Không tìm thấy wrangler.jsonc trong ZIP"
+            exit 1
+          fi
+
+          APP_DIR="$(dirname "$WRANGLER_FILE")"
+
+         
