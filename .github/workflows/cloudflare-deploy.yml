@@ -19,7 +19,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          echo "=== DANH SÁCH FILE TRONG REPO ==="
+          echo "=== FILE TRONG REPO ==="
           ls -lah
 
           rm -rf deploy
@@ -34,16 +34,13 @@ jobs:
           fi
 
           if [ -z "${ZIP_FILE:-}" ] || [ ! -f "$ZIP_FILE" ]; then
-            echo "ERROR: Không tìm thấy file Keo_R55_FULL_FROM_R46-17*.zip"
+            echo "ERROR: Không tìm thấy ZIP R55 -17"
             exit 1
           fi
 
           echo "Đang dùng ZIP: $ZIP_FILE"
 
           unzip -q "$ZIP_FILE" -d deploy
-
-          echo "=== FILE SAU KHI GIẢI NÉN ==="
-          find deploy -maxdepth 4 -type f | head -n 100
 
           WRANGLER_FILE="$(find deploy -type f -name 'wrangler.jsonc' -print -quit)"
 
@@ -54,4 +51,19 @@ jobs:
 
           APP_DIR="$(dirname "$WRANGLER_FILE")"
 
-         
+          echo "APP_DIR=$APP_DIR" >> "$GITHUB_ENV"
+          echo "Detected R55 app directory: $APP_DIR"
+
+      - name: Deploy R55 to Cloudflare
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "Deploying from: $APP_DIR"
+          cd "$APP_DIR"
+
+          npx wrangler@latest deploy --config wrangler.jsonc
+
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
