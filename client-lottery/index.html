@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0962c6">
+<title>KQ247 Xổ số • BẢN KHÁCH MỚI V29/V10</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:#edf3f7;color:#182b3c}
+.warn{background:#fff0f1;color:#ab202c;border-bottom:1px solid #f0cbd0;padding:9px 14px;text-align:center;font-size:12px;font-weight:900}
+#expiry{display:none;background:#fee2e2;color:#b91c1c;border-bottom:1px solid #fecaca;padding:10px 14px;text-align:center;font-weight:950}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;background:#fff;border-bottom:1px solid #d7e2ea}
+.brand{font-weight:900;color:#123b66;font-size:14px}.meta{font-size:11px;color:#607386}
+.btn{border:0;border-radius:8px;padding:9px 12px;background:#0962c6;color:#fff;font-weight:850;cursor:pointer}
+#frame{display:none;width:100%;height:calc(100vh - 104px);border:0;background:#fff}
+.gate{position:fixed;inset:0;z-index:100;background:#edf3f7;display:flex;align-items:center;justify-content:center;padding:18px}
+.gate.hidden{display:none}.panel{width:min(440px,100%);background:#fff;border:1px solid #d7e2ea;border-radius:16px;padding:20px;box-shadow:0 12px 36px #0f172a1c}
+.panel h1{font-size:20px;margin:0 0 7px;color:#123b66}.muted{font-size:13px;color:#607386;line-height:1.5}
+input{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:10px;margin:12px 0;font:inherit;text-transform:uppercase}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row .btn{flex:1}.secondary{background:#e9eff8;color:#17202a}
+#msg{min-height:20px;color:#b91c1c;font-size:13px;margin-top:8px}
+.links{margin-top:14px;padding-top:12px;border-top:1px solid #e5e7eb;font-size:13px;line-height:1.7}.links a{color:#d71920;font-weight:900}
+</style>
+</head>
+<body>
+<div class="warn">Cờ bạc là bất hợp pháp - Tool chỉ mang tính chất tham khảo - học hỏi !</div>
+<div id="expiry"></div>
+<div class="top"><div><div class="brand">KQ247 Xổ số • BẢN KHÁCH MỚI V29/V10</div><div class="meta">Đồng bộ trực tiếp bản chính V29/V10 mới nhất</div></div><button class="btn" onclick="recheck()">KIỂM TRA MÃ</button></div>
+<iframe id="frame" referrerpolicy="no-referrer"></iframe>
+<div id="gate" class="gate"><div class="panel">
+<h1>Nhập mã kích hoạt Xổ số</h1>
+<div class="muted">Mỗi mã khóa vào thiết bị kích hoạt đầu tiên. Mã Free 5 ngày chỉ dùng một lần/thiết bị.</div>
+<input id="code" placeholder="Nhập mã XS-..." autocomplete="off" autocapitalize="characters">
+<div class="row"><button class="btn" onclick="activate()">KÍCH HOẠT</button><button class="btn secondary" onclick="copyBuy()">COPY LINK MUA TOOL</button></div>
+<div id="msg"></div>
+<div class="links">Mua tool tại: <a href="https://t.me/muatool_du_doan_bot">@muatool_du_doan_bot</a><br>Nhóm Xổ Số: <a href="https://t.me/xsbm999">@xsbm999</a></div>
+</div></div>
+<script>
+const API="https://wbegdefpdwctolawluzo.supabase.co/functions/v1/tool-customer-api";
+const MAIN="https://kq247-xoso-r9-v2.lovable.app/xoso.html";
+const PRODUCT="lottery";
+const $=id=>document.getElementById(id);
+async function sha(s){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
+function dev(){let v=localStorage.getItem("kq247_dev");if(!v){v=crypto.randomUUID();localStorage.setItem("kq247_dev",v)}return v}
+async function ids(){return{device_hash:await sha(dev()),fingerprint_hash:await sha([navigator.userAgent,navigator.language,screen.width+"x"+screen.height,Intl.DateTimeFormat().resolvedOptions().timeZone].join("|"))}}
+async function post(action,body){const r=await fetch(API+"?action="+action,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body),cache:"no-store"});return [r,await r.json().catch(()=>({}))]}
+function reason(v){return({invalid_code:"Mã không hợp lệ",expired:"Mã đã hết hạn",device_mismatch:"Mã đã khóa ở thiết bị khác",device_has_active_license:"Thiết bị đang có mã khác còn hạn",trial_already_used:"Thiết bị đã dùng Free 5 ngày",invalid_request:"Dữ liệu kích hoạt không hợp lệ"}[v]||v||"Không kích hoạt được")}
+function target(){const u=new URL(MAIN),q=new URLSearchParams(location.search);for(const k of ["region","station","date","target"])if(q.get(k))u.searchParams.set(k,q.get(k));if(!u.searchParams.get("region"))u.searchParams.set("region","xsmb");return u.toString()}
+function unlock(j){$("gate").classList.add("hidden");const exp=new Date(j.expires_at||j.session_expires_at||Date.now()+3600000),ms=Math.max(0,exp.getTime()-Date.now()),hours=Math.ceil(ms/3600000),days=Math.ceil(ms/86400000);$("expiry").style.display="block";$("expiry").textContent="Số ngày còn hạn sử dụng: "+(hours<24?(hours+" giờ"):(days+" ngày"))+" • Hết hạn: "+exp.toLocaleString("vi-VN");const f=$("frame");f.src=target();f.style.display="block"}
+async function activate(){const raw=$("code").value.trim().toUpperCase();if(!raw){$("msg").textContent="Nhập mã kích hoạt.";return}$("msg").textContent="Đang kiểm tra...";const h=await ids(),code_hash=await sha(raw);const [r,j]=await post("activate",{product:PRODUCT,code_hash,...h});if(j.ok){localStorage.setItem("kq247_lottery_code",code_hash);localStorage.setItem("kq247_lottery_session",j.session_token||"");$("msg").textContent="";unlock(j)}else $("msg").textContent=reason(j.reason||j.error)}
+async function check(){const code_hash=localStorage.getItem("kq247_lottery_code");if(!code_hash)return false;const h=await ids();const [r,j]=await post("check",{product:PRODUCT,code_hash,...h});if(j.ok){localStorage.setItem("kq247_lottery_session",j.session_token||"");unlock(j);return true}localStorage.removeItem("kq247_lottery_code");localStorage.removeItem("kq247_lottery_session");$("msg").textContent=reason(j.reason||j.error);return false}
+function recheck(){$("frame").style.display="none";$("gate").classList.remove("hidden");check()}
+async function copyBuy(){const t="https://t.me/muatool_du_doan_bot";try{await navigator.clipboard.writeText(t);$("msg").textContent="Đã copy link mua tool."}catch{$("msg").textContent=t}}
+check();
+</script>
+</body>
+</html>
