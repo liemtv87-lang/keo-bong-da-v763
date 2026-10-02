@@ -8,9 +8,9 @@
 <style>
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:#edf3f7;color:#182b3c}
 .warn{background:#fff0f1;color:#ab202c;border-bottom:1px solid #f0cbd0;padding:9px 14px;text-align:center;font-size:12px;font-weight:900}
-#expiry{display:none;background:#fee2e2;color:#b91c1c;border-bottom:1px solid #fecaca;padding:10px 14px;text-align:center;font-weight:950}
-.top{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;background:#fff;border-bottom:1px solid #d7e2ea}
-.brand{font-weight:900;color:#123b66;font-size:14px}.meta{font-size:11px;color:#607386}
+#expiry{display:none;background:#fee2e2;color:#b91c1c;border-bottom:1px solid #fecaca;padding:4px 10px;text-align:center;font-size:11px;line-height:1.25;font-weight:850}
+.top{display:flex;align-items:center;justify-content:flex-start;gap:6px;padding:5px 10px;background:#fff;border-bottom:1px solid #d7e2ea}
+.brand{font-weight:900;color:#123b66;font-size:13px}.meta{font-size:10px;color:#607386}
 .btn{border:0;border-radius:8px;padding:9px 12px;background:#0962c6;color:#fff;font-weight:850;cursor:pointer}
 #frame{display:none;width:100%;height:calc(100vh - 104px);border:0;background:#fff}
 .gate{position:fixed;inset:0;z-index:100;background:#edf3f7;display:flex;align-items:center;justify-content:center;padding:18px}
@@ -25,7 +25,7 @@ input{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:10px;margin
 <body>
 <div class="warn">Cờ bạc là bất hợp pháp - Tool chỉ mang tính chất tham khảo - học hỏi !</div>
 <div id="expiry"></div>
-<div class="top"><div><div class="brand">KQ247 Xổ số • BẢN KHÁCH MỚI V29/V10</div><div class="meta">Đồng bộ trực tiếp bản chính V29/V10 mới nhất</div></div><button class="btn" onclick="recheck()">KIỂM TRA MÃ</button></div>
+<div class="top"><div><div class="brand">KQ247 Xổ số • BẢN KHÁCH V29/V10</div><div class="meta">Đồng bộ trực tiếp bản chính</div></div></div>
 <iframe id="frame" referrerpolicy="no-referrer"></iframe>
 <div id="gate" class="gate"><div class="panel">
 <h1>Nhập mã kích hoạt Xổ số</h1>
@@ -46,7 +46,7 @@ async function ids(){return{device_hash:await sha(dev()),fingerprint_hash:await 
 async function post(action,body){const r=await fetch(API+"?action="+action,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body),cache:"no-store"});return [r,await r.json().catch(()=>({}))]}
 function reason(v){return({invalid_code:"Mã không hợp lệ",expired:"Mã đã hết hạn",device_mismatch:"Mã đã khóa ở thiết bị khác",device_has_active_license:"Thiết bị đang có mã khác còn hạn",trial_already_used:"Thiết bị đã dùng Free 5 ngày",invalid_request:"Dữ liệu kích hoạt không hợp lệ"}[v]||v||"Không kích hoạt được")}
 function target(){const u=new URL(MAIN),q=new URLSearchParams(location.search);for(const k of ["region","station","date","target"])if(q.get(k))u.searchParams.set(k,q.get(k));if(!u.searchParams.get("region"))u.searchParams.set("region","xsmb");return u.toString()}
-function unlock(j){$("gate").classList.add("hidden");const exp=new Date(j.expires_at||j.session_expires_at||Date.now()+3600000),ms=Math.max(0,exp.getTime()-Date.now()),hours=Math.ceil(ms/3600000),days=Math.ceil(ms/86400000);$("expiry").style.display="block";$("expiry").textContent="Số ngày còn hạn sử dụng: "+(hours<24?(hours+" giờ"):(days+" ngày"))+" • Hết hạn: "+exp.toLocaleString("vi-VN");const f=$("frame");f.src=target();f.style.display="block"}
+function unlock(j){$("gate").classList.add("hidden");const exp=new Date(j.expires_at||j.session_expires_at||Date.now()+3600000),ms=Math.max(0,exp.getTime()-Date.now()),hours=Math.ceil(ms/3600000),days=Math.ceil(ms/86400000);$("expiry").style.display="block";$("expiry").textContent="Còn "+(hours<24?(hours+" giờ"):(days+" ngày"))+" • Hết hạn "+exp.toLocaleString("vi-VN",{hour:"2-digit",minute:"2-digit",day:"2-digit",month:"2-digit",year:"numeric"});const f=$("frame");f.src=target();f.style.display="block"}
 async function activate(){const raw=$("code").value.trim().toUpperCase();if(!raw){$("msg").textContent="Nhập mã kích hoạt.";return}$("msg").textContent="Đang kiểm tra...";const h=await ids(),code_hash=await sha(raw);const [r,j]=await post("activate",{product:PRODUCT,code_hash,...h});if(j.ok){localStorage.setItem("kq247_lottery_code",code_hash);localStorage.setItem("kq247_lottery_session",j.session_token||"");$("msg").textContent="";unlock(j)}else $("msg").textContent=reason(j.reason||j.error)}
 async function check(){const code_hash=localStorage.getItem("kq247_lottery_code");if(!code_hash)return false;const h=await ids();const [r,j]=await post("check",{product:PRODUCT,code_hash,...h});if(j.ok){localStorage.setItem("kq247_lottery_session",j.session_token||"");unlock(j);return true}localStorage.removeItem("kq247_lottery_code");localStorage.removeItem("kq247_lottery_session");$("msg").textContent=reason(j.reason||j.error);return false}
 function recheck(){$("frame").style.display="none";$("gate").classList.remove("hidden");check()}
