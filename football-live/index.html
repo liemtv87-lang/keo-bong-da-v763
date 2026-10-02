@@ -730,7 +730,7 @@
                 '</span> <span class="badge ' +
                 (x.trusted_pick ? 'good' : '') +
                 '">' +
-                (x.trusted_pick ? '✅ Kèo đủ dữ liệu' : '⚠️ Dữ liệu mỏng') +
+                ((x.ah_release === true || x.ou_release === true) ? '✅ Có kèo đạt chuẩn' : '⛔ Bỏ kèo') +
                 '</span> <span class="badge">' +
                 esc(bookText(x)) +
                 '</span></div><div class="picks"><div class="pick"><b>AH</b><span class="market-line" style="color:#0757d5!important;font-weight:950!important">' +
