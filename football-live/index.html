@@ -406,7 +406,7 @@
       <div class="card">
         <b>3) Thống kê hàng ngày</b>
         <div class="small" style="margin-top: 4px">
-          Tự chấm kết quả AH/T-X hằng ngày sau khi trận kết thúc.
+          Tự chấm kết quả AH/T-X hằng ngày • ép đủ 100% các trận đã có kết quả.
         </div>
         <div id="dailyStats" class="statsgrid" style="margin-top: 8px">
           <div class="muted">Đang tải...</div>
@@ -593,15 +593,32 @@
           ouL = sum('ou_loss') + 0.5 * sum('ou_half_loss');
         const ar = ahW + ahL > 0 ? ((100 * ahW) / (ahW + ahL)).toFixed(1) : '0',
           or = ouW + ouL > 0 ? ((100 * ouW) / (ouW + ouL)).toFixed(1) : '0';
-        const cards = recent.map(
-          d =>
-            '<div class="day"><b>' +
+        const cards = recent.map(d => {
+          const due = Number(d.due_predictions || 0),
+            checked = Number(d.settled_due || 0),
+            moved = Number(d.nonfinal_or_rescheduled || 0),
+            unresolved = Number(d.unresolved_due || 0),
+            pct = due > 0 ? Math.min(100, (100 * checked) / due).toFixed(1) : '100.0',
+            full = d.coverage_ok === true && checked >= due;
+          return '<div class="day"><b>' +
             esc(d.day) +
             '</b><div>Lên kèo: <b>' +
             d.picks +
-            '</b> • Đã chấm: <b>' +
+            '</b> • Đã có kết quả/chấm: <b>' +
             d.settled +
-            '</b></div><div>AH: ' +
+            '</b></div><div>Bắt buộc đến giờ: <b>' +
+            due +
+            '</b> • Đã chấm đủ: <b>' +
+            checked +
+            '</b> • <span class="rate">' +
+            (full ? 'PHỦ 100%' : ('PHỦ ' + pct + '%')) +
+            '</span></div>' +
+            ((moved || unresolved)
+              ? '<div>Hoãn/dời/chưa có KQ: <b>' + (moved + unresolved) + '</b>' +
+                (unresolved ? ' • đang tiếp tục dò: <b>' + unresolved + '</b>' : '') +
+                '</div>'
+              : '') +
+            '<div>AH: ' +
             d.ah_win +
             ' thắng + ' +
             d.ah_half_win +
@@ -625,27 +642,37 @@
             d.ou_loss +
             ' thua • <span class="rate">' +
             d.ou_rate +
-            '%</span></div></div>'
-        );
-        if (month)
+            '%</span></div></div>';
+        });
+        if (month) {
+          const mdue = sum('due_predictions'),
+            mchecked = sum('settled_due'),
+            mpct = mdue > 0 ? Math.min(100, (100 * mchecked) / mdue).toFixed(1) : '100.0';
           cards.push(
             '<div class="day"><b>THÁNG ' +
               esc(month.slice(5, 7) + '/' + month.slice(0, 4)) +
               '</b><div>Lên kèo: <b>' +
               sum('picks') +
-              '</b> • Đã chấm: <b>' +
+              '</b> • Đã có kết quả/chấm: <b>' +
               sum('settled') +
-              '</b></div><div>AH tháng: <span class="rate">' +
+              '</b></div><div>Bắt buộc đến giờ: <b>' +
+              mdue +
+              '</b> • Đã chấm đủ: <b>' +
+              mchecked +
+              '</b> • <span class="rate">PHỦ ' +
+              mpct +
+              '%</span></div><div>AH tháng: <span class="rate">' +
               ar +
               '%</span></div><div>T/X tháng: <span class="rate">' +
               or +
               '%</span></div></div>'
           );
+        }
         $('dailyStats').innerHTML =
           cards.join('') ||
           '<div class="muted">Chưa có ngày nào đã chấm.</div>';
       }
-      function renderMethods(a) {
+            function renderMethods(a) {
         $('methodStats').innerHTML =
           (a || [])
             .map(
@@ -660,7 +687,7 @@
                   ? '<span class="priority">ƯU TIÊN T/X</span>'
                   : '') +
                 (!m.coverage_gate
-                  ? '<span class="badge">CHỜ PHỦ ≥80%</span>'
+                  ? '<span class="badge">CHỜ PHỦ 100%</span>'
                   : '') +
                 '<div>Mẫu đã chấm: <b>' +
                 m.n +
