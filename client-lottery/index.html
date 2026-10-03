@@ -29,7 +29,7 @@ input{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:10px;margin
 <iframe id="frame" referrerpolicy="no-referrer"></iframe>
 <div id="gate" class="gate"><div class="panel">
 <h1>Nhập mã kích hoạt Xổ số</h1>
-<div class="muted">Mỗi mã khóa vào thiết bị kích hoạt đầu tiên. Mã Free 5 ngày chỉ dùng một lần/thiết bị.</div>
+<div class="muted">Mỗi mã khóa vào thiết bị kích hoạt đầu tiên. Mã Free 10 ngày chỉ dùng một lần/thiết bị.</div>
 <input id="code" placeholder="Nhập mã XS-..." autocomplete="off" autocapitalize="characters">
 <div class="row"><button class="btn" onclick="activate()">KÍCH HOẠT</button><button class="btn secondary" onclick="copyBuy()">COPY LINK MUA TOOL</button></div>
 <div id="msg"></div>
@@ -44,7 +44,7 @@ async function sha(s){const b=await crypto.subtle.digest("SHA-256",new TextEncod
 function dev(){let v=localStorage.getItem("kq247_dev");if(!v){v=crypto.randomUUID();localStorage.setItem("kq247_dev",v)}return v}
 async function ids(){return{device_hash:await sha(dev()),fingerprint_hash:await sha([navigator.userAgent,navigator.language,screen.width+"x"+screen.height,Intl.DateTimeFormat().resolvedOptions().timeZone].join("|"))}}
 async function post(action,body){const r=await fetch(API+"?action="+action,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body),cache:"no-store"});return [r,await r.json().catch(()=>({}))]}
-function reason(v){return({invalid_code:"Mã không hợp lệ",expired:"Mã đã hết hạn",device_mismatch:"Mã đã khóa ở thiết bị khác",device_has_active_license:"Thiết bị đang có mã khác còn hạn",trial_already_used:"Thiết bị đã dùng Free 5 ngày",invalid_request:"Dữ liệu kích hoạt không hợp lệ"}[v]||v||"Không kích hoạt được")}
+function reason(v){return({invalid_code:"Mã không hợp lệ",expired:"Mã đã hết hạn",device_mismatch:"Mã đã khóa ở thiết bị khác",device_has_active_license:"Thiết bị đang có mã khác còn hạn",trial_already_used:"Thiết bị đã dùng Free 10 ngày",invalid_request:"Dữ liệu kích hoạt không hợp lệ"}[v]||v||"Không kích hoạt được")}
 function target(){const u=new URL(MAIN),q=new URLSearchParams(location.search);for(const k of ["region","station","date","target"])if(q.get(k))u.searchParams.set(k,q.get(k));if(!u.searchParams.get("region"))u.searchParams.set("region","xsmb");return u.toString()}
 function unlock(j){$("gate").classList.add("hidden");const exp=new Date(j.expires_at||j.session_expires_at||Date.now()+3600000),ms=Math.max(0,exp.getTime()-Date.now()),hours=Math.ceil(ms/3600000),days=Math.ceil(ms/86400000);$("expiry").style.display="block";$("expiry").textContent="Còn "+(hours<24?(hours+" giờ"):(days+" ngày"))+" • Hết hạn "+exp.toLocaleString("vi-VN",{hour:"2-digit",minute:"2-digit",day:"2-digit",month:"2-digit",year:"numeric"});const f=$("frame");f.src=target();f.style.display="block"}
 async function activate(){const raw=$("code").value.trim().toUpperCase();if(!raw){$("msg").textContent="Nhập mã kích hoạt.";return}$("msg").textContent="Đang kiểm tra...";const h=await ids(),code_hash=await sha(raw);const [r,j]=await post("activate",{product:PRODUCT,code_hash,...h});if(j.ok){localStorage.setItem("kq247_lottery_code",code_hash);localStorage.setItem("kq247_lottery_session",j.session_token||"");$("msg").textContent="";unlock(j)}else $("msg").textContent=reason(j.reason||j.error)}
