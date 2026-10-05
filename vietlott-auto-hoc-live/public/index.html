@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vietlott Auto Học R6</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#172033;background:#f4f6f9}*{box-sizing:border-box}body{margin:0}.wrap{max-width:1120px;margin:auto;padding:16px}.hero,.card{background:#fff;border-radius:18px;padding:18px;box-shadow:0 4px 18px #0001}.hero h1{margin:0 0 6px;font-size:25px}.muted{color:#667085;font-size:13px}.tabs{display:flex;gap:8px;margin:16px 0;position:sticky;top:0;z-index:5;background:#f4f6f9;padding:8px 0}.tabs button,.btn,.smallbtn{border:0;border-radius:12px;padding:11px 15px;font-weight:700;background:#e8edf5;color:#233047;cursor:pointer}.tabs button.active,.btn.primary{background:#172b4d;color:#fff}.btn.secondary{background:#e8edf5;color:#233047}.btn.warn{background:#7a2e0e;color:#fff}.btn:disabled,.smallbtn:disabled{opacity:.5;cursor:not-allowed}.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:14px}.card{margin-bottom:14px}.card h2{font-size:19px;margin:0 0 10px}.combo{display:flex;align-items:center;gap:7px;padding:10px 0;border-bottom:1px solid #eef0f3}.balls{display:flex;gap:5px;flex-wrap:wrap}.ball{width:35px;height:35px;border-radius:50%;display:grid;place-items:center;border:2px solid #d0d7e2;font-weight:800;background:#fff}.score{margin-left:auto;font-size:12px;color:#667085}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:#f7f8fa;border-radius:12px;padding:10px;min-width:0}.stat b{display:block;font-size:20px;overflow-wrap:anywhere}.bar{height:9px;background:#eef1f5;border-radius:9px;overflow:hidden}.bar>i{display:block;height:100%;background:#5b6b82;width:0}.rule{padding:7px 0;border-bottom:1px dashed #e4e7ec;font-size:13px}.ok{color:#067647}.bad{color:#b42318}.copybar,.actionbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.copybar .btn,.actionbar .btn{flex:1;min-width:150px}.copymsg{font-size:13px;color:#067647;min-height:20px;margin-top:8px}.notice{background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:10px;font-size:13px;color:#9a3412;margin:10px 0}.inputrow{display:flex;gap:8px;flex-wrap:wrap}.inputrow input{flex:1;min-width:220px;padding:12px;border:1px solid #d0d5dd;border-radius:12px;font-size:16px}.progress{height:10px;background:#e9edf3;border-radius:99px;overflow:hidden;margin:10px 0}.progress i{display:block;height:100%;background:#344054;width:0}.preview{max-height:440px;overflow:auto;border:1px solid #eef0f3;border-radius:12px;padding:0 10px;margin-top:10px}.minirow{display:flex;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid #f1f3f6;font-size:13px}.minirow code{font-size:13px;white-space:nowrap;font-weight:900;color:var(--official-navy)}.tag{display:inline-block;padding:3px 7px;border-radius:99px;background:#eef2f7;font-size:11px;margin:2px}.aihead{display:flex;align-items:center;justify-content:space-between;gap:10px}.aihead .tag{background:#e7f0ff;color:#173b72}
+#hardMsg{color:#b91c1c!important;font-weight:950;font-size:17px;line-height:1.45;margin-top:10px}
+.ai-card{padding:0;overflow:hidden}
+.ai-details>summary{list-style:none;cursor:pointer;padding:18px}
+.ai-details>summary::-webkit-details-marker{display:none}
+.ai-summaryline{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ai-summary-title{min-width:0}
+.ai-summary-title h2{margin:0;font-size:19px}
+.ai-summary-title .muted{margin-top:4px}
+.ai-detail-btn{flex:0 0 auto;border-radius:10px;padding:8px 11px;background:#eef2f7;color:var(--official-navy);font-size:12px;font-weight:900}
+.ai-detail-btn .when-open{display:none}
+.ai-details[open] .ai-detail-btn .when-open{display:inline}
+.ai-details[open] .ai-detail-btn .when-closed{display:none}
+.ai-body{padding:0 18px 18px;border-top:1px solid #eef0f3}
+.ai-body>.tag{margin:12px 0 4px;background:#e7f0ff;color:#173b72}
+.client-snapshot-only .result-hero,
+.client-snapshot-only #hardCard,
+.client-snapshot-only .ai-card,
+.client-snapshot-only .analytics-card,
+.client-snapshot-only aside{display:none!important}
+.client-snapshot-only .grid{grid-template-columns:1fr}
+.client-snapshot-only main>.card:not(#searchCard):not(#excludeCard):not(.result-hero):not(.ai-card):not(.analytics-card){display:none!important}
+.client-mode .result-hero,.client-mode .snapshot-main-card,.client-mode .ai-card,.client-mode .analytics-card,.client-mode aside{display:none!important}
+.client-mode .grid{grid-template-columns:1fr!important}
+.client-mode .hero .muted:last-child{display:none}
+@media(max-width:700px){.ai-details>summary{padding:14px 12px}.ai-body{padding:0 12px 14px}.ai-summary-title h2{font-size:16px}.ai-detail-btn{padding:7px 9px;font-size:11px}}table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:8px;border-bottom:1px solid #eee}.copy{font-size:12px;padding:6px 9px;border:0;border-radius:8px;background:#eef2f7;cursor:pointer}@media(max-width:800px){.grid{grid-template-columns:1fr}.wrap{padding:10px}.ball{width:32px;height:32px}.hero h1{font-size:21px}.stats{grid-template-columns:1fr 1fr}.combo{align-items:flex-start}.score{margin-left:0}.copy{margin-left:auto}.preview{max-height:360px}}
+
+:root{--official-navy:#10285c;--jackpot-red:#ed1c24;--mega-red:#d71920;--power-gold:#c88412;--power-gold-light:#f2aa00}
+body{color:var(--official-navy)}
+.card h2,.hero h1{color:var(--official-navy)}
+.result-hero{position:relative;overflow:hidden;border-top:6px solid #f48743}
+.result-hero:after{content:"";position:absolute;right:-60px;bottom:-80px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle at 50% 50%,transparent 0 31%,#e7e8eb 32% 43%,transparent 44%);opacity:.45;pointer-events:none}
+.product-name{font-size:22px;font-weight:900;letter-spacing:.2px;margin-bottom:10px;position:relative;z-index:1}
+body[data-product="mega645"] .product-name{color:var(--mega-red)}
+body[data-product="power655"] .product-name{color:#9c5b08}
+.jackpot-label{font-weight:800;font-size:16px;color:var(--official-navy);position:relative;z-index:1}
+.jackpot-value{font-size:clamp(30px,7vw,48px);line-height:1.05;font-weight:950;color:var(--jackpot-red);margin:4px 0 14px;letter-spacing:-1px;position:relative;z-index:1}
+.result-line{font-size:17px;color:var(--official-navy);margin:6px 0 10px;position:relative;z-index:1}
+.result-line b{font-weight:900}
+.result-balls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;position:relative;z-index:1}
+.result-ball{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#fff;border:3px solid var(--jackpot-red);font-weight:900;color:#303030}
+.result-ball.special{border-color:var(--power-gold-light);color:var(--power-gold)}
+.result-sep{font-size:28px;color:#5b5b5b;margin:0 1px}
+.prize-updated{margin-top:10px;font-size:13px;color:var(--official-navy);position:relative;z-index:1}
+.snapshot-chip{display:inline-block;margin-top:10px;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800;background:#eef2f7;color:var(--official-navy)}
+body[data-product="mega645"] .tabs button.active,body[data-product="mega645"] .btn.primary{background:var(--mega-red);color:#fff}
+body[data-product="power655"] .tabs button.active,body[data-product="power655"] .btn.primary{background:var(--power-gold);color:#fff}
+body[data-product="mega645"] .bar>i{background:var(--mega-red)}
+body[data-product="power655"] .bar>i{background:var(--power-gold)}
+.grade30 details{border:1px solid #e6e9ef;border-radius:12px;margin:8px 0;background:#fff;overflow:hidden}
+.grade30 summary{cursor:pointer;list-style:none;padding:11px 12px;font-weight:800;display:flex;gap:8px;align-items:center;justify-content:space-between}
+.grade30 summary::-webkit-details-marker{display:none}
+.grade30 .grade-body{padding:0 12px 12px;border-top:1px solid #eef0f3}
+.grade30 .win{color:#067647;font-weight:900}.grade30 .miss{color:#667085}
+.grade30 .prize-counts{font-size:13px;margin:8px 0;color:var(--official-navy)}
+.grade30 .winrow{display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px dashed #eceef2;font-size:12px}
+.grade30 .detail-button{display:inline-block;padding:7px 10px;border-radius:9px;color:#fff;font-weight:800;font-size:12px}
+body[data-product="mega645"] .grade30 .detail-button{background:var(--mega-red)}
+body[data-product="power655"] .grade30 .detail-button{background:var(--power-gold)}
+
+
+/* Chấm 30 kỳ + thống kê 60 ngày + 1 năm */
+.analytics-card{padding:0;overflow:hidden}
+.analytics-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0}
+.analytics-panel{min-width:0;padding:18px}
+.analytics-panel+.analytics-panel{border-left:1px solid #e6e9ef}
+.analytics-year,.analytics-backtest{grid-column:1/-1;border-left:0!important;border-top:1px solid #e6e9ef}
+.analytics-heading{display:flex;align-items:flex-start;gap:9px;margin-bottom:10px}
+.analytics-heading h2{font-size:21px;line-height:1.15;margin:0 0 5px;color:var(--official-navy)}
+.analytics-heading .muted{font-size:13px;line-height:1.35}
+.analytics-icon{font-size:25px;line-height:1;color:#f36f45;font-weight:900}
+.analytics-range{font-size:12px;color:#667085;margin:6px 0 8px}
+.draw30-list{max-height:560px;overflow:auto;border:1px solid #edf0f4;border-radius:11px;background:#fff}
+.draw30-item{border-bottom:1px solid #edf0f4}.draw30-item:last-child{border-bottom:0}
+.draw30-item>summary{position:relative;list-style:none;cursor:pointer;padding:8px 74px 8px 9px}.draw30-item>summary::-webkit-details-marker{display:none}
+.draw30-top{display:flex;gap:7px;align-items:baseline;white-space:nowrap}.draw-id{font-weight:900;color:var(--official-navy);font-size:13px}.draw-date{font-size:12px;color:#526077}
+.prize-chips{display:flex;gap:3px;flex-wrap:wrap;margin-top:5px}
+.prize-chip{display:inline-flex;border-radius:999px;padding:2px 5px;font-size:10px;font-weight:900;line-height:1.35;white-space:nowrap}
+.prize-chip.jp{color:#b42318;background:#fee4e2}.prize-chip.first{color:#d92d20;background:#fff0ee}.prize-chip.second{color:#067647;background:#dff7ea}.prize-chip.third{color:#c45400;background:#fff1d6}.prize-chip.none{color:#667085;background:#f2f4f7}
+.detail-link{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:900;padding:5px 7px;border-radius:8px;color:#fff;background:var(--mega-red)}
+body[data-product="power655"] .detail-link{background:var(--power-gold)}
+.draw30-body{padding:9px 10px 12px;background:#fafbfc;border-top:1px solid #edf0f4;font-size:12px}
+.draw30-result{font-weight:900;color:var(--official-navy);margin-bottom:7px}
+.draw30-result .mini-ball{display:inline-grid;place-items:center;width:25px;height:25px;border-radius:50%;border:1.8px solid var(--jackpot-red);background:#fff;margin:2px 2px 2px 0;font-size:10px}
+.draw30-result .mini-ball.special{border-color:var(--power-gold-light);color:var(--power-gold)}
+.draw30-meta{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:7px 0}.draw30-meta>div{background:#fff;border:1px solid #eceff3;border-radius:8px;padding:6px}.draw30-meta b{display:block;color:var(--official-navy);font-size:12px}
+.win-list{max-height:220px;overflow:auto;margin-top:7px;border-top:1px dashed #dfe3e8}.win-ticket{display:flex;justify-content:space-between;gap:6px;padding:5px 0;border-bottom:1px dashed #e7eaee;font-size:10px}.win-ticket strong{white-space:nowrap}
+.win-ticket.jp strong{color:#b42318}.win-ticket.first strong{color:#d92d20}.win-ticket.second strong{color:#067647}.win-ticket.third strong{color:#c45400}
+.stats60{margin-top:10px;border:1px solid #edf0f4;border-radius:11px;overflow:hidden;background:#fff}
+.stat60-row{display:flex;justify-content:space-between;gap:10px;padding:9px 10px;border-bottom:1px solid #edf0f4;font-size:13px;color:var(--official-navy)}.stat60-row:last-child{border-bottom:0}.stat60-row b{font-size:14px}.stat60-row.em b{font-size:18px}
+.stat60-row.jp b{color:#b42318}.stat60-row.first b{color:#d92d20}.stat60-row.second b{color:#067647}.stat60-row.third b{color:#c45400}
+.stats60-foot{padding:9px 10px;font-size:11px;color:#667085;background:#fafbfc;line-height:1.4}
+.filtered-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}
+.filtered-stat{background:#f8fafc;border:1px solid #e6eaf0;border-radius:12px;padding:9px 10px;min-width:0}
+.filtered-stat span{display:block;font-size:11px;color:#667085;line-height:1.25}
+.filtered-stat b{display:block;margin-top:3px;color:var(--official-navy);font-size:17px;line-height:1.15;word-break:break-word}
+.filtered-stat.strong{background:#eef8f1;border-color:#cfe9d7}
+.filtered-stat.strong b{color:#067647}
+@media(max-width:700px){
+  .filtered-summary{gap:6px}
+  .filtered-stat{padding:8px 6px}
+  .filtered-stat span{font-size:9.5px}
+  .filtered-stat b{font-size:14px}
+}
+.filter-count-mini{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:9px;padding:8px 10px;border:1px solid #e6e9ef;border-radius:10px;background:#f8fafc;color:var(--official-navy);font-size:12px}
+.filter-count-mini b{font-size:18px;white-space:nowrap}
+body[data-product="mega645"] .filter-count-mini b{color:var(--mega-red)}
+body[data-product="power655"] .filter-count-mini b{color:var(--power-gold)}
+@media(max-width:700px){
+  .analytics-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .analytics-panel{padding:10px 8px}.analytics-heading{gap:5px}.analytics-heading h2{font-size:15px}.analytics-heading .muted{font-size:10px}.analytics-icon{font-size:18px}
+  .draw30-list{max-height:500px}.draw30-item>summary{padding:7px 50px 7px 6px}.draw-id{font-size:11px}.draw-date{font-size:10px}.prize-chip{font-size:8.5px;padding:2px 4px}.detail-link{font-size:9px;right:5px;padding:4px 5px}
+  .draw30-body{padding:7px 6px;font-size:10px}.draw30-meta{grid-template-columns:1fr}.stat60-row{font-size:10.5px;padding:8px 7px}.stat60-row b{font-size:11px}.stat60-row.em b{font-size:15px}.stats60-foot{font-size:9.5px;padding:7px}
+}
+
+</style>
+</head>
+<body data-product="mega645">
+<div class="wrap">
+  <div class="hero">
+    <h1>VIETLOTT AUTO HỌC R6</h1>
+    <div id="meta" class="muted">Đang tải dữ liệu…</div>
+    <div class="muted" style="margin-top:8px">Mega 6/45 & Power 6/55 • toàn bộ điều kiện người dùng đã chốt • PP người dùng tự học walk-forward • chạy nền bằng SnapDeploy runner</div>
+  </div>
+
+  <div class="tabs">
+    <button type="button" id="tmega" class="active">Mega 6/45</button>
+    <button type="button" id="tpower">Power 6/55</button>
+  </div>
+
+  <div class="grid">
+    <main>
+      <div class="card result-hero" id="resultHero"></div>
+
+      <div class="card" id="hardCard">
+        <h2 id="hardTitle">Tất cả bộ số hợp lệ sau điều kiện người dùng đã chốt</h2>
+        <div class="notice"><strong>XUẤT FILE TXT:</strong> Chỉ đọc kho SNAP đã khóa, tuyệt đối không quét lại. Mega rút gọn phải đủ 200.000 bộ (40.000 dòng × 5 bộ); Power rút gọn phải đủ 500.000 bộ (100.000 dòng × 5 bộ) khi kho gốc đủ số lượng. File dùng UTF-8 BOM để Android mở đúng tiếng Việt/chữ số đậm.</div>
+        <div id="filteredSummary" class="filtered-summary"></div>
+        <div class="actionbar">
+          <button type="button" class="btn primary" id="copyHard">XUẤT FILE TXT – TOÀN BỘ SAU LOẠI</button>
+          <button type="button" class="btn secondary" id="reduceHard">XUẤT FILE TXT – RÚT GỌN BẰNG TẤT CẢ PP NGƯỜI DÙNG</button>
+        </div>
+        <div id="hardStatus" class="muted">Đang đọc kho SNAP đã khóa…</div>
+        <div id="filteredCount" class="filter-count-mini"><span>Trạng thái dàn</span><b>ĐANG KIỂM TRA SNAPSHOT</b></div>
+        <div id="hardMsg" class="copymsg"></div>
+      </div>
+
+      <div class="card ai-card">
+        <details id="aiDetails" class="ai-details">
+          <summary>
+            <div class="ai-summaryline">
+              <div class="ai-summary-title">
+                <h2 id="predTitle">Dàn rút gọn PP người dùng</h2>
+                <div id="predSummary" class="muted">Danh sách đang thu gọn để trang nhẹ và dễ xem.</div>
+              </div>
+              <span class="ai-detail-btn"><span class="when-closed">Chi tiết</span><span class="when-open">Thu gọn</span></span>
+            </div>
+          </summary>
+          <div class="ai-body">
+            <span class="tag">Tự học chỉ dùng các PP người dùng đã chốt</span>
+            <div id="pred"></div>
+            <div class="copybar">
+              <button type="button" class="btn primary" id="copyAI">Copy bộ PP đang xem</button>
+              <button type="button" class="btn secondary" id="copyBoth">Copy bộ PP 6/45 + 6/55</button>
+            </div>
+            <div id="copymsg" class="copymsg"></div>
+          </div>
+        </details>
+      </div>
+
+      <div class="card analytics-card">
+        <div class="analytics-grid">
+          <section class="analytics-panel analytics-30">
+            <div class="analytics-heading">
+              <span class="analytics-icon">▣</span>
+              <div>
+                <h2 id="detail30Heading">Chấm 30 kỳ gần nhất</h2>
+                <div class="muted">Mỗi kỳ thống kê toàn bộ dàn sau các điều kiện cứng của người dùng; đồng thời chấm riêng dàn rút gọn 200k/500k bằng toàn bộ PP người dùng.</div>
+              </div>
+            </div>
+            <div id="dailyReport" class="analytics-range"></div>
+            <div id="reportHistory" class="draw30-list"></div>
+          </section>
+          <section class="analytics-panel analytics-60">
+            <div class="analytics-heading">
+              <span class="analytics-icon">▥</span>
+              <div>
+                <h2 id="stats60Heading">Thống kê 60 ngày gần nhất</h2>
+                <div class="muted">Hiển thị riêng dàn đầy đủ sau điều kiện cứng và dàn rút gọn bằng toàn bộ PP người dùng.</div>
+                <div id="stats60Range" class="analytics-range"></div>
+              </div>
+            </div>
+            <div id="stats" class="stats60"></div>
+          </section>
+          <section class="analytics-panel analytics-year">
+            <div class="analytics-heading">
+              <span class="analytics-icon">▥</span>
+              <div>
+                <h2>Thống kê 1 năm gần nhất</h2>
+                <div class="muted">Walk-forward từng kỳ: chỉ học dữ liệu trước kỳ test; thống kê riêng dàn đầy đủ và dàn rút gọn bằng PP người dùng.</div>
+              </div>
+            </div>
+            <div id="statsYear" class="stats60"></div>
+          </section>
+          <section class="analytics-panel analytics-backtest">
+            <div class="analytics-heading">
+              <span class="analytics-icon">▦</span>
+              <div>
+                <h2>Hồi kiểm 50 kỳ / 150 kỳ / toàn lịch sử</h2>
+                <div class="muted">Walk-forward không nhìn trước. Mỗi cửa sổ hiển thị riêng dàn đầy đủ và dàn 200k/500k xếp hạng bằng toàn bộ PP người dùng.</div>
+              </div>
+            </div>
+            <div id="statsBacktest" class="stats60"></div>
+          </section>
+        </div>
+      </div>
+
+      <div class="card" id="searchCard">
+        <h2>Chọn bộ theo số tìm kiếm</h2>
+        <div class="muted">Nhập 1–6 số. Tool chỉ giữ các bộ chứa tất cả số đã nhập và vẫn phải vượt toàn bộ điều kiện người dùng đã chốt.</div>
+        <div class="inputrow" style="margin-top:10px">
+          <input id="searchNums" inputmode="numeric" placeholder="Ví dụ: 05 12 27">
+          <button type="button" class="btn primary" id="searchBtn">Tìm bộ</button>
+          <button type="button" class="btn secondary" id="exportSearch">XUẤT FILE TXT – KẾT QUẢ TÌM</button>
+          <button type="button" class="btn secondary" id="copySearch">Copy kết quả</button>
+        </div>
+        <div class="progress"><i id="searchProgress"></i></div>
+        <div id="searchStatus" class="muted">Chưa tìm kiếm.</div>
+        <div id="searchStats" style="margin-top:10px"></div>
+        <div id="searchPreview" class="preview"></div>
+        <div id="searchMsg" class="copymsg"></div>
+      </div>
+
+      <div class="card" id="excludeCard">
+        <h2>Bỏ thêm số / cụm số khỏi dàn sau điều kiện người dùng</h2>
+        <div class="muted">Mỗi cụm cách nhau bằng dấu ;. Bộ nào chứa đủ tất cả số của ít nhất một cụm sẽ bị bỏ. Ví dụ: 11 13 18 16; 11 13 18; 11 16 18.</div>
+        <div class="inputrow" style="margin-top:10px">
+          <input id="excludeGroups" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="11 13 18 16; 11 13 18; 11 16 18">
+          <button type="button" class="btn secondary" id="insertSpace">Dấu cách ␠</button>
+          <button type="button" class="btn secondary" id="insertSemi">Dấu ;</button>
+          <button type="button" class="btn primary" id="excludeBtn">Tính số bộ còn lại</button>
+          <button type="button" class="btn secondary" id="exportExclude">XUẤT FILE TXT – BỘ CÒN LẠI</button>
+        </div>
+        <div class="progress"><i id="excludeProgress"></i></div>
+        <div id="excludeStatus" class="muted">Chưa lọc thêm.</div>
+        <div id="excludeStats" style="margin-top:10px"></div>
+        <div id="excludePreview" class="preview"></div>
+        <div id="excludeMsg" class="copymsg"></div>
+      </div>
+
+    </main>
+
+    <aside>
+      <div class="card"><h2>Kho dữ liệu</h2><div id="db"></div></div>
+      <div class="card"><h2>Tự học phương pháp</h2><div id="weights"></div></div>
+      <div class="card"><h2>Toàn bộ điều kiện đã chốt</h2><div id="rules"></div></div><div class="card"><h2>PP phân tích / tự học của bạn</h2><div id="systemRules"></div></div>
+    </aside>
+  </div>
+
+  <div class="card"><div class="muted">Lưu ý: xổ số là ngẫu nhiên. Thống kê và dự đoán chỉ là phân tích dữ liệu, không bảo đảm kết quả.</div></div>
+</div>
+<script>
+'use strict';
+const CLIENT_MODE=new URLSearchParams(location.search).get('client')==='1';
+const CLIENT_SNAPSHOT_ONLY=new URLSearchParams(location.search).get('client')==='1';
+if(CLIENT_SNAPSHOT_ONLY)document.body.classList.add('client-snapshot-only');
+let S=null,BT60=null,P='mega645',CTX={},hardSummary=null,searchSummary=null,excludeSummary=null,scanWorker=null;
+if(CLIENT_MODE){document.documentElement.classList.add('client-mode');}
+const N={mega645:'Mega 6/45',power655:'Power 6/55'};
+const M={frequency:'Tần suất',trend:'Xu hướng',triangle:'Tam giác cộng dồn',position:'Cầu vị trí',position_pair:'Ghép vị trí',rhythm:'Nhịp / gap',weekday:'Thứ trong tuần',day_signal:'Tín hiệu ngày / lịch',canchi:'Can–Chi',zodiac:'12 con giáp',reverse:'Lộn',touch:'Chạm',total:'Tổng',difference:'Hiệu',elimination:'Cầu loại số',transition2:'Chuyển tiếp bộ 2 số',transition3:'Chuyển tiếp bộ 3 số',transition4:'Chuyển tiếp bộ 4 số',pair_keo:'Cầu kèo / cặp số'}
+const RNAME={past_exact:'Bộ đã từng nổ',mod3:'Quá 3 số cùng lớp chia 3',tong:'Quá 2 số cùng tổng chữ số',hieu:'Quá 2 số cùng hiệu chữ số',con_giap:'Quá 3 số cùng con giáp',can:'Quá 2 số cùng Can',chi:'Quá 2 số cùng Chi',kep:'Quá 2 số cùng kép bằng/kép lệch',kep_bang_max2:'Kép bằng quá 2 số',kep_lech_max2:'Kép lệch quá 2 số',kep_am_max2:'Kép âm quá 2 số',kep_lech_am_max3:'Kép lệch + kép âm quá 3 số',mod3_pair_max5:'Hai lớp chia 3 đi cùng quá 5 số',tail_pair_max4:'Cặp đuôi 05/16/27/38/49 quá 4 số',head_pair_max5:'Cặp đầu 05/12/23/34/45 quá 5 số',chan_chan:'Quá 3 số chẵn-chẵn',le_le:'Quá 3 số lẻ-lẻ',chuc_chan_le:'Vượt giới hạn chẵn/lẻ của đầu',dv_chan_le:'Quá 4 số cùng chẵn/lẻ của đuôi',same_head:'Quá 3 số cùng đầu',same_tail:'Quá 3 số cùng đuôi',touch_max2:'Quá 2 số cùng chạm',ticket_sum_cap:'Tổng bộ vượt giới hạn',tu_hanh_xung:'Đủ nhóm tứ hành xung',past_overlap:'Trùng 5/6 số kỳ lịch sử',prev_3region_missing:'Thiếu dữ liệu MB+MT+MN đúng ngày',prev_lottery_min1:'Không có số thuộc MB+MT+MN ngày trước',prev_lottery_max4:'Quá 4 số thuộc MB+MT+MN ngày trước',head_coverage_min3:'Chưa phủ đủ 3 đầu',head23_min2:'Thiếu 2 số đầu 2/3',head234_min3:'Thiếu 3 số đầu 2/3/4',head4_max2:'Đầu 4 quá 2 số',head5_max2:'Đầu 5 quá 2 số',head34_max4:'Đầu 3+4 quá 4 số',head45_max4:'Đầu 4+5 quá 4 số',xsmb_jackpot_missing:'Thiếu dữ liệu ĐB XSMB 200 ngày',xsmb_jackpot200:'Không có đuôi ĐB XSMB 200 ngày'}
+const COPY_LIMIT=6000000;
+const $=id=>document.getElementById(id);
+const fmt=d=>d?d.split('-').reverse().join('/'):'-';
+const ball=n=>`<span class="ball">${String(n).padStart(2,'0')}</span>`;
+const comboText=c=>(c.numbers||c).map(n=>String(n).padStart(2,'0')).join(' ');
+const money=v=>v?Number(v).toLocaleString('vi-VN')+' VNĐ':'Đang cập nhật';
+const resultBall=(n,special=false)=>`<span class="result-ball${special?' special':''}">${String(n).padStart(2,'0')}</span>`;
+function renderResultHero(p,x){
+  const pm=x.prize_meta||{},d=x.latest||{},snap=x.snapshot||{};
+  const balls=(d.numbers||[]).map(n=>resultBall(n)).join('');
+  const special=p==='power655'&&d.special?'<span class="result-sep">|</span>'+resultBall(d.special,true):'';
+  const prize=p==='mega645'
+    ? `<div class="jackpot-label">Jackpot Mega 6/45 ước tính</div><div class="jackpot-value">${money(pm.jackpot)}</div>`
+    : `<div class="jackpot-label">Jackpot 1 Power 6/55 ước tính</div><div class="jackpot-value">${money(pm.jackpot1)}</div><div class="jackpot-label">Jackpot 2 Power 6/55 ước tính</div><div class="jackpot-value">${money(pm.jackpot2)}</div>`;
+  $('resultHero').innerHTML=`
+    <div class="product-name">${N[p]}</div>
+    ${prize}
+    <div class="result-line">Kết quả QSMT kỳ <b>#${d.draw_id||'-'}</b> ngày <b>${fmt(d.date)}</b></div>
+    <div class="result-balls">${balls}${special}</div>
+    <div class="prize-updated">Giải thưởng và kết quả hiển thị riêng cho ${N[p]} • cập nhật: ${pm.fetched_at?new Date(pm.fetched_at).toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh'}):'-'}</div>
+    <span class="snapshot-chip">${snap.locked?`SNAP ĐÃ KHÓA CHO KỲ ${fmt(snap.target_date)}`:'SNAP CHƯA KHÓA'}</span>`;
+}
+function renderGrade30(rows){
+  const pc=o=>Object.entries(o||{}).map(([k,v])=>`${k}: ${Number(v).toLocaleString('vi-VN')}`).join(' • ')||'Không có giải';
+  if(!rows.length)return '<div class="muted">Chưa có báo cáo rút gọn đã chấm.</div>';
+  return '<div class="grade30">'+rows.slice().reverse().slice(0,30).map(r=>{
+    const rd=r.reduced,win=rd?.winning_tickets||0;
+    const status=rd?(win?`<span class="win">${win.toLocaleString('vi-VN')} bộ trúng</span>`:'<span class="miss">Không trúng</span>'):'<span class="miss">Chưa có chấm dàn rút gọn</span>';
+    const wins=(rd?.wins||[]);
+    return `<details><summary><span>Kỳ #${r.draw_id||'-'} • ${fmt(r.target_date)}</span>${status}</summary>
+      <div class="grade-body">
+        <p>Kết quả: <b>${(r.result||[]).map(n=>String(n).padStart(2,'0')).join(' ')}${r.special?' | '+String(r.special).padStart(2,'0'):''}</b></p>
+        <p><b>Dàn sau rút gọn:</b> ${Number(rd?.total||0).toLocaleString('vi-VN')} / mục tiêu ${Number(rd?.target_total||0).toLocaleString('vi-VN')} bộ</p>
+        <div class="prize-counts"><b>Đã trúng:</b> ${pc(rd?.prize_counts)}</div>
+        ${wins.length?'<div><b>Các bộ trúng đã lưu:</b>'+wins.map(w=>`<div class="winrow"><span class="tag">${w.prize}</span><code>${comboText(w.numbers)}</code></div>`).join('')+'</div>':'<div class="muted">Không có bộ trúng hoặc báo cáo cũ chưa có dữ liệu rút gọn.</div>'}
+        <div style="margin-top:8px"><span class="detail-button">Chi tiết kỳ này</span></div>
+      </div></details>`;
+  }).join('')+'</div>';
+}
+
+
+function prizeClass(name){if(/^Jackpot/i.test(name))return'jp';if(/nhất/i.test(name))return'first';if(/nhì/i.test(name))return'second';if(/ba/i.test(name))return'third';return''}
+function pcount(c,name){return Number(c?.[name]||0)}
+function compactPrizeChips(p,c){
+  const defs=p==='power655'?[['JP1','Jackpot 1','jp'],['JP2','Jackpot 2','jp'],['I','Giải nhất','first'],['II','Giải nhì','second'],['III','Giải ba','third']]:[['JP','Jackpot','jp'],['I','Giải nhất','first'],['II','Giải nhì','second'],['III','Giải ba','third']];
+  const total=defs.reduce((a,d)=>a+pcount(c,d[1]),0);
+  return total?defs.map(([lab,key,cl])=>`<span class="prize-chip ${cl}">${lab} ${pcount(c,key).toLocaleString('vi-VN')}</span>`).join(''):'<span class="prize-chip none">Không trúng</span>';
+}
+function render30Detail(p,r){
+  const normal=(r.result||[]).map(n=>`<span class="mini-ball">${String(n).padStart(2,'0')}</span>`).join('');
+  const special=p==='power655'&&r.special?`<span class="mini-ball special">${String(r.special).padStart(2,'0')}</span>`:'';
+  const wins=r.wins||[],rwins=r.reduced_wins||[];
+  return `<div class="draw30-body"><div class="draw30-result">Kết quả: ${normal}${special?'<span style="margin:0 3px">|</span>'+special:''}</div>
+  <div class="draw30-meta"><div>Dàn đầy đủ sau điều kiện cứng<b>${Number(r.filtered_total||0).toLocaleString('vi-VN')} bộ</b></div><div>Dàn PP người dùng<b>${Number(r.reduced_total||0).toLocaleString('vi-VN')} bộ</b></div><div>Bộ trúng — dàn đầy đủ<b>${Number(r.winning_tickets||0).toLocaleString('vi-VN')}</b></div><div>Bộ trúng — dàn PP<b>${Number(r.reduced_winning_tickets||0).toLocaleString('vi-VN')}</b></div></div>
+  <div><b>Dàn đầy đủ:</b> ${compactPrizeChips(p,r.prize_counts||{})}</div>
+  <div style="margin-top:5px"><b>Dàn PP:</b> ${compactPrizeChips(p,r.reduced_prize_counts||{})}</div>
+  <div style="margin-top:7px"><b>Các bộ trúng dàn đầy đủ đã lưu:</b></div>
+  ${wins.length?'<div class="win-list">'+wins.map(w=>`<div class="win-ticket ${prizeClass(w.prize)}"><strong>${w.prize}</strong><code>${comboText(w.numbers)}</code></div>`).join('')+'</div>':'<div class="muted" style="margin-top:5px">Không có bộ trúng.</div>'}
+  <div style="margin-top:7px"><b>Các bộ trúng dàn PP đã lưu:</b></div>
+  ${rwins.length?'<div class="win-list">'+rwins.map(w=>`<div class="win-ticket ${prizeClass(w.prize)}"><strong>${w.prize}</strong><code>${comboText(w.numbers)}</code></div>`).join('')+'</div>':'<div class="muted" style="margin-top:5px">Không có bộ trúng.</div>'}</div>`;
+}
+
+function renderStatsBox(p,box,elId,label,reducedBox=null){
+  if(!box){$(elId).innerHTML='<div class="stats60-foot">Đang chờ kết quả hồi kiểm '+label+' trên máy chủ…</div>';return}
+  const one=(b,title)=>{
+    const c=b?.prize_counts||{},total=Number(b?.total_winning_tickets||0),rate=b?.draws_tested?((Number(b.winning_draws||0)/Number(b.draws_tested))*100).toFixed(1):'0.0';
+    const jp=p==='power655'?`<div class="stat60-row jp"><span>Jackpot 1</span><b>${pcount(c,'Jackpot 1').toLocaleString('vi-VN')}</b></div><div class="stat60-row jp"><span>Jackpot 2</span><b>${pcount(c,'Jackpot 2').toLocaleString('vi-VN')}</b></div>`:`<div class="stat60-row jp"><span>Jackpot</span><b>${pcount(c,'Jackpot').toLocaleString('vi-VN')}</b></div>`;
+    return `<div class="stats60-foot"><b>${title}</b></div><div class="stat60-row"><span>Số kỳ đã thống kê</span><b>${Number(b?.draws_tested||0).toLocaleString('vi-VN')}</b></div><div class="stat60-row"><span>Số kỳ có trúng thưởng</span><b>${Number(b?.winning_draws||0).toLocaleString('vi-VN')}</b></div><div class="stat60-row em"><span>Tổng số bộ trúng giải</span><b>${total.toLocaleString('vi-VN')}</b></div>${jp}<div class="stat60-row first"><span>Giải Nhất</span><b>${pcount(c,'Giải nhất').toLocaleString('vi-VN')}</b></div><div class="stat60-row second"><span>Giải Nhì</span><b>${pcount(c,'Giải nhì').toLocaleString('vi-VN')}</b></div><div class="stat60-row third"><span>Giải Ba</span><b>${pcount(c,'Giải ba').toLocaleString('vi-VN')}</b></div><div class="stat60-row em"><span>Tỷ lệ kỳ có giải</span><b>${rate}%</b></div><div class="stats60-foot">Cửa sổ ${fmt(b?.window_start)} → ${fmt(b?.window_end)} • trung bình ${Number(Math.round(b?.avg_pool??b?.avg_filtered_pool??0)).toLocaleString('vi-VN')} bộ/kỳ.</div>`;
+  };
+  $(elId).innerHTML=one(box,'DÀN ĐẦY ĐỦ — toàn bộ điều kiện cứng của người dùng')+(reducedBox?one(reducedBox,'DÀN PP — rút gọn bằng toàn bộ PP người dùng'):'<div class="stats60-foot">Dàn PP đang chờ backtest mới sau khi cập nhật phương pháp.</div>');
+}
+function renderBacktestSummary(p,b){
+  if(!b){$('statsBacktest').innerHTML='<div class="stats60-foot">Đang chờ hồi kiểm…</div>';return}
+  const row=(label,full,red)=>`<div class="stat60-row em"><span>${label}</span><b>${Number(full?.draws_tested||0)} kỳ</b></div><div class="stats60-foot">Dàn đầy đủ: ${Number(full?.total_winning_tickets||0).toLocaleString('vi-VN')} bộ trúng • Dàn PP: ${Number(red?.total_winning_tickets||0).toLocaleString('vi-VN')} bộ trúng • JP đầy đủ: ${jackpotTickets(p,full?.prize_counts||{}).toLocaleString('vi-VN')} • JP dàn PP: ${jackpotTickets(p,red?.prize_counts||{}).toLocaleString('vi-VN')}</div>`;
+  $('statsBacktest').innerHTML=row('50 kỳ',b.stats50,b.reduced_stats50)+row('150 kỳ',b.stats150,b.reduced_stats150)+row('Toàn lịch sử',b.stats_all,b.reduced_stats_all);
+}
+
+function jackpotTickets(p,c){return p==='power655'?pcount(c,'Jackpot 1')+pcount(c,'Jackpot 2'):pcount(c,'Jackpot')}
+function calendarDays(a,b){if(!a||!b)return 0;return Math.floor((Date.parse(b+'T00:00:00Z')-Date.parse(a+'T00:00:00Z'))/86400000)+1}
+function renderAnalytics(p){
+  const b=BT60?.products?.[p];
+  const currentBacktest=BT60?.schema_version==='R14_USER_ALL_METHODS_SAME_DAY_30DRAWS_60D_365D_50_150_ALL'
+    &&Array.isArray(b?.method_names)&&b.method_names.length>0
+    &&b?.filter_scope?.reduction_applied===true
+    &&!!b?.reduced_stats60;
+  if(!currentBacktest){
+    $('detail30Heading').textContent='Chấm 30 kỳ gần nhất — đang tính lại';
+    $('dailyReport').textContent='Đang tính lại bằng TOÀN BỘ điều kiện và TOÀN BỘ PP người dùng mới nhất. Không dùng số thống kê cũ.';
+    $('reportHistory').innerHTML='<div class="muted" style="padding:10px;font-weight:850;color:#b42318">Thống kê cũ đã bị khóa hiển thị. Chờ backtest mới hoàn tất để tránh nhầm với kết quả trước khi thêm PP.</div>';
+    $('stats60Heading').textContent='Thống kê 60 ngày — đang tính lại';
+    $('stats60Range').textContent='Chỉ hiện khi backtest R14 toàn bộ PP người dùng hoàn tất.';
+    $('stats').innerHTML='<div class="stats60-foot" style="color:#b42318;font-weight:900">ĐANG TÍNH LẠI TOÀN BỘ PP NGƯỜI DÙNG • không hiển thị số R6 cũ.</div>';
+    $('statsYear').innerHTML='<div class="stats60-foot" style="color:#b42318;font-weight:900">ĐANG TÍNH LẠI 1 NĂM bằng toàn bộ PP người dùng.</div>';
+    $('statsBacktest').innerHTML='<div class="stats60-foot" style="color:#b42318;font-weight:900">ĐANG HỒI KIỂM 50 KỲ / 150 KỲ / TOÀN LỊCH SỬ bằng toàn bộ PP người dùng.</div>';
+    return
+  }
+  const raw=(b.details30?.length?b.details30:b.details||[]).slice(-30),rows=raw.slice().reverse();
+  const start=b.detail30_start||rows.at(-1)?.date,end=b.detail30_end||rows[0]?.date,span=calendarDays(start,end);
+  $('detail30Heading').textContent=`Chấm ${rows.length} kỳ gần nhất${span?` (${span} ngày lịch)`:''}`;
+  $('dailyReport').textContent=`Đã chấm ${rows.length}/30 kỳ • ${fmt(start)} → ${fmt(end)} • đây là 30 KỲ quay, không phải 30 ngày.`;
+  $('reportHistory').innerHTML=rows.map(r=>`<details class="draw30-item"><summary><div class="draw30-top"><span class="draw-id">#${r.draw_id||'-'}</span><span class="draw-date">${fmt(r.date)}</span></div><div class="prize-chips">${compactPrizeChips(p,r.prize_counts||{})}</div><span class="detail-link">Chi tiết ›</span></summary>${render30Detail(p,r)}</details>`).join('')||'<div class="muted" style="padding:10px">Chưa có kỳ nào để chấm.</div>';
+  const s60=b.stats60||null;
+  if(s60){
+    $('stats60Heading').textContent=`Thống kê 60 ngày gần nhất (${Number(s60.draws_tested||0)} kỳ quay)`;
+    const outsideJp=raw.filter(r=>r.date<s60.window_start||r.date>s60.window_end).reduce((a,r)=>a+jackpotTickets(p,r.prize_counts||{}),0);
+    $('stats60Range').textContent=`Cửa sổ đúng 60 ngày: ${fmt(s60.window_start)} → ${fmt(s60.window_end)}.`+(outsideJp?` Trong 30 kỳ bên trái có ${outsideJp} Jackpot nằm ngoài cửa sổ 60 ngày nên không cộng vào thống kê 60 ngày.`:'');
+  }else{$('stats60Heading').textContent='Thống kê 60 ngày gần nhất';$('stats60Range').textContent='Đang tính cửa sổ 60 ngày…'}
+  renderStatsBox(p,s60,'stats','60 ngày',b.reduced_stats60||null);renderStatsBox(p,b.stats365||null,'statsYear','1 năm',b.reduced_stats365||null);renderBacktestSummary(p,b);
+}
+function setMsg(id,t,bad=false){const e=$(id);if(!e)return;e.style.color=bad?'#b42318':'#067647';e.textContent=t;}
+async function writeClip(t,msgId,msg){
+  if(!t){setMsg(msgId,'Không có dữ liệu để copy.',true);return false;}
+  try{await navigator.clipboard.writeText(t);setMsg(msgId,msg);return true}
+  catch(e){try{const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.focus();ta.select();document.execCommand('copy');ta.remove();setMsg(msgId,msg);return true}catch(e2){setMsg(msgId,'Trình duyệt chặn clipboard. Hãy cấp quyền clipboard rồi thử lại.',true);return false}}
+}
+async function getJson(url,opt){const r=await fetch(url,opt);const j=await r.json().catch(()=>({}));if(!r.ok)throw Object.assign(new Error(j.error||j.message||`HTTP ${r.status}`),{status:r.status,data:j});return j}
+function setDataReady(ready){for(const id of ['copyHard','reduceHard','searchBtn','copySearch','copyAI','copyBoth']){const e=$(id);if(e)e.disabled=!ready}}
+async function init(){
+  try{
+    const got=await Promise.all([getJson('/api/state?'+Date.now()),getJson('/backtest-60.json?'+Date.now()).catch(()=>null)]);
+    S=got[0];BT60=got[1];
+  }
+  catch(e){
+    S=null;setDataReady(false);
+    if(e.status===503){$('meta').textContent=e.data?.message||'SnapDeploy đang tạo dữ liệu R5. Trang sẽ tự thử lại.';setMsg('copymsg','Chưa có snapshot SnapDeploy nên các nút dữ liệu đang tạm khóa.',true);setTimeout(init,15000);return}
+    $('meta').textContent='Lỗi tải dữ liệu: '+e.message;return
+  }
+  if(!S?.ready){setDataReady(false);$('meta').textContent=S?.message||'SnapDeploy đang tạo dữ liệu R5.';setTimeout(init,15000);return}
+  setDataReady(true);
+  const err=S.last_update_error?.message?` • Lần cập nhật gần nhất có lỗi: ${S.last_update_error.message}`:'';
+  $('meta').textContent=`Tự chạy 19:00 VN • thử lại 19:10 và 19:20 nếu chưa khóa • dùng KQXS MB+MT+MN đúng ngày • Cập nhật: ${new Date(S.generated_at).toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh'})} • XSMB: ${fmt(S.xsmb_previous?.date)} • ${S.snapshot?.locked?'SNAPSHOT ĐÃ KHÓA':'SNAPSHOT CHƯA KHÓA'} • chỉ đọc, không cập nhật từ thiết bị${err}`;
+  $('rules').innerHTML=(S.hard_rules||[]).map(x=>`<div class="rule">✓ ${x}</div>`).join('');
+  $('systemRules').innerHTML=(S.user_methods||[]).map(x=>`<div class="rule">✓ ${x}</div>`).join('');
+  show(P);
+}
+function show(p){
+  $('hardMsg').replaceChildren();
+  P=p;document.body.dataset.product=p;hardSummary=null;searchSummary=null;stopScanner();
+  $('tmega').classList.toggle('active',p==='mega645');$('tpower').classList.toggle('active',p==='power655');
+  $('searchStats').innerHTML='';$('searchPreview').innerHTML='';$('searchStatus').textContent='Chưa tìm kiếm.';$('searchProgress').style.width='0%';
+  if(!S){$('pred').innerHTML='<div class="muted">Dữ liệu đang tải…</div>';return}
+  const x=S.products[p]||{},pr=x.prediction||{candidates:[],weights:{}};
+  renderResultHero(p,x);
+  const snapReady=x.snapshot?.locked===true;
+  for(const id of ['copyHard','reduceHard'])$(id).disabled=!snapReady;
+  const targetDate=x.snapshot?.target_date||x.snapshot_waiting?.target_date||pr.target_date||x.next_target_date;
+  $('hardTitle').textContent=`${N[p]} — toàn bộ bộ hợp lệ theo điều kiện người dùng — kỳ ${fmt(targetDate)}`;
+  const totalScanned=Number(x.snapshot?.filtered_scanned||0);
+  const filteredTotal=Number(x.snapshot?.filtered_total||0);
+  $('copyHard').textContent=filteredTotal>0
+    ? `XUẤT FILE TXT – ĐỦ ${filteredTotal.toLocaleString('vi-VN')} BỘ SAU LOẠI`
+    : 'XUẤT FILE TXT – TOÀN BỘ SAU LOẠI';
+  $('reduceHard').textContent=`XUẤT FILE TXT – RÚT GỌN CÒN ${p==='mega645'?'200.000':'500.000'} BỘ`;
+  const keptPct=totalScanned&&filteredTotal?(filteredTotal/totalScanned*100).toFixed(2):null;
+  $('filteredSummary').innerHTML=filteredTotal>0?`
+    <div class="filtered-stat"><span>Tổng tổ hợp đã kiểm tra</span><b>${totalScanned.toLocaleString('vi-VN')}</b></div>
+    <div class="filtered-stat strong"><span>Sau toàn bộ điều kiện cứng còn</span><b>${filteredTotal.toLocaleString('vi-VN')} bộ</b></div>
+    <div class="filtered-stat"><span>Tỷ lệ còn lại</span><b>${keptPct}%</b></div>
+  `:x.snapshot_waiting?`<div class="muted">Sau 19h hệ thống lấy KQXS MB+MT+MN đúng ngày, tính xong rồi khóa snapshot.</div>`:'<div class="muted">Chưa có snapshot hợp lệ theo bộ điều kiện mới.</div>';
+  $('hardStatus').textContent=snapReady
+    ? `SNAP kỳ ${fmt(x.snapshot?.target_date||pr.target_date)} đã khóa • số lượng duy nhất: ${filteredTotal.toLocaleString('vi-VN')} bộ • mọi xuất/tìm/lọc chỉ đọc từ kho, KHÔNG quét lại.`
+    : x.snapshot_waiting?`Đang chờ KQXS MB+MT+MN đúng ngày ${fmt(x.snapshot_waiting.prerequisite_date)}; hệ thống chỉ cập nhật lúc 19:00, 19:10, 19:20 VN.`:'Snapshot kỳ mục tiêu chưa khóa.';
+  $('filteredCount').innerHTML=filteredTotal>0
+    ? `<span>Sau toàn bộ điều kiện cứng còn</span><b>${filteredTotal.toLocaleString('vi-VN')} bộ</b>`
+    : x.snapshot_waiting
+      ? `<span>Dàn kỳ ${fmt(targetDate)}</span><b>CHƯA KHÓA</b>`
+      : '<span>Trạng thái dàn</span><b>CHƯA CÓ SNAPSHOT</b>';
+  if(!snapReady)setMsg('hardMsg',x.snapshot_waiting
+    ? `Đang chờ hệ thống tự tạo/khóa snapshot đúng kỳ quay. Dự đoán sẽ có sau 20h ngày ${fmt(x.snapshot_waiting.prerequisite_date)} (ngày có kết quả MB + MT + MN dùng cho kỳ này).`
+    : 'Đang chờ hệ thống tự tạo/khóa snapshot đúng kỳ quay.',true);
+  if(x.update_error)setMsg('hardMsg',x.update_error,true);
+  const aiRows=pr.candidates||[],aiCount=aiRows.length;
+  const reducedTarget=p==='mega645'?200000:500000;
+  const reducedTotal=Number(x.snapshot?.reduced_total||0);
+  $('aiDetails').open=false;
+  $('predTitle').textContent=snapReady
+    ? `${N[p]} — dàn rút gọn PP người dùng ${reducedTotal.toLocaleString('vi-VN')} bộ — kỳ ${fmt(targetDate)}`
+    : `${N[p]} — dàn rút gọn PP người dùng — kỳ ${fmt(targetDate)}`;
+  $('predSummary').textContent=snapReady
+    ? `Dàn rút gọn bằng toàn bộ PP người dùng đã chốt. Mục tiêu ${reducedTarget.toLocaleString('vi-VN')} bộ khi kho gốc đủ số lượng.`
+    : x.snapshot_waiting
+      ? `Chưa tạo dàn: chờ MB+MT+MN ngày ${fmt(x.snapshot_waiting.prerequisite_date)} để khóa snapshot.`
+      : 'Chưa có snapshot hợp lệ.';
+  $('copyAI').textContent=`Copy ${aiCount} bộ PP đang xem`;
+  $('copyAI').disabled=aiCount===0;
+  $('copyBoth').textContent='Copy bộ PP 6/45 + 6/55';
+  $('pred').innerHTML=aiRows.length
+    ? aiRows.map((c,i)=>`<div class="combo"><b>#${i+1}</b><div class="balls">${c.numbers.map(ball).join('')}</div><span class="score">${c.score} điểm</span><button type="button" class="copy" data-copy-one="${c.numbers.join(',')}">Copy</button></div>`).join('')
+    : snapReady
+      ? `<div class="muted">Dàn rút gọn đã khóa trong SNAP. Dùng nút “XUẤT FILE TXT – RÚT GỌN” phía trên để lấy toàn bộ ${reducedTotal.toLocaleString('vi-VN')} bộ.</div>`
+      : `<div class="muted">Chưa có dàn rút gọn vì snapshot kỳ ${fmt(targetDate)} chưa khóa.</div>`;
+  document.querySelectorAll('[data-copy-one]').forEach(b=>b.addEventListener('click',()=>writeClip(b.dataset.copyOne.split(',').map(Number).map(n=>String(n).padStart(2,'0')).join(' '),'copymsg','✓ Đã copy 1 bộ số')));
+  $('db').innerHTML=`<div class="stats"><div class="stat"><span>Kỳ đã lưu</span><b>${x.count}</b></div><div class="stat"><span>Từ</span><b style="font-size:14px">${fmt(x.first_date)}</b></div><div class="stat"><span>Đến</span><b style="font-size:14px">${fmt(x.last_date)}</b></div></div><p class="muted">Kỳ mới nhất #${x.latest?.draw_id||'-'} • ${(x.latest?.numbers||[]).map(n=>String(n).padStart(2,'0')).join(' ')} • XSMB đã lưu ${S.xsmb200_count||0}/200 ngày • thống kê tách dàn đầy đủ và dàn rút gọn bằng PP người dùng.</p>`;
+  renderAnalytics(p);
+  const ws=Object.entries(pr.weights||{}).sort((a,b)=>b[1]-a[1]);$('weights').innerHTML=ws.map(([k,v])=>`<div style="margin:8px 0"><div class="muted">${M[k]||k} — ${(v*100).toFixed(1)}%</div><div class="bar"><i style="width:${v*100}%"></i></div></div>`).join('');
+
+}
+async function context(){
+  if(CTX[P])return CTX[P];
+  $('hardStatus').textContent='Đang tải dữ liệu bộ lọc…';
+  CTX[P]=await getJson('/api/filter-context?product='+encodeURIComponent(P)+'&t='+Date.now());
+  const n=Number(CTX[P]?.filtered_total||0);
+  if(n>0)$('filteredCount').innerHTML=`<span>Sau toàn bộ điều kiện cứng còn</span><b>${n.toLocaleString('vi-VN')} bộ</b>`;
+  return CTX[P]
+}
+function scannerCode(){
+  const e5=(a,b,c,d,e)=>((((a*64+b)*64+c)*64+d)*64+e);
+  const e6=(a,b,c,d,e,f)=>(((((a*64+b)*64+c)*64+d)*64+e)*64+f);
+  const choose=(n,k)=>{if(k<0||k>n)return 0;let r=1;for(let i=1;i<=k;i++)r=r*(n-k+i)/i;return Math.round(r)};
+  const digits=n=>{const a=Math.floor(n/10),b=n%10;return [a,b]};
+  const consecutiveViolation=n=>{let run=1,mr=1,pairs=0;for(let i=1;i<n.length;i++){if(n[i]-n[i-1]===1){run++;pairs++}else run=1;mr=Math.max(mr,run)}return mr>=3||pairs>=3};
+  function prep(ctx){
+    const max=ctx.maxn,blocked5=new Set(),exact=new Set(),x=Array(max+1).fill(false),jp=Array(max+1).fill(false),ds=Array(max+1),dd=Array(max+1),z=Array(max+1),ca=Array(max+1),ch=Array(max+1),pp=Array(max+1),dc=Array(max+1),ka=Array(max+1),head=Array(max+1),tail=Array(max+1);
+    for(const n of (ctx.three_region_numbers||ctx.xsmb_numbers||[]))if(n>=1&&n<=max)x[n]=true;
+    for(const n of ctx.xsmb_jackpot_200||[])if(n>=1&&n<=max)jp[n]=true;
+    for(let n=1;n<=max;n++){const [a,b]=digits(n);ds[n]=a+b;dd[n]=Math.abs(a-b);z[n]=(n-1)%12;ca[n]=(n-1)%10;ch[n]=(n-1)%12;pp[n]=(a%2)*2+(b%2);dc[n]=a===b?1:(Math.abs(a-b)===5?2:0);ka[n]=[7,70,14,41,29,92,36,63,58,85].includes(n)?1:0;head[n]=a;tail[n]=b}
+    for(const row0 of ctx.history||[]){const row=[...row0].sort((a,b)=>a-b);if(row.length!==6)continue;exact.add(e6(...row));for(let skip=0;skip<6;skip++){const a=row.filter((_,i)=>i!==skip);blocked5.add(e5(...a))}}
+    return {max,blocked5,exact,x,jp,xRequired:(ctx.three_region_numbers||ctx.xsmb_numbers||[]).length>0,jpRequired:(ctx.xsmb_jackpot_200||[]).length>0,ds,dd,z,ca,ch,pp,dc,ka,head,tail,adaptive:ctx.adaptive_rules||{enabled:false}};
+  }
+  function has5(set,n){return set.has(e5(n[1],n[2],n[3],n[4],n[5]))||set.has(e5(n[0],n[2],n[3],n[4],n[5]))||set.has(e5(n[0],n[1],n[3],n[4],n[5]))||set.has(e5(n[0],n[1],n[2],n[4],n[5]))||set.has(e5(n[0],n[1],n[2],n[3],n[5]))||set.has(e5(n[0],n[1],n[2],n[3],n[4]));}
+  function reason(n,c){
+    if(c.exact.has(e6(...n)))return 'past_exact';
+    const m3=[0,0,0],sum=Array(19).fill(0),dif=Array(10).fill(0),zo=Array(12).fill(0),can=Array(10).fill(0),chi=Array(12).fill(0),kp=[0,0,0],hd=Array(10).fill(0),tl=Array(10).fill(0),tp=[0,0],up=[0,0],touch=Array(10).fill(0);let cc=0,ll=0,xo=0,jpo=0,total=0,kepLech=0,kepAm=0;
+    const branches=new Set(),tensCap=c.max===45?4:5;
+    for(const v of n){
+      total+=v;
+      if(++m3[v%3]>3)return 'mod3';if(++sum[c.ds[v]]>2)return 'tong';if(++dif[c.dd[v]]>2)return 'hieu';if(++zo[c.z[v]]>3)return 'con_giap';if(++can[c.ca[v]]>2)return 'can';if(++chi[c.ch[v]]>2)return 'chi';
+      if(c.dc[v]===1&&++kp[1]>2)return 'kep_bang_max2';if(c.dc[v]===2&&++kepLech>2)return 'kep_lech_max2';if(c.ka[v]&&++kepAm>2)return 'kep_am_max2';if(kepLech+kepAm>3)return 'kep_lech_am_max3';if(c.pp[v]===0&&++cc>3)return 'chan_chan';if(c.pp[v]===3&&++ll>3)return 'le_le';if(++tp[c.head[v]%2]>tensCap)return 'chuc_chan_le';if(++up[c.tail[v]%2]>4)return 'dv_chan_le';if(++hd[c.head[v]]>3)return 'same_head';if(++tl[c.tail[v]]>3)return 'same_tail';
+      if(++touch[c.head[v]]>2)return 'touch_max2';if(c.tail[v]!==c.head[v]&&++touch[c.tail[v]]>2)return 'touch_max2';
+      if(c.x[v])xo++;if(c.jp[v])jpo++;branches.add(c.ch[v]);
+    }
+    if(m3[0]+m3[1]>5||m3[1]+m3[2]>5||m3[2]+m3[0]>5)return 'mod3_pair_max5';
+    for(const [u,v] of [[0,5],[1,6],[2,7],[3,8],[4,9]])if((tl[u]||0)+(tl[v]||0)>4)return 'tail_pair_max4';
+    for(const [u,v] of [[0,5],[1,2],[2,3],[3,4],[4,5]])if((hd[u]||0)+(hd[v]||0)>5)return 'head_pair_max5';
+    if(total>(c.max===45?160:200))return 'ticket_sum_cap';
+    const groups=[[0,6,3,9],[4,10,1,7],[2,8,5,11]];if(groups.some(g=>g.every(x=>branches.has(x))))return 'tu_hanh_xung';
+    if(has5(c.blocked5,n))return 'past_overlap';if(!c.xRequired)return 'prev_3region_missing';if(xo<1)return 'prev_lottery_min1';if(xo>4)return 'prev_lottery_max4';
+    const h23=(hd[2]||0)+(hd[3]||0);if(h23<2)return 'head23_min2';
+    const h234=h23+(hd[4]||0);if(h234<3)return 'head234_min3';
+    const distinctHeads=hd.reduce((s,v)=>s+(v>0?1:0),0);if(distinctHeads<3)return 'head_coverage_min3';
+    if((hd[4]||0)>2)return 'head4_max2';if((hd[3]||0)+(hd[4]||0)>4)return 'head34_max4';
+    if(c.max===55){if((hd[5]||0)>2)return 'head5_max2';if((hd[4]||0)+(hd[5]||0)>4)return 'head45_max4';}
+    if(!c.jpRequired)return 'xsmb_jackpot_missing';if(jpo<1)return 'xsmb_jackpot200';
+    return 'ok';
+  }
+
+  function ctxHasJp(c){for(let i=1;i<c.jp.length;i++)if(c.jp[i])return true;return false}
+  function iterate(ctx,required,handle,progress){
+    const c=prep(ctx),req=[...new Set((required||[]).map(Number))].sort((a,b)=>a-b);if(req.some(v=>v<1||v>c.max)||req.length>6)return {scanned:0,total:0,badInput:true};
+    const need=6-req.length,allowed=[];for(let i=1;i<=c.max;i++)if(!req.includes(i))allowed.push(i);const total=choose(allowed.length,need);let scanned=0,last=0;
+    const emit=()=>{if(scanned-last>=100000){last=scanned;progress(scanned,total)}};
+    if(req.length===0){const m=c.max;for(let a=1;a<=m-5;a++)for(let b=a+1;b<=m-4;b++)for(let d=b+1;d<=m-3;d++)for(let e=d+1;e<=m-2;e++)for(let f=e+1;f<=m-1;f++)for(let g=f+1;g<=m;g++){scanned++;handle([a,b,d,e,f,g],c);emit()}}
+    else{const pick=[];function rec(start,left){if(left===0){scanned++;handle([...req,...pick].sort((a,b)=>a-b),c);emit();return}for(let i=start;i<=allowed.length-left;i++){pick.push(allowed[i]);rec(i+1,left-1);pick.pop()}}rec(0,need)}
+    progress(scanned,total);return {scanned,total};
+  }
+  // Bounded heap: retain top K only; TXT chunks avoid a giant clipboard string.
+  self.onmessage=e=>{
+    const {id,ctx,required=[],excludeGroups=[],mode='scan',maxCollect=6000000}=e.data;
+    const rejects={},preview=[],lines=[],chunks=[],chunk=[];let valid=0,baseValid=0,excluded=0,tooMany=false; const hasGroup=n=>excludeGroups.some(g=>g.length&&g.every(v=>n.includes(v)));
+    const K=Math.max(1,Math.floor(ctx.reduction_target||(ctx.maxn===45?200000:500000))),heap=[];
+    function score(n){return n.reduce((a,v)=>a+Number(ctx.number_scores?.[v]??ctx.number_scores?.[String(v)]??0),0)}
+    const worse=(a,b)=>a.score<b.score||(a.score===b.score&&a.key>b.key);
+    function offer(item){if(heap.length<K){heap.push(item);let i=heap.length-1;while(i){const p=(i-1)>>1;if(!worse(heap[i],heap[p]))break;[heap[i],heap[p]]=[heap[p],heap[i]];i=p}}else if(worse(heap[0],item)){heap[0]=item;let i=0;while(true){let j=i*2+1;if(j>=heap.length)break;if(j+1<heap.length&&worse(heap[j+1],heap[j]))j++;if(!worse(heap[j],heap[i]))break;[heap[i],heap[j]]=[heap[j],heap[i]];i=j}}}
+    const line=n=>n.map(v=>String(v).padStart(2,'0')).join(' ');
+    let txtRow=[];
+    const flushTxtRow=()=>{if(!txtRow.length)return;chunk.push(txtRow.join(' ; ')+'\n');txtRow=[];if(chunk.length===2048){chunks.push(chunk.join(''));chunk.length=0}};
+    const append=n=>{txtRow.push(line(n));if(txtRow.length===5)flushTxtRow()};
+    try{
+      const res=iterate(ctx,required,(nums,c)=>{const r=reason(nums,c);if(r==='ok'){
+        baseValid++; if(hasGroup(nums)){excluded++;return} valid++;if(preview.length<300)preview.push(nums);
+        if(mode==='export'||mode==='excludeExport'||mode==='searchExport')append(nums);
+        if(mode==='reduce')offer({key:e6(...nums),score:score(nums)});
+        if(mode==='collect'){if(lines.length<maxCollect)lines.push(line(nums));else tooMany=true}
+      }else rejects[r]=(rejects[r]||0)+1},(scanned,total)=>self.postMessage({id,type:'progress',scanned,total,valid}));
+      if(mode==='reduce'){preview.length=0;heap.sort((a,b)=>a.key-b.key);for(const item of heap){let key=item.key;const n=Array(6);for(let i=5;i>=0;i--){n[i]=key%64;key=Math.floor(key/64)}append(n);if(preview.length<300)preview.push(n)}}
+      flushTxtRow();if(chunk.length)chunks.push(chunk.join(''));
+      self.postMessage({id,type:'done',scanned:res.scanned,total:res.total,valid,baseValid,excluded,rejects,preview,lines:mode==='collect'&&!tooMany?lines:null,tooMany,badInput:res.badInput||false,exported:mode==='reduce'?heap.length:valid,blob:['export','reduce','excludeExport','searchExport'].includes(mode)?new Blob(chunks,{type:'text/plain;charset=utf-8'}):null});
+    }catch(err){self.postMessage({id,type:'error',error:String(err),stack:err?.stack})}
+  };
+}
+function makeScanner(){const src=`(${scannerCode.toString()})()`;return new Worker(URL.createObjectURL(new Blob([src],{type:'text/javascript'})))}
+function stopScanner(){if(scanWorker){scanWorker.terminate();scanWorker=null}const b=$('stopHard');if(b)b.disabled=true}
+function previewHtml(rows){return (rows||[]).map((a,i)=>`<div class="minirow"><b>${i+1}</b><code>${a.map(n=>String(n).padStart(2,'0')).join(' ')}</code></div>`).join('')}
+function reasonStats(summary){const r=summary.rejects||{};return `<div class="stats"><div class="stat"><span>Tổ hợp đã xét</span><b>${(summary.scanned||0).toLocaleString('vi-VN')}</b></div><div class="stat"><span>Hợp lệ</span><b>${(summary.valid||0).toLocaleString('vi-VN')}</b></div><div class="stat"><span>Tỷ lệ qua lọc</span><b>${summary.scanned?((summary.valid/summary.scanned)*100).toFixed(2):0}%</b></div></div><div style="margin-top:8px">${Object.entries(r).map(([k,v])=>`<span class="tag">${RNAME[k]||k}: ${v.toLocaleString('vi-VN')}</span>`).join('')}</div>`}
+async function runScan(kind,required=[],mode='scan',excludeGroups=[]){
+  const ctx=await context();stopScanner();scanWorker=makeScanner();$('stopHard').disabled=false;const id=Math.random().toString(36).slice(2),isSearch=kind==='search',isExclude=kind==='exclude',bar=$(isExclude?'excludeProgress':isSearch?'searchProgress':'hardProgress'),status=$(isExclude?'excludeStatus':isSearch?'searchStatus':'hardStatus'),stats=$(isExclude?'excludeStats':isSearch?'searchStats':'hardStats'),preview=$(isExclude?'excludePreview':isSearch?'searchPreview':'hardPreview');bar.style.width='0%';status.textContent='Đang quét…';stats.innerHTML='';preview.innerHTML='';
+  return new Promise((resolve,reject)=>{
+    scanWorker.onmessage=e=>{const m=e.data;if(m.id!==id)return;if(m.type==='progress'){const pct=m.total?Math.min(100,m.scanned/m.total*100):0;bar.style.width=pct.toFixed(1)+'%';status.textContent=isExclude?`Đang lọc trên dàn sau điều kiện người dùng… đã xác nhận ${m.valid.toLocaleString('vi-VN')} bộ còn lại`:`Đang quét ${m.scanned.toLocaleString('vi-VN')} / ${m.total.toLocaleString('vi-VN')} • hợp lệ tạm thời ${m.valid.toLocaleString('vi-VN')}`}
+      if(m.type==='done'){bar.style.width='100%';status.textContent=isExclude?`Dàn sau điều kiện người dùng: ${m.baseValid.toLocaleString('vi-VN')} bộ • bỏ thêm ${m.excluded.toLocaleString('vi-VN')} bộ • còn ${m.valid.toLocaleString('vi-VN')} bộ.`:`Hoàn tất: ${m.valid.toLocaleString('vi-VN')} bộ hợp lệ.`;stats.innerHTML=isExclude?`<div class="stats"><div class="stat"><span>Dàn sau điều kiện người dùng</span><b>${m.baseValid.toLocaleString('vi-VN')}</b></div><div class="stat"><span>Bỏ thêm theo cụm</span><b>${m.excluded.toLocaleString('vi-VN')}</b></div><div class="stat"><span>Còn lại</span><b>${m.valid.toLocaleString('vi-VN')}</b></div></div>`:reasonStats(m);preview.innerHTML=previewHtml(m.preview);stopScanner();resolve(m)}
+      if(m.type==='error'){stopScanner();status.textContent='Lỗi quét: '+m.error;reject(new Error(m.error))}}
+    scanWorker.onerror=e=>{stopScanner();status.textContent='Lỗi bộ quét.';reject(e)};
+    scanWorker.postMessage({id,ctx,required,excludeGroups,mode,maxCollect:COPY_LIMIT});
+  })
+}
+async function scanHard(){try{hardSummary=await runScan('hard',[],'scan')}catch(e){setMsg('hardMsg',e.message,true)}}
+let exportUrl=null;
+const TXT_SETS_PER_LINE=5;
+const UTF8_BOM='\uFEFF';
+const TXT_BOLD_DIGITS=['𝟎','𝟏','𝟐','𝟑','𝟒','𝟓','𝟔','𝟕','𝟖','𝟗'];
+function boldTxt(s){return String(s).replace(/\d/g,d=>TXT_BOLD_DIGITS[Number(d)])}
+function txtCombo(n){return n.map(v=>boldTxt(String(v).padStart(2,'0'))).join(' ')}
+function makeTxtBlobFromPool(pool,include,meta={}){
+  const parts=[],buf=[];let line=[],count=0,dataLines=0;
+  const flushLine=()=>{if(!line.length)return;buf.push(line.join(' ; ')+'\n');line=[];dataLines++;if(buf.length>=2048){parts.push(buf.join(''));buf.length=0}};
+  for(const key of pool.keys){
+    const n=decodePoolKey(key);
+    if(include&&!include(n))continue;
+    count++;line.push(txtCombo(n));if(line.length===TXT_SETS_PER_LINE)flushLine();
+  }
+  flushLine();if(buf.length)parts.push(buf.join(''));
+  const header=[
+    'VIETLOTT AUTO HỌC — XUẤT FILE TXT',
+    'Sản phẩm: '+(meta.productName||N[P]||P),
+    'Kỳ: '+(meta.targetDate?fmt(meta.targetDate):'-'),
+    'TỔNG SỐ BỘ: '+count.toLocaleString('vi-VN'),
+    'SỐ DÒNG DỮ LIỆU: '+dataLines.toLocaleString('vi-VN')+' dòng ('+TXT_SETS_PER_LINE+' bộ/dòng)',
+    'KIỂM TRA: '+count.toLocaleString('vi-VN')+' / '+Number(pool.valid_total||count).toLocaleString('vi-VN')+' bộ từ kho SNAP khóa',
+    'Định dạng: '+TXT_SETS_PER_LINE+' bộ mỗi hàng ngang; cách nhau bằng dấu chấm phẩy (;). File UTF-8 BOM để mở đúng tiếng Việt và chữ số đậm trên Android.',
+    ''
+  ].join('\n')+'\n';
+  const footer='\n--- KẾT THÚC FILE ---\nĐÃ XUẤT ĐỦ '+count.toLocaleString('vi-VN')+' BỘ • '+dataLines.toLocaleString('vi-VN')+' DÒNG DỮ LIỆU • '+TXT_SETS_PER_LINE+' BỘ/DÒNG\n';
+  const blob=new Blob([UTF8_BOM,header,...parts,footer],{type:'text/plain;charset=utf-8'});
+  return {blob,count,dataLines,bytes:blob.size};
+}
+async function exactReducedPool(){
+  const ctx=await context(),r=await fetch(`/reduced-pool-${P}.json?d=${encodeURIComponent(ctx.target_date)}`,{cache:'no-store'});
+  if(!r.ok)throw new Error('Kho rút gọn của SNAP chưa sẵn sàng trên máy chủ.');
+  const x=await r.json();
+  const wanted=P==='mega645'?200000:500000;
+  const expected=Math.min(wanted,Number(x.source_total||x.valid_total||0));
+  if(!x.locked||x.target_date!==ctx.target_date||!Array.isArray(x.keys)||x.keys.length!==Number(x.valid_total)||Number(x.valid_total)!==expected){
+    throw new Error(`Kho rút gọn không khớp SNAP: cần ${expected.toLocaleString('vi-VN')} bộ, kho có ${Number(x.valid_total||0).toLocaleString('vi-VN')} bộ.`);
+  }
+  return x;
+}
+async function exportHard(reduce=false){
+  const product=P,ctx=await context();
+  try{
+    $('hardStatus').textContent='Đang lấy FILE TXT trực tiếp từ kho SNAP đã khóa • không quét lại…';
+    const pool=reduce?await exactReducedPool():await exactPool();
+    const expected=Number(reduce?pool.valid_total:(ctx.filtered_total||pool.valid_total||0));
+    if(expected>0&&pool.keys.length!==expected)throw new Error(`Kho SNAP báo ${expected.toLocaleString('vi-VN')} bộ nhưng thực tế có ${pool.keys.length.toLocaleString('vi-VN')} bộ. Không xuất file sai số lượng.`);
+    const out=makeTxtBlobFromPool(pool,null,{productName:N[product],targetDate:ctx.target_date});
+    if(out.count!==Number(pool.valid_total))throw new Error('Kiểm tra số lượng FILE TXT không khớp kho SNAP.');
+    const name=`${product}_${ctx.target_date}_${reduce?'RUT-GON':'TOAN-BO-SAU-LOAI'}_${out.count}.txt`;
+    downloadBlob(out.blob,name,'hardMsg',out.count,{dataLines:out.dataLines,bytes:out.bytes});
+    $('hardStatus').textContent=`ĐÃ KIỂM TRA ĐỦ ${out.count.toLocaleString('vi-VN')} BỘ • ${out.dataLines.toLocaleString('vi-VN')} dòng dữ liệu • lấy từ kho SNAP khóa, KHÔNG quét lại.`;
+  }catch(e){setMsg('hardMsg',e.message,true)}
+}
+function copyHard(){return exportHard(false)}
+
+let exactPoolCache={};
+function decodePoolKey(key){const n=Array(6);for(let i=5;i>=0;i--){n[i]=key%64;key=Math.floor(key/64)}return n}
+async function exactPool(){
+  const ctx=await context(),cached=exactPoolCache[P];
+  if(cached?.target_date===ctx.target_date)return cached;
+  const r=await fetch(`/filtered-pool-${P}.json?d=${encodeURIComponent(ctx.target_date)}`,{cache:'no-store'});
+  if(!r.ok)throw new Error('Tập snapshot điều kiện người dùng chưa sẵn sàng. Hãy tải lại sau khi máy chủ hoàn tất.');
+  const x=await r.json();
+  if(!x.locked||x.target_date!==ctx.target_date||!Array.isArray(x.keys)||x.keys.length!==Number(x.valid_total))throw new Error('Tập snapshot điều kiện người dùng không khớp kỳ đang khóa.');
+  exactPoolCache[P]=x;return x;
+}
+function parseSearch(){return [...new Set(($('searchNums').value.match(/\d{1,2}/g)||[]).map(Number))].sort((a,b)=>a-b)}
+function poolFilter(pool,required=[],groups=[]){
+  const rows=[],req=new Set(required);let excluded=0;
+  for(const key of pool.keys){const n=decodePoolKey(key);if(required.length&&![...req].every(v=>n.includes(v)))continue;if(groups.some(g=>g.every(v=>n.includes(v)))){excluded++;continue}rows.push(n)}
+  return {rows,excluded};
+}
+function rowsBlob(rows){
+  const parts=[],buf=[];let line=[];
+  const flush=()=>{if(!line.length)return;buf.push(line.join(' ; ')+'\n');line=[];if(buf.length>=2048){parts.push(buf.join(''));buf.length=0}};
+  for(const n of rows){line.push(txtCombo(n));if(line.length===TXT_SETS_PER_LINE)flush()}
+  flush();if(buf.length)parts.push(buf.join(''));
+  return new Blob([UTF8_BOM,...parts],{type:'text/plain;charset=utf-8'})
+}
+async function searchSets(){const req=parseSearch();if(!req.length){setMsg('searchMsg','Nhập ít nhất 1 số cần tìm.',true);return}try{const pool=await exactPool(),r=poolFilter(pool,req);searchSummary={valid:r.rows.length,preview:r.rows.slice(0,300)};$('searchStatus').textContent=`Lọc trực tiếp ${pool.valid_total.toLocaleString('vi-VN')} bộ snapshot điều kiện người dùng • tìm thấy ${r.rows.length.toLocaleString('vi-VN')} bộ.`;$('searchStats').innerHTML=`<div class="stats"><div class="stat"><span>Dàn snapshot điều kiện người dùng</span><b>${pool.valid_total.toLocaleString('vi-VN')}</b></div><div class="stat"><span>Tìm thấy</span><b>${r.rows.length.toLocaleString('vi-VN')}</b></div></div>`;$('searchPreview').innerHTML=previewHtml(r.rows.slice(0,300))}catch(e){setMsg('searchMsg',e.message,true)}}
+async function copySearch(){const req=parseSearch();if(!req.length){setMsg('searchMsg','Nhập số rồi bấm Tìm bộ trước.',true);return}try{const pool=await exactPool(),r=poolFilter(pool,req);if(r.rows.length>COPY_LIMIT){setMsg('searchMsg','Kết quả quá lớn để copy; hãy xuất TXT.',true);return}await writeClip(`${N[P]} — BỘ CHỨA ${req.map(n=>String(n).padStart(2,'0')).join(' ')}\n`+r.rows.map(n=>n.map(v=>String(v).padStart(2,'0')).join(' ')).join('\n'),'searchMsg',`✓ Đã copy ${r.rows.length.toLocaleString('vi-VN')} bộ`)}catch(e){setMsg('searchMsg',e.message,true)}}
+function parseExcludeGroups(){
+  const raw=$('excludeGroups').value.trim(); if(!raw)return [];
+  const parts=raw.split(';').map(x=>x.trim()).filter(Boolean),out=[];
+  for(const part of parts){if(/[,，]/.test(part))throw new Error('Sai định dạng: dùng dấu cách giữa các số và dấu ; giữa các cụm.');const toks=part.split(/\s+/).filter(Boolean);if(toks.some(t=>!/^\d{1,2}$/.test(t)))throw new Error('Mỗi số phải viết riêng bằng 1–2 chữ số.');const nums=[...new Set(toks.map(Number))].sort((a,b)=>a-b),max=P==='mega645'?45:55;if(nums.some(n=>n<1||n>max))throw new Error(`Số phải nằm trong 01–${max}.`);if(nums.length>6)throw new Error('Mỗi cụm tối đa 6 số.');out.push(nums)}return out
+}
+async function excludeSets(){let gs;try{gs=parseExcludeGroups()}catch(e){setMsg('excludeMsg',e.message,true);return}if(!gs.length){setMsg('excludeMsg','Nhập ít nhất 1 số hoặc cụm số cần bỏ.',true);return}try{const pool=await exactPool(),r=poolFilter(pool,[],gs);excludeSummary={baseValid:pool.valid_total,excluded:r.excluded,valid:r.rows.length,preview:r.rows.slice(0,300)};$('excludeStatus').textContent=`Dàn snapshot sau điều kiện người dùng: ${pool.valid_total.toLocaleString('vi-VN')} bộ • bỏ thêm ${r.excluded.toLocaleString('vi-VN')} bộ • còn ${r.rows.length.toLocaleString('vi-VN')} bộ.`;$('excludeStats').innerHTML=`<div class="stats"><div class="stat"><span>Dàn sau điều kiện người dùng</span><b>${pool.valid_total.toLocaleString('vi-VN')}</b></div><div class="stat"><span>Bỏ thêm theo cụm</span><b>${r.excluded.toLocaleString('vi-VN')}</b></div><div class="stat"><span>Còn lại</span><b>${r.rows.length.toLocaleString('vi-VN')}</b></div></div>`;$('excludePreview').innerHTML=previewHtml(r.rows.slice(0,300))}catch(e){setMsg('excludeMsg',e.message,true)}}
+async function exportExcludeSets(){let gs;try{gs=parseExcludeGroups()}catch(e){setMsg('excludeMsg',e.message,true);return}if(!gs.length){setMsg('excludeMsg','Nhập cụm số cần bỏ trước.',true);return}try{const pool=await exactPool(),r=poolFilter(pool,[],gs),ctx=await context();downloadBlob(rowsBlob(r.rows),`${P}_${ctx.target_date}_bo-cum_con-${r.rows.length}.txt`,'excludeMsg',r.rows.length)}catch(e){setMsg('excludeMsg',e.message,true)}}
+async function exportSearchSets(){const req=parseSearch();if(!req.length){setMsg('searchMsg','Nhập số cần tìm trước.',true);return}try{const pool=await exactPool(),r=poolFilter(pool,req),ctx=await context();downloadBlob(rowsBlob(r.rows),`${P}_${ctx.target_date}_tim-${req.join('-')}_${r.rows.length}.txt`,'searchMsg',r.rows.length)}catch(e){setMsg('searchMsg',e.message,true)}}
+function downloadBlob(blob,name,msgId,count,meta={}){const u=URL.createObjectURL(blob),area=$(msgId);area.replaceChildren();const a=document.createElement('a');a.href=u;a.download=name;a.textContent=`TẢI FILE TXT — ${count.toLocaleString('vi-VN')} BỘ`;a.style.fontWeight='950';a.className='btn primary';area.appendChild(a);const p=document.createElement('p');p.style.fontWeight='900';const lines=Number(meta.dataLines||Math.ceil(count/TXT_SETS_PER_LINE)),mb=Number(meta.bytes||blob.size)/1048576;p.textContent=`ĐÃ KIỂM TRA ĐỦ ${count.toLocaleString('vi-VN')} BỘ • ${lines.toLocaleString('vi-VN')} dòng dữ liệu • ${TXT_SETS_PER_LINE} bộ/dòng • file ${mb.toFixed(2)} MB • cách nhau bằng dấu ;`;area.appendChild(p);a.click();setTimeout(()=>URL.revokeObjectURL(u),300000)}
+function copyAI(){if(!S?.products?.[P]){setMsg('copymsg','Chưa có dữ liệu.',true);return}const rows=S.products[P].prediction?.candidates||[];const t=`${N[P]} — ${rows.length} BỘ PP NGƯỜI DÙNG\n`+rows.map((c,i)=>String(i+1).padStart(3,'0')+'. '+comboText(c)).join('\n');writeClip(t,'copymsg',`✓ Đã copy ${rows.length} bộ PP`)}
+function copyBothAI(){if(!S)return;const blocks=['mega645','power655'].map(p=>{const rows=S.products?.[p]?.prediction?.candidates||[];return `${N[p]} — ${rows.length} BỘ PP NGƯỜI DÙNG\n`+rows.map((c,i)=>String(i+1).padStart(3,'0')+'. '+comboText(c)).join('\n')});writeClip(blocks.join('\n\n'),'copymsg','✓ Đã copy bộ PP 6/45 + 6/55')}
+$('tmega').addEventListener('click',()=>show('mega645'));
+$('tpower').addEventListener('click',()=>show('power655'));
+$('copyHard').addEventListener('click',copyHard);
+$('reduceHard').addEventListener('click',()=>exportHard(true));
+$('searchBtn').addEventListener('click',searchSets);
+$('copySearch').addEventListener('click',copySearch);
+$('exportSearch').addEventListener('click',exportSearchSets);
+function insertExcludeText(t){const el=$('excludeGroups'),a=el.selectionStart??el.value.length,b=el.selectionEnd??a;el.value=el.value.slice(0,a)+t+el.value.slice(b);const p=a+t.length;el.focus();el.setSelectionRange(p,p)}
+$('insertSpace').addEventListener('click',()=>insertExcludeText(' '));
+$('insertSemi').addEventListener('click',()=>insertExcludeText('; '));
+$('excludeBtn').addEventListener('click',excludeSets);
+$('exportExclude').addEventListener('click',exportExcludeSets);
+$('copyAI').addEventListener('click',copyAI);
+$('copyBoth').addEventListener('click',copyBothAI);
+init();
+</script>
+</body>
+</html>
+
