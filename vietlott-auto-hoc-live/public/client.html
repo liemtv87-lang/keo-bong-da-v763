@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#d71920">
+<title>Vietlott Auto Học • BẢN KHÁCH</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:#f4f6f9;color:#172033}
+.warn{background:#fff0f1;color:#ab202c;border-bottom:1px solid #f0cbd0;padding:9px 14px;text-align:center;font-size:12px;font-weight:900}
+#expiry{display:none;background:#fee2e2;color:#b91c1c;border-bottom:1px solid #fecaca;padding:4px 10px;text-align:center;font-size:11px;line-height:1.25;font-weight:850}
+.top{display:flex;align-items:center;justify-content:flex-start;gap:6px;padding:7px 12px;background:#fff;border-bottom:1px solid #d7e2ea}
+.brand{font-weight:950;color:#10285c;font-size:14px}.meta{font-size:10px;color:#607386}
+.btn{border:0;border-radius:9px;padding:10px 12px;background:#d71920;color:#fff;font-weight:850;cursor:pointer}
+#frame{display:none;width:100%;height:calc(100vh - 106px);border:0;background:#fff}
+.gate{position:fixed;inset:0;z-index:100;background:#f4f6f9;display:flex;align-items:center;justify-content:center;padding:18px}
+.gate.hidden{display:none}.panel{width:min(440px,100%);background:#fff;border:1px solid #d7e2ea;border-radius:18px;padding:20px;box-shadow:0 12px 36px #0f172a1c}
+.panel h1{font-size:21px;margin:0 0 7px;color:#10285c}.muted{font-size:13px;color:#607386;line-height:1.5}
+.badge{display:inline-block;margin-top:8px;background:#eef2f7;color:#10285c;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:900}
+input{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:10px;margin:12px 0 8px;font:inherit;background:#fff;color:#172033;caret-color:#172033;user-select:text;-webkit-user-select:text}
+.codeRow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.codeRow input{margin:12px 0 8px;min-width:0}
+.pasteBtn{border:0;border-radius:9px;padding:12px 14px;background:#e9eff8;color:#172033;font-weight:900;white-space:nowrap}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row .btn{flex:1}.secondary{background:#e9eff8;color:#17202a}
+#msg{min-height:20px;color:#b91c1c;font-size:13px;margin-top:8px}
+.links{margin-top:14px;padding-top:12px;border-top:1px solid #e5e7eb;font-size:13px;line-height:1.7}.links a{color:#d71920;font-weight:900}
+</style>
+</head>
+<body>
+<div class="warn">Cờ bạc là bất hợp pháp - Tool chỉ mang tính chất tham khảo - học hỏi !</div>
+<div id="expiry"></div>
+<div class="top"><div><div class="brand">VIETLOTT AUTO HỌC • BẢN KHÁCH</div><div class="meta">Chỉ đọc SNAP đã khóa từ đúng nguồn bản chính</div></div></div>
+<iframe id="frame" referrerpolicy="no-referrer"></iframe>
+<div id="gate" class="gate"><div class="panel">
+<h1>Nhập mã kích hoạt Vietlott</h1>
+<div class="muted">Bản khách dùng đúng SNAP đã khóa của bản chính Mega 6/45 & Power 6/55. Không tự tính lại dữ liệu trên điện thoại.</div>
+<span class="badge">Free 10 ngày • 1 mã / 1 thiết bị • Free chỉ 1 lần/thiết bị</span>
+<div class="codeRow">
+  <input id="code" placeholder="Nhập hoặc dán mã VL-..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text">
+  <button type="button" class="pasteBtn" id="pasteCode">DÁN MÃ</button>
+</div>
+<div class="row"><button class="btn" id="activateBtn">KÍCH HOẠT</button><button class="btn secondary" id="copyBuyBtn">COPY LINK MUA TOOL</button></div>
+<div id="msg"></div>
+<div class="links">Mua tool tại: <a href="https://t.me/muatool_du_doan_bot">@muatool_du_doan_bot</a></div>
+</div></div>
+<script>
+const API="https://wbegdefpdwctolawluzo.supabase.co/functions/v1/tool-customer-api";
+const MAIN=location.origin+"/";
+const PRODUCT="vietlott";
+const $=id=>document.getElementById(id);
+async function sha(s){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
+function dev(){let v=localStorage.getItem("kq247_dev");if(!v){v=crypto.randomUUID();localStorage.setItem("kq247_dev",v)}return v}
+async function ids(){return{device_hash:await sha(dev()),fingerprint_hash:await sha([navigator.userAgent,navigator.language,screen.width+"x"+screen.height,Intl.DateTimeFormat().resolvedOptions().timeZone].join("|"))}}
+async function post(action,body){const r=await fetch(API+"?action="+action,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body),cache:"no-store"});return [r,await r.json().catch(()=>({}))]}
+function reason(v){return({invalid_code:"Mã không hợp lệ",expired:"Mã đã hết hạn",device_mismatch:"Mã đã khóa ở thiết bị khác",device_has_active_license:"Thiết bị đang có mã khác còn hạn",trial_already_used:"Thiết bị đã dùng Free 10 ngày Vietlott",invalid_request:"Dữ liệu kích hoạt không hợp lệ"}[v]||v||"Không kích hoạt được")}
+function unlock(j){$("gate").classList.add("hidden");const exp=new Date(j.expires_at||j.session_expires_at||Date.now()+3600000),ms=Math.max(0,exp.getTime()-Date.now()),hours=Math.ceil(ms/3600000),days=Math.ceil(ms/86400000);$("expiry").style.display="block";$("expiry").textContent="Còn "+(hours<24?(hours+" giờ"):(days+" ngày"))+" • Hết hạn "+exp.toLocaleString("vi-VN",{hour:"2-digit",minute:"2-digit",day:"2-digit",month:"2-digit",year:"numeric"});const f=$("frame");f.src=MAIN+"?client=1&client_sync="+Date.now()+"&ui=same-day-snapshot-r14";f.style.display="block"}
+function cleanCode(v){return String(v||"").replace(/\s+/g,"").trim().toUpperCase()}
+async function activate(){const raw=cleanCode($("code").value);if(!raw){$("msg").textContent="Nhập hoặc dán mã kích hoạt.";return}$("code").value=raw;$("activateBtn").disabled=true;$("msg").textContent="Đang kiểm tra...";try{const h=await ids(),code_hash=await sha(raw);const [r,j]=await post("activate",{product:PRODUCT,code_hash,...h});if(j.ok){localStorage.setItem("kq247_vietlott_code",code_hash);localStorage.setItem("kq247_vietlott_session",j.session_token||"");$("msg").textContent="";unlock(j)}else $("msg").textContent=reason(j.reason||j.error)}finally{$("activateBtn").disabled=false}}
+async function check(){const code_hash=localStorage.getItem("kq247_vietlott_code");if(!code_hash)return false;const h=await ids();const [r,j]=await post("check",{product:PRODUCT,code_hash,...h});if(j.ok){localStorage.setItem("kq247_vietlott_session",j.session_token||"");unlock(j);return true}localStorage.removeItem("kq247_vietlott_code");localStorage.removeItem("kq247_vietlott_session");$("msg").textContent=reason(j.reason||j.error);return false}
+async function pasteCode(){try{const t=cleanCode(await navigator.clipboard.readText());if(!t)throw new Error("empty");$("code").value=t;$("msg").textContent="Đã dán mã. Bấm KÍCH HOẠT.";$("code").focus()}catch{$("code").focus();$("code").select();$("msg").textContent="Nếu trình duyệt chặn đọc clipboard, nhấn giữ ô mã rồi chọn Dán."}}
+async function copyBuy(){const t="https://t.me/muatool_du_doan_bot";try{await navigator.clipboard.writeText(t);$("msg").textContent="Đã copy link mua tool."}catch{$("msg").textContent=t}}
+function importLinkMigration(){const p="#kq247=";if(!location.hash.startsWith(p))return;try{const raw=location.hash.slice(p.length).replace(/-/g,"+").replace(/_/g,"/");const bin=atob(raw+"=".repeat((4-(raw.length%4))%4));const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));const data=JSON.parse(new TextDecoder().decode(bytes));if(data.dev)localStorage.setItem("kq247_dev",String(data.dev));if(data.code)localStorage.setItem("kq247_vietlott_code",String(data.code));if(data.session)localStorage.setItem("kq247_vietlott_session",String(data.session))}catch{}history.replaceState(null,"",location.pathname+location.search)}
+function exportLinkMigration(){const data={dev:localStorage.getItem("kq247_dev")||"",code:localStorage.getItem("kq247_vietlott_code")||"",session:localStorage.getItem("kq247_vietlott_session")||""};const bytes=new TextEncoder().encode(JSON.stringify(data));let bin="";for(const b of bytes)bin+=String.fromCharCode(b);return btoa(bin).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+function canonical(u){const x=new URL(u,location.href);x.hash="";x.search="";x.pathname=x.pathname.replace(/\/+$/,"")||"/";return x.origin+x.pathname}
+async function ensureLatestLink(){
+  importLinkMigration();
+  try{
+    const r=await fetch(API+"?action=latest-link&product="+PRODUCT,{cache:"no-store"});
+    const j=await r.json();
+    if(!r.ok||!j.ok||!j.latest_url)return true;
+    const latest=String(j.latest_url),cur=location.href;
+    if(canonical(latest)===canonical(cur))return true;
+    const guard="kq247_vietlott_migrated_to";
+    if(sessionStorage.getItem(guard)===canonical(latest))return true;
+    sessionStorage.setItem(guard,canonical(latest));
+    location.replace(latest+"#kq247="+exportLinkMigration());
+    return false;
+  }catch{return true}
+}
+$("activateBtn").addEventListener("click",activate);
+$("copyBuyBtn").addEventListener("click",copyBuy);
+$("pasteCode").addEventListener("click",pasteCode);
+$("code").addEventListener("paste",()=>setTimeout(()=>{$("code").value=cleanCode($("code").value)},0));
+$("code").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();activate()}});
+(async()=>{if(await ensureLatestLink())await check()})();
+</script>
+</body>
+</html>
