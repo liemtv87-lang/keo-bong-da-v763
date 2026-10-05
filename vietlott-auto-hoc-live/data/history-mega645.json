@@ -1,0 +1,2548 @@
+[
+  {
+    "draw_id": "01415",
+    "date": "2025-10-05",
+    "numbers": [
+      5,
+      14,
+      22,
+      28,
+      32,
+      39
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01416",
+    "date": "2025-10-08",
+    "numbers": [
+      8,
+      10,
+      11,
+      18,
+      23,
+      32
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01417",
+    "date": "2025-10-10",
+    "numbers": [
+      4,
+      5,
+      25,
+      34,
+      39,
+      43
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01418",
+    "date": "2025-10-12",
+    "numbers": [
+      4,
+      10,
+      16,
+      20,
+      28,
+      34
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01419",
+    "date": "2025-10-15",
+    "numbers": [
+      1,
+      6,
+      18,
+      20,
+      29,
+      40
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01420",
+    "date": "2025-10-17",
+    "numbers": [
+      15,
+      17,
+      18,
+      26,
+      31,
+      42
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01421",
+    "date": "2025-10-19",
+    "numbers": [
+      16,
+      17,
+      25,
+      26,
+      28,
+      37
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01422",
+    "date": "2025-10-22",
+    "numbers": [
+      5,
+      11,
+      12,
+      24,
+      28,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01423",
+    "date": "2025-10-24",
+    "numbers": [
+      2,
+      11,
+      24,
+      31,
+      32,
+      38
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01424",
+    "date": "2025-10-26",
+    "numbers": [
+      18,
+      30,
+      34,
+      42,
+      43,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01425",
+    "date": "2025-10-29",
+    "numbers": [
+      7,
+      26,
+      35,
+      39,
+      41,
+      42
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01426",
+    "date": "2025-10-31",
+    "numbers": [
+      3,
+      10,
+      31,
+      34,
+      36,
+      43
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01427",
+    "date": "2025-11-02",
+    "numbers": [
+      3,
+      7,
+      12,
+      20,
+      30,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01428",
+    "date": "2025-11-05",
+    "numbers": [
+      2,
+      9,
+      18,
+      25,
+      30,
+      31
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01429",
+    "date": "2025-11-07",
+    "numbers": [
+      3,
+      4,
+      20,
+      28,
+      39,
+      42
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01430",
+    "date": "2025-11-09",
+    "numbers": [
+      13,
+      23,
+      27,
+      30,
+      37,
+      43
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01431",
+    "date": "2025-11-12",
+    "numbers": [
+      16,
+      24,
+      29,
+      37,
+      40,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01432",
+    "date": "2025-11-14",
+    "numbers": [
+      3,
+      10,
+      15,
+      27,
+      41,
+      42
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01433",
+    "date": "2025-11-16",
+    "numbers": [
+      15,
+      20,
+      31,
+      33,
+      34,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01434",
+    "date": "2025-11-19",
+    "numbers": [
+      9,
+      12,
+      19,
+      30,
+      40,
+      43
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01435",
+    "date": "2025-11-21",
+    "numbers": [
+      8,
+      11,
+      18,
+      25,
+      28,
+      35
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01436",
+    "date": "2025-11-23",
+    "numbers": [
+      4,
+      12,
+      19,
+      42,
+      43,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01437",
+    "date": "2025-11-26",
+    "numbers": [
+      2,
+      8,
+      15,
+      19,
+      30,
+      38
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01438",
+    "date": "2025-11-28",
+    "numbers": [
+      2,
+      9,
+      17,
+      23,
+      39,
+      41
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01439",
+    "date": "2025-11-30",
+    "numbers": [
+      7,
+      13,
+      26,
+      30,
+      34,
+      42
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01440",
+    "date": "2025-12-03",
+    "numbers": [
+      8,
+      15,
+      20,
+      23,
+      31,
+      34
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01441",
+    "date": "2025-12-05",
+    "numbers": [
+      2,
+      19,
+      23,
+      37,
+      42,
+      43
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01442",
+    "date": "2025-12-07",
+    "numbers": [
+      1,
+      5,
+      23,
+      28,
+      29,
+      43
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01443",
+    "date": "2025-12-10",
+    "numbers": [
+      7,
+      18,
+      22,
+      29,
+      30,
+      36
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01444",
+    "date": "2025-12-12",
+    "numbers": [
+      3,
+      7,
+      13,
+      17,
+      38,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01445",
+    "date": "2025-12-14",
+    "numbers": [
+      8,
+      11,
+      13,
+      16,
+      28,
+      32
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01446",
+    "date": "2025-12-17",
+    "numbers": [
+      5,
+      14,
+      24,
+      38,
+      41,
+      43
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01447",
+    "date": "2025-12-19",
+    "numbers": [
+      1,
+      21,
+      36,
+      42,
+      43,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01448",
+    "date": "2025-12-21",
+    "numbers": [
+      6,
+      9,
+      12,
+      18,
+      29,
+      43
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01449",
+    "date": "2025-12-24",
+    "numbers": [
+      15,
+      19,
+      31,
+      35,
+      43,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01450",
+    "date": "2025-12-26",
+    "numbers": [
+      4,
+      6,
+      16,
+      25,
+      27,
+      40
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01451",
+    "date": "2025-12-28",
+    "numbers": [
+      1,
+      2,
+      7,
+      16,
+      31,
+      37
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01452",
+    "date": "2025-12-31",
+    "numbers": [
+      1,
+      25,
+      35,
+      36,
+      37,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01453",
+    "date": "2026-01-02",
+    "numbers": [
+      7,
+      18,
+      22,
+      32,
+      37,
+      38
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01454",
+    "date": "2026-01-04",
+    "numbers": [
+      2,
+      12,
+      21,
+      29,
+      35,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01455",
+    "date": "2026-01-07",
+    "numbers": [
+      1,
+      5,
+      7,
+      28,
+      31,
+      43
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01456",
+    "date": "2026-01-09",
+    "numbers": [
+      8,
+      9,
+      17,
+      21,
+      36,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01457",
+    "date": "2026-01-11",
+    "numbers": [
+      8,
+      10,
+      21,
+      25,
+      31,
+      38
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01458",
+    "date": "2026-01-14",
+    "numbers": [
+      1,
+      22,
+      23,
+      28,
+      39,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01459",
+    "date": "2026-01-16",
+    "numbers": [
+      2,
+      10,
+      21,
+      31,
+      34,
+      40
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01460",
+    "date": "2026-01-18",
+    "numbers": [
+      2,
+      5,
+      15,
+      26,
+      39,
+      42
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01461",
+    "date": "2026-01-21",
+    "numbers": [
+      1,
+      18,
+      23,
+      24,
+      29,
+      37
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01462",
+    "date": "2026-01-23",
+    "numbers": [
+      9,
+      15,
+      16,
+      20,
+      22,
+      31
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01463",
+    "date": "2026-01-25",
+    "numbers": [
+      2,
+      19,
+      20,
+      24,
+      33,
+      34
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01464",
+    "date": "2026-01-28",
+    "numbers": [
+      4,
+      10,
+      16,
+      19,
+      27,
+      40
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01465",
+    "date": "2026-01-30",
+    "numbers": [
+      16,
+      17,
+      30,
+      41,
+      42,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01466",
+    "date": "2026-02-01",
+    "numbers": [
+      1,
+      18,
+      21,
+      23,
+      30,
+      36
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01467",
+    "date": "2026-02-04",
+    "numbers": [
+      2,
+      12,
+      14,
+      17,
+      39,
+      43
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01468",
+    "date": "2026-02-06",
+    "numbers": [
+      2,
+      7,
+      13,
+      17,
+      42,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01469",
+    "date": "2026-02-08",
+    "numbers": [
+      6,
+      13,
+      16,
+      20,
+      23,
+      38
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01470",
+    "date": "2026-02-11",
+    "numbers": [
+      15,
+      20,
+      35,
+      40,
+      44,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01471",
+    "date": "2026-02-13",
+    "numbers": [
+      8,
+      12,
+      31,
+      36,
+      42,
+      43
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01472",
+    "date": "2026-02-15",
+    "numbers": [
+      4,
+      6,
+      7,
+      20,
+      28,
+      43
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01473",
+    "date": "2026-02-18",
+    "numbers": [
+      1,
+      7,
+      19,
+      23,
+      26,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01474",
+    "date": "2026-02-20",
+    "numbers": [
+      4,
+      25,
+      28,
+      33,
+      34,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01475",
+    "date": "2026-02-22",
+    "numbers": [
+      7,
+      23,
+      24,
+      36,
+      38,
+      40
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01476",
+    "date": "2026-02-25",
+    "numbers": [
+      4,
+      13,
+      20,
+      22,
+      23,
+      29
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01477",
+    "date": "2026-02-27",
+    "numbers": [
+      2,
+      4,
+      8,
+      15,
+      17,
+      28
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01478",
+    "date": "2026-03-01",
+    "numbers": [
+      16,
+      22,
+      23,
+      35,
+      44,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01479",
+    "date": "2026-03-04",
+    "numbers": [
+      1,
+      4,
+      6,
+      9,
+      13,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01480",
+    "date": "2026-03-06",
+    "numbers": [
+      2,
+      10,
+      12,
+      21,
+      32,
+      37
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01481",
+    "date": "2026-03-08",
+    "numbers": [
+      6,
+      12,
+      13,
+      25,
+      31,
+      32
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01482",
+    "date": "2026-03-11",
+    "numbers": [
+      16,
+      18,
+      19,
+      28,
+      31,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01483",
+    "date": "2026-03-13",
+    "numbers": [
+      11,
+      12,
+      20,
+      22,
+      31,
+      33
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01484",
+    "date": "2026-03-15",
+    "numbers": [
+      4,
+      7,
+      11,
+      26,
+      42,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01485",
+    "date": "2026-03-18",
+    "numbers": [
+      14,
+      20,
+      33,
+      35,
+      36,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01486",
+    "date": "2026-03-20",
+    "numbers": [
+      8,
+      11,
+      22,
+      23,
+      38,
+      43
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01487",
+    "date": "2026-03-22",
+    "numbers": [
+      5,
+      10,
+      22,
+      26,
+      31,
+      36
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01488",
+    "date": "2026-03-25",
+    "numbers": [
+      16,
+      22,
+      24,
+      29,
+      35,
+      36
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01489",
+    "date": "2026-03-27",
+    "numbers": [
+      5,
+      7,
+      13,
+      19,
+      38,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01490",
+    "date": "2026-03-29",
+    "numbers": [
+      5,
+      8,
+      18,
+      30,
+      37,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01491",
+    "date": "2026-04-01",
+    "numbers": [
+      6,
+      30,
+      34,
+      36,
+      37,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01492",
+    "date": "2026-04-03",
+    "numbers": [
+      2,
+      4,
+      23,
+      24,
+      35,
+      41
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01493",
+    "date": "2026-04-05",
+    "numbers": [
+      2,
+      9,
+      23,
+      30,
+      32,
+      42
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01494",
+    "date": "2026-04-08",
+    "numbers": [
+      5,
+      8,
+      23,
+      26,
+      38,
+      41
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01495",
+    "date": "2026-04-10",
+    "numbers": [
+      7,
+      8,
+      10,
+      16,
+      28,
+      35
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01496",
+    "date": "2026-04-12",
+    "numbers": [
+      1,
+      10,
+      11,
+      32,
+      39,
+      42
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01497",
+    "date": "2026-04-15",
+    "numbers": [
+      21,
+      22,
+      33,
+      35,
+      36,
+      43
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01498",
+    "date": "2026-04-17",
+    "numbers": [
+      1,
+      10,
+      19,
+      31,
+      36,
+      38
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01499",
+    "date": "2026-04-19",
+    "numbers": [
+      7,
+      10,
+      15,
+      27,
+      33,
+      35
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01500",
+    "date": "2026-04-22",
+    "numbers": [
+      2,
+      6,
+      15,
+      16,
+      17,
+      37
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01501",
+    "date": "2026-04-24",
+    "numbers": [
+      20,
+      29,
+      33,
+      36,
+      41,
+      42
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01502",
+    "date": "2026-04-26",
+    "numbers": [
+      12,
+      18,
+      22,
+      25,
+      31,
+      41
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01503",
+    "date": "2026-04-29",
+    "numbers": [
+      4,
+      14,
+      15,
+      16,
+      17,
+      25
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01504",
+    "date": "2026-05-01",
+    "numbers": [
+      4,
+      21,
+      25,
+      31,
+      41,
+      43
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01505",
+    "date": "2026-05-03",
+    "numbers": [
+      7,
+      9,
+      14,
+      24,
+      38,
+      39
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01506",
+    "date": "2026-05-06",
+    "numbers": [
+      9,
+      12,
+      28,
+      36,
+      37,
+      40
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01507",
+    "date": "2026-05-08",
+    "numbers": [
+      4,
+      16,
+      17,
+      26,
+      34,
+      42
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01508",
+    "date": "2026-05-10",
+    "numbers": [
+      3,
+      4,
+      10,
+      11,
+      27,
+      42
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01509",
+    "date": "2026-05-13",
+    "numbers": [
+      8,
+      10,
+      15,
+      32,
+      35,
+      43
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01510",
+    "date": "2026-05-15",
+    "numbers": [
+      6,
+      14,
+      20,
+      22,
+      23,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01511",
+    "date": "2026-05-17",
+    "numbers": [
+      4,
+      8,
+      13,
+      15,
+      27,
+      31
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01512",
+    "date": "2026-05-20",
+    "numbers": [
+      16,
+      28,
+      29,
+      37,
+      40,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01513",
+    "date": "2026-05-22",
+    "numbers": [
+      2,
+      3,
+      14,
+      28,
+      41,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01514",
+    "date": "2026-05-24",
+    "numbers": [
+      4,
+      8,
+      9,
+      14,
+      25,
+      42
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01515",
+    "date": "2026-05-27",
+    "numbers": [
+      2,
+      13,
+      17,
+      18,
+      31,
+      37
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01516",
+    "date": "2026-05-29",
+    "numbers": [
+      13,
+      14,
+      24,
+      28,
+      30,
+      42
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01517",
+    "date": "2026-05-31",
+    "numbers": [
+      1,
+      12,
+      16,
+      21,
+      24,
+      41
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01518",
+    "date": "2026-06-03",
+    "numbers": [
+      3,
+      11,
+      26,
+      33,
+      36,
+      38
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01519",
+    "date": "2026-06-05",
+    "numbers": [
+      13,
+      16,
+      19,
+      32,
+      36,
+      39
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01520",
+    "date": "2026-06-07",
+    "numbers": [
+      14,
+      21,
+      26,
+      30,
+      34,
+      35
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01521",
+    "date": "2026-06-10",
+    "numbers": [
+      3,
+      9,
+      17,
+      22,
+      27,
+      32
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01522",
+    "date": "2026-06-12",
+    "numbers": [
+      5,
+      15,
+      30,
+      34,
+      37,
+      38
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01523",
+    "date": "2026-06-14",
+    "numbers": [
+      7,
+      16,
+      20,
+      22,
+      24,
+      38
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01524",
+    "date": "2026-06-17",
+    "numbers": [
+      5,
+      6,
+      16,
+      28,
+      35,
+      39
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01525",
+    "date": "2026-06-19",
+    "numbers": [
+      6,
+      9,
+      19,
+      29,
+      30,
+      36
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01526",
+    "date": "2026-06-21",
+    "numbers": [
+      3,
+      8,
+      19,
+      27,
+      41,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01527",
+    "date": "2026-06-24",
+    "numbers": [
+      3,
+      11,
+      17,
+      19,
+      30,
+      32
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01528",
+    "date": "2026-06-26",
+    "numbers": [
+      9,
+      14,
+      31,
+      36,
+      41,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01529",
+    "date": "2026-06-28",
+    "numbers": [
+      2,
+      11,
+      18,
+      33,
+      42,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01530",
+    "date": "2026-07-01",
+    "numbers": [
+      20,
+      24,
+      25,
+      29,
+      40,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01531",
+    "date": "2026-07-03",
+    "numbers": [
+      6,
+      20,
+      21,
+      28,
+      30,
+      39
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01532",
+    "date": "2026-07-05",
+    "numbers": [
+      1,
+      5,
+      13,
+      29,
+      32,
+      35
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01533",
+    "date": "2026-07-08",
+    "numbers": [
+      13,
+      14,
+      22,
+      26,
+      37,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01534",
+    "date": "2026-07-10",
+    "numbers": [
+      9,
+      17,
+      23,
+      26,
+      42,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01535",
+    "date": "2026-07-12",
+    "numbers": [
+      6,
+      9,
+      11,
+      17,
+      35,
+      44
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01536",
+    "date": "2026-07-15",
+    "numbers": [
+      7,
+      11,
+      29,
+      37,
+      43,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01537",
+    "date": "2026-07-17",
+    "numbers": [
+      9,
+      18,
+      30,
+      31,
+      39,
+      45
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01538",
+    "date": "2026-07-19",
+    "numbers": [
+      12,
+      22,
+      24,
+      26,
+      31,
+      37
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01539",
+    "date": "2026-07-22",
+    "numbers": [
+      3,
+      32,
+      33,
+      34,
+      39,
+      43
+    ],
+    "special": null,
+    "sources": [
+      "canonical_seed"
+    ]
+  },
+  {
+    "draw_id": "01540",
+    "date": "2026-07-24",
+    "numbers": [
+      12,
+      16,
+      36,
+      38,
+      41,
+      45
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01541",
+    "date": "2026-07-26",
+    "numbers": [
+      13,
+      16,
+      27,
+      33,
+      41,
+      44
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01542",
+    "date": "2026-07-29",
+    "numbers": [
+      2,
+      6,
+      21,
+      31,
+      36,
+      45
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01543",
+    "date": "2026-07-31",
+    "numbers": [
+      6,
+      16,
+      24,
+      25,
+      38,
+      43
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01544",
+    "date": "2026-08-02",
+    "numbers": [
+      3,
+      12,
+      20,
+      25,
+      27,
+      37
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01545",
+    "date": "2026-08-05",
+    "numbers": [
+      2,
+      6,
+      11,
+      16,
+      28,
+      39
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01546",
+    "date": "2026-08-07",
+    "numbers": [
+      2,
+      8,
+      19,
+      30,
+      36,
+      43
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01547",
+    "date": "2026-08-09",
+    "numbers": [
+      3,
+      17,
+      20,
+      27,
+      31,
+      35
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01548",
+    "date": "2026-08-12",
+    "numbers": [
+      15,
+      17,
+      22,
+      29,
+      33,
+      40
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01549",
+    "date": "2026-08-14",
+    "numbers": [
+      7,
+      9,
+      13,
+      31,
+      35,
+      44
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01550",
+    "date": "2026-08-16",
+    "numbers": [
+      6,
+      7,
+      15,
+      19,
+      36,
+      41
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01551",
+    "date": "2026-08-19",
+    "numbers": [
+      6,
+      15,
+      18,
+      33,
+      40,
+      43
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01552",
+    "date": "2026-08-21",
+    "numbers": [
+      7,
+      26,
+      31,
+      38,
+      43,
+      45
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01553",
+    "date": "2026-08-23",
+    "numbers": [
+      4,
+      16,
+      17,
+      22,
+      32,
+      39
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01554",
+    "date": "2026-08-26",
+    "numbers": [
+      3,
+      10,
+      11,
+      16,
+      33,
+      40
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01555",
+    "date": "2026-08-28",
+    "numbers": [
+      3,
+      13,
+      15,
+      22,
+      36,
+      39
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01556",
+    "date": "2026-08-30",
+    "numbers": [
+      1,
+      3,
+      12,
+      15,
+      37,
+      45
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01557",
+    "date": "2026-09-02",
+    "numbers": [
+      6,
+      9,
+      27,
+      29,
+      35,
+      44
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01558",
+    "date": "2026-09-04",
+    "numbers": [
+      16,
+      21,
+      23,
+      29,
+      34,
+      45
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01559",
+    "date": "2026-09-06",
+    "numbers": [
+      9,
+      14,
+      22,
+      26,
+      27,
+      40
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01560",
+    "date": "2026-09-09",
+    "numbers": [
+      12,
+      17,
+      20,
+      21,
+      36,
+      43
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01561",
+    "date": "2026-09-11",
+    "numbers": [
+      14,
+      18,
+      20,
+      21,
+      26,
+      27
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01562",
+    "date": "2026-09-13",
+    "numbers": [
+      4,
+      12,
+      31,
+      34,
+      38,
+      41
+    ],
+    "special": null,
+    "source": "xoso_com_vn",
+    "sources": [
+      "xoso_com_vn"
+    ]
+  },
+  {
+    "draw_id": "01563",
+    "date": "2026-09-16",
+    "numbers": [
+      1,
+      3,
+      10,
+      11,
+      18,
+      23
+    ],
+    "special": null,
+    "source": "xoso_com_vn",
+    "sources": [
+      "xoso_com_vn"
+    ]
+  },
+  {
+    "draw_id": "01564",
+    "date": "2026-09-18",
+    "numbers": [
+      7,
+      12,
+      26,
+      27,
+      41,
+      43
+    ],
+    "special": null,
+    "source": "xoso_com_vn",
+    "sources": [
+      "xoso_com_vn"
+    ]
+  },
+  {
+    "draw_id": "01565",
+    "date": "2026-09-20",
+    "numbers": [
+      10,
+      15,
+      16,
+      27,
+      33,
+      38
+    ],
+    "special": null,
+    "source": "xoso_com_vn",
+    "sources": [
+      "xoso_com_vn"
+    ]
+  },
+  {
+    "draw_id": "01566",
+    "date": "2026-09-23",
+    "numbers": [
+      2,
+      6,
+      12,
+      15,
+      25,
+      26
+    ],
+    "special": null,
+    "source": "xoso_com_vn",
+    "sources": [
+      "xoso_com_vn"
+    ]
+  },
+  {
+    "draw_id": "01567",
+    "date": "2026-09-25",
+    "numbers": [
+      3,
+      15,
+      18,
+      28,
+      33,
+      36
+    ],
+    "special": null,
+    "source": "xoso_com_vn",
+    "sources": [
+      "xoso_com_vn"
+    ]
+  },
+  {
+    "draw_id": "01568",
+    "date": "2026-09-27",
+    "numbers": [
+      2,
+      4,
+      13,
+      25,
+      31,
+      39
+    ],
+    "special": null,
+    "source": "xoso_com_vn",
+    "sources": [
+      "xoso_com_vn"
+    ]
+  },
+  {
+    "draw_id": "01569",
+    "date": "2026-09-30",
+    "numbers": [
+      2,
+      9,
+      24,
+      27,
+      30,
+      33
+    ],
+    "special": null,
+    "source": "xoso_com_vn",
+    "sources": [
+      "xoso_com_vn"
+    ]
+  },
+  {
+    "draw_id": "01570",
+    "date": "2026-10-02",
+    "numbers": [
+      1,
+      6,
+      20,
+      27,
+      31,
+      41
+    ],
+    "special": null,
+    "source": "xoso_com_vn",
+    "sources": [
+      "xoso_com_vn",
+      "minhngoc"
+    ]
+  },
+  {
+    "draw_id": "01571",
+    "date": "2026-10-04",
+    "numbers": [
+      15,
+      20,
+      29,
+      37,
+      40,
+      45
+    ],
+    "special": null,
+    "source": "minhngoc",
+    "sources": [
+      "xoso_com_vn",
+      "minhngoc"
+    ]
+  }
+]
