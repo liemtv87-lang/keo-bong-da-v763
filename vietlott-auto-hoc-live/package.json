@@ -1,0 +1,23 @@
+{
+  "name": "vietlott-auto-hoc",
+  "private": true,
+  "version": "6.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "cf:dev": "wrangler dev",
+    "cf:deploy": "wrangler deploy",
+    "update": "node scripts/update-data.mjs",
+    "test": "node test.mjs && node test-daily.mjs && node test-export.mjs && node test-restore.mjs && node test-snapshot.mjs",
+    "start": "node snapdeploy-server.mjs"
+  },
+  "dependencies": {
+    "next": "^16.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
