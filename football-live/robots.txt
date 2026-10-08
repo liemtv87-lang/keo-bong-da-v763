@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /
+Allow: /client.html
+Sitemap: https://kq247-football-live.onrender.com/sitemap.xml
