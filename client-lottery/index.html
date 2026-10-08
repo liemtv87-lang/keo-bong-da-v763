@@ -109,7 +109,7 @@ input{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:10px;margin
 <input id="code" placeholder="Nhập mã XS-..." autocomplete="off" autocapitalize="characters">
 <div class="row"><button class="btn" onclick="activate()">KÍCH HOẠT</button><button class="btn secondary" onclick="copyBuy()">COPY LINK MUA TOOL</button></div>
 <div id="msg"></div>
-<div class="links">Mua tool tại: <a href="https://t.me/muatool_du_doan_bot">Mua Tool KQ247 tại @muatool_du_doan_bot</a><br>Nhóm Xổ Số: <a href="https://t.me/xsbm999">@xsbm999</a></div>
+<div class="links">Mua tool tại: <a href="https://t.me/muatool_du_doan_bot?start=from_lottery_client">Mua Tool KQ247 tại @muatool_du_doan_bot</a><br>Nhóm Xổ Số: <a href="https://t.me/xsbm999">@xsbm999</a></div>
 </div></div>
 <script>
 const API="https://wbegdefpdwctolawluzo.supabase.co/functions/v1/tool-customer-api";
@@ -126,7 +126,7 @@ function unlock(j){$("gate").classList.add("hidden");const exp=new Date(j.expire
 async function activate(){const raw=$("code").value.trim().toUpperCase();if(!raw){$("msg").textContent="Nhập mã kích hoạt.";return}$("msg").textContent="Đang kiểm tra...";const h=await ids(),code_hash=await sha(raw);const [r,j]=await post("activate",{product:PRODUCT,code_hash,...h});if(j.ok){localStorage.setItem("kq247_lottery_code",code_hash);localStorage.setItem("kq247_lottery_session",j.session_token||"");$("msg").textContent="";unlock(j)}else $("msg").textContent=reason(j.reason||j.error)}
 async function check(){const code_hash=localStorage.getItem("kq247_lottery_code");if(!code_hash)return false;const h=await ids();const [r,j]=await post("check",{product:PRODUCT,code_hash,...h});if(j.ok){localStorage.setItem("kq247_lottery_session",j.session_token||"");unlock(j);return true}localStorage.removeItem("kq247_lottery_code");localStorage.removeItem("kq247_lottery_session");$("msg").textContent=reason(j.reason||j.error);return false}
 function recheck(){$("frame").style.display="none";$("gate").classList.remove("hidden");check()}
-async function copyBuy(){const t="https://t.me/muatool_du_doan_bot";try{window.kq247GrowthCapture?.("sales bot copied",{sales_bot:"muatool_du_doan_bot"})}catch{}try{await navigator.clipboard.writeText(t);$("msg").textContent="Đã copy link mua tool."}catch{$("msg").textContent=t}}
+async function copyBuy(){const t="https://t.me/muatool_du_doan_bot?start=from_lottery_client";try{window.kq247GrowthCapture?.("sales bot copied",{sales_bot:"muatool_du_doan_bot"})}catch{}try{await navigator.clipboard.writeText(t);$("msg").textContent="Đã copy link mua tool."}catch{$("msg").textContent=t}}
 function importLinkMigration(){
   const p="#kq247=";
   if(!location.hash.startsWith(p))return;
