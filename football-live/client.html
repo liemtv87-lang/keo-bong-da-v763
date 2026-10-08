@@ -7,7 +7,7 @@
       content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
     />
     <meta name="theme-color" content="#ffffff" />
-    <title>KQ247 Bóng đá • Bản khách | Kết quả & phân tích hôm nay</title>
+    <title>Tool phân tích bóng đá KQ247 • Bản khách</title>
     <script>
       (() => {
         window.addEventListener('beforeinstallprompt', event => {
@@ -355,14 +355,14 @@
       }
     </style>
   
-    <meta name="description" content="Bản khách KQ247 bóng đá: xem lịch, kết quả và phân tích trận đấu hôm nay trên giao diện mobile, đồng bộ dữ liệu từ hệ thống chính." />
+    <meta name="description" content="Tool phân tích bóng đá KQ247 dành cho khách đã có mã kích hoạt: lịch trận, dữ liệu phân tích và 1 kèo tham khảo sáng nhất mỗi trận trên điện thoại." />
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
     <link rel="canonical" href="https://kq247-football-live.onrender.com/client.html" />
-    <meta property="og:title" content="KQ247 Bóng đá • Bản khách | Kết quả & phân tích hôm nay" />
-    <meta property="og:description" content="Bản khách KQ247 bóng đá: xem lịch, kết quả và phân tích trận đấu hôm nay trên giao diện mobile, đồng bộ dữ liệu từ hệ thống chính." />
+    <meta property="og:title" content="Tool phân tích bóng đá KQ247 • Bản khách" />
+    <meta property="og:description" content="Bản khách Tool bóng đá KQ247: lịch trận, dữ liệu phân tích, giao diện mobile và kích hoạt bằng mã khách hàng." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://kq247-football-live.onrender.com/client.html" />
-    <script type="application/ld+json" data-kq247-seo="1">{"@context":"https://schema.org","@type":"WebPage","name":"KQ247 Bóng đá • Bản khách | Kết quả & phân tích hôm nay","description":"Bản khách KQ247 bóng đá: xem lịch, kết quả và phân tích trận đấu hôm nay trên giao diện mobile, đồng bộ dữ liệu từ hệ thống chính.","url":"https://kq247-football-live.onrender.com/client.html","inLanguage":"vi-VN"}</script>
+    <script type="application/ld+json" data-kq247-seo="1">{"@context":"https://schema.org","@type":"WebPage","name":"Tool phân tích bóng đá KQ247 • Bản khách","description":"Bản khách Tool bóng đá KQ247 dành cho người dùng có mã kích hoạt, hỗ trợ xem lịch trận và dữ liệu phân tích trên web mobile.","url":"https://kq247-football-live.onrender.com/client.html","inLanguage":"vi-VN"}</script>
 
 <script data-kq247-growth-analytics="1">
 (() => {
@@ -406,11 +406,19 @@
       }).catch(() => {});
     } catch {}
   }
+  window.kq247GrowthCapture = kq247Capture;
   kq247Capture('$pageview');
   document.addEventListener('click', event => {
     const a = event.target && event.target.closest ? event.target.closest('a[href]') : null;
     if (!a) return;
     const href = String(a.href || '');
+    if (href.includes('t.me/muatool_du_doan_bot')) {
+      kq247Capture('sales bot clicked', {
+        sales_bot: 'muatool_du_doan_bot',
+        link_text: String(a.textContent || '').trim().slice(0, 120)
+      });
+      return;
+    }
     let telegram_group = '';
     if (href.includes('t.me/keochuyengia79')) telegram_group = 'keochuyengia79';
     if (href.includes('t.me/xsbm999')) telegram_group = 'xsbm999';
@@ -444,7 +452,7 @@
         "
       ></div>
       <div class="hero">
-        <h1>⚽ KQ247 Bóng đá • BẢN KHÁCH</h1>
+        <h1>⚽ Tool phân tích bóng đá KQ247 • BẢN KHÁCH</h1>
         <div class="muted">
           1 KÈO SÁNG NHẤT/TRẬN • snapshot đã khóa • tự học hiệu suất • không quét lại trên
           điện thoại
@@ -532,13 +540,13 @@
         </div>
         <div class="buy">
           Mua tool tại:
-          <a href="https://t.me/muatool_du_doan_bot">@muatool_du_doan_bot</a>
+          <a href="https://t.me/muatool_du_doan_bot">Mua Tool KQ247 tại @muatool_du_doan_bot</a>
         </div>
       </div>
     </div>
     <div id="gate" class="gate">
       <div class="panel">
-        <h2 style="margin-top: 0">Kích hoạt Bóng đá</h2>
+        <h2 style="margin-top: 0">Kích hoạt Tool bóng đá KQ247</h2>
         <div class="muted">
           Mỗi mã chỉ dùng trên thiết bị đã kích hoạt. Mã Free 10 ngày chỉ dùng
           một lần/thiết bị.
@@ -565,7 +573,7 @@
           </div>
           <div class="buy">
             Mua tool tại:
-            <a href="https://t.me/muatool_du_doan_bot">@muatool_du_doan_bot</a>
+            <a href="https://t.me/muatool_du_doan_bot">Mua Tool KQ247 tại @muatool_du_doan_bot</a>
           </div>
         </div>
       </div>
@@ -730,6 +738,7 @@
       function copyBuy() {
         cp(BUY);
         $('msg').textContent = 'Đã copy link mua tool.';
+        try { window.kq247GrowthCapture?.('sales bot copied', { sales_bot: 'muatool_du_doan_bot' }); } catch {}
       }
       function methods(x) {
         return (x.learning_methods || []).join(', ') || 'R55 xG';
