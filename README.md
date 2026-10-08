@@ -1,20 +1,10 @@
-# KQ247
+# KQ247 • Bản khách
 
-KQ247 là bộ công cụ tra cứu và phân tích thông tin xổ số, bóng đá và Vietlott dành cho người dùng Việt Nam.
+Các đường dẫn công khai dành cho khách sử dụng và mua tool:
 
-## Liên kết chính
+- Bản khách bóng đá: https://kq247-football-live.onrender.com/client.html
+- Bản khách xổ số: https://kq247-xoso-khach-v29.onrender.com/?region=xsmb
+- Bản khách Vietlott 6/45 & 6/55: https://snapdeploy-vietlott-bridge-df5xvz.v2.appdeploy.ai/client.html
+- Bot mua tool KQ247: https://t.me/muatool_du_doan_bot
 
-- Kết quả xổ số 3 miền: https://www.kq247.com/
-- XSMB: https://www.kq247.com/ket-qua-xo-so/mien-bac
-- XSMT: https://www.kq247.com/ket-qua-xo-so/mien-trung
-- XSMN: https://www.kq247.com/ket-qua-xo-so/mien-nam
-- Công cụ bóng đá KQ247: https://kq247-football-live.onrender.com/
-- Bản khách xổ số KQ247: https://kq247-xoso-khach-v29.onrender.com/
-- Vietlott 6/45 và 6/55: https://vietlott-r32-runner-free.onrender.com/
-
-## Cộng đồng cập nhật
-
-- Nhóm cập nhật bóng đá KQ247: https://t.me/keochuyengia79
-- Nhóm cập nhật xổ số KQ247: https://t.me/xsbm999
-
-Các nội dung phân tích và dự đoán chỉ mang tính tham khảo, học hỏi.
+Nội dung phân tích/dự đoán chỉ mang tính tham khảo, học hỏi.
