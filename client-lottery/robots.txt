@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kq247-xoso-khach-v29.onrender.com/sitemap.xml
