@@ -620,13 +620,13 @@
         };
       }
       async function post(action, body) {
-        const r = await fetch(API + '?action=' + action, {
+        try { const r = await fetch(API + '?action=' + action, {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify(body),
           cache: 'no-store',
         });
-        return [r, await r.json()];
+        return [r, await r.json().catch(() => ({ok:false,error:'service_unavailable'}))]; } catch { return [{ok:false,status:503},{ok:false,error:'service_unavailable'}]; }
       }
       function reason(r) {
         return (
@@ -675,9 +675,7 @@
           unlock(j);
           loadFeatured();
         } else {
-          localStorage.removeItem('kq247_football_code');
-          localStorage.removeItem('kq247_football_session');
-          $('msg').textContent = reason(j.reason || j.error);
+          $('msg').textContent = (j.error === 'service_unavailable' || r.status >= 500 || r.status === 402 || r.status === 429) ? 'API đang gián đoạn. Đã giữ nguyên mã, thiết bị và hạn dùng; vui lòng thử lại sau.' : reason(j.reason || j.error);
         }
       }
       function unlock(j) {
