@@ -648,6 +648,7 @@
             expired: 'Mã đã hết hạn',
             device_mismatch: 'Mã đã khóa ở thiết bị khác',
             device_has_active_license: 'Thiết bị đang có mã khác còn hạn. Hãy dùng mã cũ hoặc mở bot bên dưới để lấy lại mã đã cấp.',
+            fingerprint_matches_other_device: 'Thông số nhận diện trình duyệt trùng với thiết bị đã có mã còn hạn. Mã này chưa bị kích hoạt. Không cần mua hoặc cấp mã mới; hãy gửi ảnh lỗi cho quản trị viên để kiểm tra.',
             trial_already_used: 'Thiết bị đã dùng Free 10 ngày',
             service_unavailable: 'Không kết nối được hệ thống mã. Mã cũ vẫn được giữ, vui lòng thử lại.',
           }[r] ||
@@ -673,6 +674,9 @@
           localStorage.setItem('kq247_football_session', j.session_token || '');
           unlock(j);
           loadFeatured();
+        } else if (j.reason === 'fingerprint_matches_other_device') {
+          $('msg').textContent = reason(j.reason);
+          $('existingLicenseHelp').style.display = 'none';
         } else if (j.reason === 'device_has_active_license') {
           const prior = localStorage.getItem('kq247_football_code');
           if (prior && prior !== ch && await check()) return;
