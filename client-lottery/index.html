@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
 <meta name="theme-color" content="#0962c6">
 <title>Tool Xổ Số KQ247 • Bản khách XSMB XSMT XSMN</title>
 <style>
@@ -217,30 +218,38 @@ function exportLinkMigration(){
 }
 async function ensureLatestLink(){
   importLinkMigration();
-  // Always use a public Neon fallback, even if the latest-link API is unavailable.
-  // Never change saved license codes, bound devices, or expiry timestamps.
-  let next=MAIN+"?client=1&region=xsmb";
+  // Same-origin Neon-authenticated customer portal: no login or license resets.
+  // Preserves existing localStorage device ID, activation code hash and expiry.
+  const current=new URL(location.href);
+  let next=new URL(current.origin+current.pathname);
+  next.searchParams.set("neon","1");
+  next.searchParams.set("client","1");
+  next.searchParams.set("region","xsmb");
   try{
+    const ctrl=new AbortController();
+    // A best-effort discovery call; the local destination works without it.
     const r=await fetch(API+"?action=latest-link&product="+PRODUCT,{
-      cache:"no-store",
-      signal:AbortSignal.timeout(2300)
+      cache:"no-store",signal:AbortSignal.timeout(2000)
     });
     const j=await r.json();
     if(r.ok&&j.ok&&j.latest_url){
       const candidate=new URL(String(j.latest_url));
-      // Only trusted public KQ247 Neon viewer destinations are allowed.
-      if(candidate.protocol==="https:"&&candidate.hostname===new URL(MAIN).hostname)next=candidate.href;
+      if(candidate.protocol==="https:"&&candidate.origin===current.origin&&
+         candidate.searchParams.get("neon")==="1")next=candidate;
     }
   }catch{}
-  const latest=new URL(next),cur=new URL(location.href);
   for(const k of ["region","station","date","target"]){
-    const v=cur.searchParams.get(k);
-    if(v)latest.searchParams.set(k,v);
+    const v=current.searchParams.get(k);
+    if(v)next.searchParams.set(k,v);
   }
-  latest.searchParams.set("client","1");
-  latest.hash="";cur.hash="";
-  if(latest.origin!==cur.origin||latest.pathname!==cur.pathname||latest.search!==cur.search){
-    location.replace(latest.href+"#kq247="+exportLinkMigration());
+  next.searchParams.set("neon","1");
+  next.searchParams.set("client","1");
+  next.hash="";current.hash="";
+  // Query param order isn't semantically relevant.
+  const normalized=url=>[...url.searchParams.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(([k,v])=>k+"="+v).join("&");
+  if(next.origin!==current.origin||next.pathname!==current.pathname||normalized(next)!==normalized(current)){
+    // Same origin: never copy license or device identifiers into a URL.
+    location.replace(next.href);
     return false;
   }
   return true;
