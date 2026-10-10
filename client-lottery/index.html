@@ -217,21 +217,32 @@ function exportLinkMigration(){
 }
 async function ensureLatestLink(){
   importLinkMigration();
+  // Always use a public Neon fallback, even if the latest-link API is unavailable.
+  // Never change saved license codes, bound devices, or expiry timestamps.
+  let next=MAIN+"?client=1&region=xsmb";
   try{
-    const r=await fetch(API+"?action=latest-link&product="+PRODUCT,{cache:"no-store",...(typeof AbortSignal!=="undefined"&&typeof AbortSignal.timeout==="function"?{signal:AbortSignal.timeout(3000)}:{})});
+    const r=await fetch(API+"?action=latest-link&product="+PRODUCT,{
+      cache:"no-store",
+      signal:AbortSignal.timeout(2300)
+    });
     const j=await r.json();
-    if(!r.ok||!j.ok||!j.latest_url)return true;
-    const latest=new URL(String(j.latest_url),location.href),cur=new URL(location.href);
-    for(const k of ["region","station","date","target"]){
-      const v=cur.searchParams.get(k);
-      if(v)latest.searchParams.set(k,v);
-    }
-    latest.hash="";cur.hash="";
-    if(latest.href!==cur.href){
-      location.replace(latest.href+"#kq247="+exportLinkMigration());
-      return false;
+    if(r.ok&&j.ok&&j.latest_url){
+      const candidate=new URL(String(j.latest_url));
+      // Only trusted public KQ247 Neon viewer destinations are allowed.
+      if(candidate.protocol==="https:"&&candidate.hostname===new URL(MAIN).hostname)next=candidate.href;
     }
   }catch{}
+  const latest=new URL(next),cur=new URL(location.href);
+  for(const k of ["region","station","date","target"]){
+    const v=cur.searchParams.get(k);
+    if(v)latest.searchParams.set(k,v);
+  }
+  latest.searchParams.set("client","1");
+  latest.hash="";cur.hash="";
+  if(latest.origin!==cur.origin||latest.pathname!==cur.pathname||latest.search!==cur.search){
+    location.replace(latest.href+"#kq247="+exportLinkMigration());
+    return false;
+  }
   return true;
 }
 (async()=>{
