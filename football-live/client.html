@@ -895,8 +895,6 @@
           formatPick(x, market) +
           ' • Tỷ lệ ăn: ' +
           (p?.price ?? '-') +
-          '\nTin cậy: ' +
-          (x.confidence_score ?? '-') +
           '\n' +
           bookText(x) +
           '\nPP: ' +
@@ -1029,9 +1027,7 @@
                 esc(x.home || '') +
                 ' - ' +
                 esc(x.away || '') +
-                '</h3><div><span class="badge">Tin cậy ' +
-                esc(x.confidence_score ?? '-') +
-                '</span> <span class="badge ' +
+                '</h3><div><span class="badge ' +
                 (x.trusted_pick ? 'good' : '') +
                 '">' +
                 (x.trusted_pick ? '✅ Kèo đủ dữ liệu' : '⚠️ Dữ liệu mỏng') +
@@ -1070,13 +1066,14 @@
         const j = await r.json().catch(() => ({}));
         if (!r.ok || !j.ok) throw Error(j.error || 'Không tải được snapshot bóng đá');
         if (j.found && !j.locked) throw Error('Snapshot chưa khóa, chưa thể hiển thị');
-        return { ...j, data: j };
+        const verified = cleanSnapshot(j);
+        return { ...verified, data: verified };
       }
       async function copyMode(n, mode, label) {
         try {
           const j = await fetchMode(n, mode),
             v = j.data || {},
-            a = [...(v.predictions || [])].sort(
+            a = [...(j.found ? (v.predictions || []).filter(upcoming) : [])].sort(
               (a, b) => Number(a.ts || 0) - Number(b.ts || 0)
             );
           await cp(a.map(txt).join('\n\n'));
