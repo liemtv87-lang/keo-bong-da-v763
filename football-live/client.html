@@ -558,7 +558,8 @@
             COPY LINK MUA TOOL
           </button>
         </div>
-        <p id="msg" class="muted"></p>
+        <p id="msg" class="muted" role="status" aria-live="polite"></p>
+        <p id="existingLicenseHelp" style="display:none"><a href="https://t.me/muatool_du_doan_bot?start=from_football_client" target="_blank" rel="noopener noreferrer">LẤY LẠI MÃ BÓNG ĐÁ CŨ CÒN HẠN</a></p>
         <div class="promo">
           <div>* Tool bóng đá + xổ số</div>
           <div>
@@ -646,7 +647,7 @@
             invalid_code: 'Mã không hợp lệ',
             expired: 'Mã đã hết hạn',
             device_mismatch: 'Mã đã khóa ở thiết bị khác',
-            device_has_active_license: 'Thiết bị đang có mã khác còn hạn',
+            device_has_active_license: 'Thiết bị đang có mã khác còn hạn. Hãy dùng mã cũ hoặc mở bot bên dưới để lấy lại mã đã cấp.',
             trial_already_used: 'Thiết bị đã dùng Free 10 ngày',
             service_unavailable: 'Không kết nối được hệ thống mã. Mã cũ vẫn được giữ, vui lòng thử lại.',
           }[r] ||
@@ -672,6 +673,11 @@
           localStorage.setItem('kq247_football_session', j.session_token || '');
           unlock(j);
           loadFeatured();
+        } else if (j.reason === 'device_has_active_license') {
+          const prior = localStorage.getItem('kq247_football_code');
+          if (prior && prior !== ch && await check()) return;
+          $('msg').textContent = reason(j.reason);
+          $('existingLicenseHelp').style.display = 'block';
         } else $('msg').textContent = reason(j.reason || j.error);
       }
       async function check() {
@@ -687,9 +693,11 @@
           localStorage.setItem('kq247_football_session', j.session_token || '');
           unlock(j);
           loadFeatured();
+          return true;
         } else {
           $('msg').textContent = (j.error === 'service_unavailable' || r.status >= 500 || r.status === 402 || r.status === 429) ? 'API đang gián đoạn. Đã giữ nguyên mã, thiết bị và hạn dùng; vui lòng thử lại sau.' : reason(j.reason || j.error);
         }
+        return false;
       }
       function unlock(j) {
         $('gate').classList.add('hidden');
