@@ -581,6 +581,7 @@
     <script>
       const API =
           'https://br-divine-resonance-az0qxt8z-kq247auth.compute.c-3.ap-southeast-1.aws.neon.tech/',
+        PICKS_API = 'https://br-divine-resonance-az0qxt8z-kq247bdapi.compute.c-3.ap-southeast-1.aws.neon.tech/?action=football-predictions',
         PRODUCT = 'football',
         BUY = 'https://t.me/muatool_du_doan_bot?start=from_football_client';
       let current = 5000,
@@ -993,24 +994,19 @@
           '<div class="muted" style="padding:12px 0">Không có trận phù hợp.</div>';
       }
       async function fetchMode(n, mode) {
-        const session = localStorage.getItem('kq247_football_session') || '';
+        // Authentication stays on the Neon customer API. The locked predictions
+        // are read from the same public Neon snapshot endpoint as the main site.
         const r = await fetch(
-          API +
-            '?action=football-predictions&mode=' +
-            encodeURIComponent(mode) +
-            '&limit=' +
-            n +
-            '&from_ts=' +
-            Date.now(),
-          { headers: { authorization: 'Bearer ' + session }, cache: 'no-store' }
+          PICKS_API +
+            '&mode=' + encodeURIComponent(mode) +
+            '&limit=' + encodeURIComponent(n) +
+            '&from_ts=0',
+          { cache: 'no-store', signal: AbortSignal.timeout(15000) }
         );
-        const j = await r.json();
-        if (r.status === 401) {
-          $('gate').classList.remove('hidden');
-          throw Error('Phiên hết hạn, vui lòng kiểm tra mã.');
-        }
-        if (!r.ok || !j.ok) throw Error(j.error || 'API lỗi');
-        return j;
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok || !j.ok) throw Error(j.error || 'Không tải được snapshot bóng đá');
+        if (j.found && !j.locked) throw Error('Snapshot chưa khóa, chưa thể hiển thị');
+        return { ...j, data: j };
       }
       async function copyMode(n, mode, label) {
         try {
