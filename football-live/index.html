@@ -756,7 +756,7 @@
                 '</span> <span class="badge ' +
                 (x.trusted_pick ? 'good' : '') +
                 '">' +
-                ((x.ah_release === true || x.ou_release === true) ? '✅ Có kèo đạt chuẩn' : '⛔ Bỏ kèo') +
+                ((x.ah_release === true || x.ou_release === true) ? '✅ 1 kèo tham khảo' : '⛔ Bỏ kèo') +
                 '</span> <span class="badge">' +
                 esc(bookText(x)) +
                 '</span></div><div class="picks"><div class="pick"><b>KÈO SÁNG NHẤT • ' +
@@ -786,8 +786,20 @@
         const j=await r.json();
         if(!r.ok||!j.ok)throw Error(j.error||'API không thể tải snapshot');
         if(mode==='top'){
-          const priority=x=>/(premier league|la liga|serie a|bundesliga|ligue 1|champions league|europa league|libertadores|j1 league|j-league)/i.test(String(x?.league||''))?100:x?.top===true?90:0;
+          const avoid=/\b(?:nb iii|iii liga|third division|4th division|division 3|division 4|div 3|3\.liga|4\.liga|liga 3|liga 4|tercera|youth|u19|u20|u21|u23|reserves|reserve|revelacao|rfe[f]?|division b|kakkonen|national league north|national league south)\b/i;
+          const priority=x=>{
+            const l=String(x?.league||'').toLowerCase();
+            if(/uefa champions league|uefa europa league|copa libertadores/.test(l))return 250;
+            if(/english premier league|england premier league/.test(l))return 240;
+            if(/spanish la liga|^la liga$|italian serie a|^serie a$|^german bundesliga$|french ligue 1/.test(l))return 230;
+            if(/japan j1 league|j-league|j1 league/.test(l))return 210;
+            if(/turkey super lig|eredivisie|primeira liga|belgian pro league/.test(l))return 180;
+            if(/ukrainian premier league|russia premier league|belarusian premier league|kazakhstan premier league|thai league 1|v\.league 1/.test(l))return 130;
+            if(/bundesliga 2|championship|liga portugal 2|first league|league 1/.test(l))return 75;
+            return 30;
+          };
           j.predictions=[...(j.predictions||[])]
+            .filter(x=>!avoid.test(String(x?.league||'')))
             .sort((a,b)=>priority(b)-priority(a)||Number(b.confidence_score||0)-Number(a.confidence_score||0)||Number(a.ts||0)-Number(b.ts||0)).slice(0,n);
         }
         return j;
@@ -832,7 +844,7 @@
         }
       }
       function loadFeatured(n) {
-        return load(n, 'featured');
+        return load(Math.min(n,20), 'top');
       }
       function refreshCurrent() {
         return load(current, currentMode);
