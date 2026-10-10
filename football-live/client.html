@@ -831,7 +831,7 @@
           const side = String(p.pick).trim().toUpperCase();
           const team = ['CHỦ','HOME','1'].includes(side) ? String(x.home || '') :
             ['KHÁCH','AWAY','2'].includes(side) ? String(x.away || '') : String(p.pick);
-          return team + ' ' + (Number.isFinite(n) && n > 0 ? '+' : '') + line;
+          return team + ' ' + (Number.isFinite(n) && n >= 0 ? '+' : '') + line;
         }
         return String(p.pick).trim().toUpperCase() + (line ? ' ' + line : '');
       }
