@@ -583,15 +583,33 @@
       function copyMatch(i) {
         cp(pickTxt(ALL[i]));
       }
+
+      // KQ247_CURRENT_WINDOW_V2: 12:05 VN rollover; old kickoff stays in audit, never sold as a live prediction.
+      function operationalDay() {
+        return new Date(Date.now() + 7 * 3600000 - (12 * 60 + 5) * 60000).toISOString().slice(0, 10);
+      }
+      function upcoming(x) {
+        return Number.isFinite(Number(x?.ts)) && Number(x.ts) > Date.now();
+      }
+      function cleanSnapshot(j) {
+        const snapDay = String(j.date || '');
+        const all = Array.isArray(j.predictions) ? j.predictions : [];
+        if (snapDay !== operationalDay()) {
+          return {...j, found:false, predictions:[], total:0, stale:true, error:'snapshot_expired', snapshot_total:all.length};
+        }
+        const fresh=all.filter(upcoming);
+        return {...j, predictions:fresh, total:fresh.length, snapshot_total:all.length, hidden_past:all.length-fresh.length};
+      }
       function visible() {
         const s = ($('q').value || '').toLowerCase().trim();
+        const relevant = META?.date === operationalDay() ? ALL.filter(upcoming) : [];
         const a = s
-          ? ALL.filter(x =>
+          ? relevant.filter(x =>
               ((x.home || '') + ' ' + (x.away || '') + ' ' + comp(x))
                 .toLowerCase()
                 .includes(s)
             )
-          : ALL;
+          : relevant;
         return [...a].sort((a, b) => Number(a.ts || 0) - Number(b.ts || 0));
       }
       function toggleCollapse() {
@@ -785,6 +803,7 @@
           {cache:'no-store',signal:AbortSignal.timeout(18000)});
         const j=await r.json();
         if(!r.ok||!j.ok)throw Error(j.error||'API không thể tải snapshot');
+        Object.assign(j, cleanSnapshot(j));
         if(mode==='top'){
           const avoid=/\b(?:nb iii|iii liga|third division|4th division|division 3|division 4|div 3|3\.liga|4\.liga|liga 3|liga 4|tercera|youth|u19|u20|u21|u23|reserves|reserve|revelacao|rfe[f]?|division b|kakkonen|national league north|national league south)\b/i;
           const priority=x=>{
@@ -824,7 +843,7 @@
         try {
           const j = await fetchMode(n, mode);
           META = j;
-          ALL = [...(j.predictions || [])].sort(
+          ALL = [...(j.predictions || [])].filter(upcoming).sort(
             (a, b) => Number(a.ts || 0) - Number(b.ts || 0)
           );
           $('runStatus').textContent =
@@ -832,7 +851,7 @@
             (mode === 'featured' ? 'TRẬN LỚN • ' : '') +
             'Đã tải ' +
             ALL.length +
-            ' trận • kỳ ' + (j.date || '-') + (j.stale ? ' • CẢNH BÁO: SNAP CŨ' : '') + ' • cập nhật ' +
+            ' trận sắp diễn ra • ẩn ' + Number(j.hidden_past || 0) + ' trận quá giờ • kỳ ' + (j.date || '-') + (j.stale ? ' • CẢNH BÁO: SNAP CŨ' : '') + ' • cập nhật ' +
             (j.updated_at && Number.isFinite(new Date(j.updated_at).getTime())
               ? new Date(j.updated_at).toLocaleString('vi-VN')
               : 'chưa có');
