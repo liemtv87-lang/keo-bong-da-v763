@@ -155,7 +155,7 @@
       .fixture h3 {
         font-size: 17px;
         margin: 5px 0 8px;
-        color: #dc2626 !important;
+        color: #ff172b !important;
         font-weight: 950 !important;
         line-height: 1.35;
       }
@@ -195,8 +195,8 @@
       }
       .market-line {
         display: block;
-        color: #0757d5 !important;
-        font-size: 16px;
+        color: #ff172b !important;
+        font-size: 17px;
         font-weight: 950 !important;
         line-height: 1.35;
         margin: 2px 0 10px;
@@ -343,8 +343,8 @@
         <div class="row" style="margin-top: 8px">
           <button onclick="loadFeatured(5000)">
             🔥 LẤY TRẬN LỚN NHẤT TRONG NGÀY</button
-          ><button onclick="load(20)">LẤY 20 TRẬN</button
-          ><button onclick="load(30)">LẤY 30 TRẬN</button
+          ><button onclick="load(20, 'top')">LẤY 20 TRẬN</button
+          ><button onclick="load(30, 'top')">LẤY 30 TRẬN</button
           ><button onclick="load(100000)">LẤY TẤT CẢ TRẬN</button
           ><button class="green" onclick="refreshCurrent()">CẬP NHẬT</button
           ><button class="secondary" onclick="toggleCollapse()">
@@ -352,9 +352,9 @@
           </button>
         </div>
         <div class="row" style="margin-top: 8px">
-          <button class="copy" onclick="copyMode(20, 'all', '20 TRẬN')">
+          <button class="copy" onclick="copyMode(20, 'top', '20 TRẬN')">
             COPY TOÀN BỘ 20 TRẬN</button
-          ><button class="copy" onclick="copyMode(30, 'all', '30 TRẬN')">
+          ><button class="copy" onclick="copyMode(30, 'top', '30 TRẬN')">
             COPY TOÀN BỘ 30 TRẬN</button
           ><button
             class="copy"
@@ -430,7 +430,7 @@
     </div>
     <script>
       const API =
-          'https://wbegdefpdwctolawluzo.supabase.co/functions/v1/main-football?data=1',
+          'https://br-divine-resonance-az0qxt8z-kq247bdapi.compute.c-3.ap-southeast-1.aws.neon.tech/?action=football-predictions',
         TZ = 'Asia/Ho_Chi_Minh';
       let ALL = [],
         current = 5000,
@@ -543,38 +543,30 @@
           return 'UEFA Nations League • ' + l;
         return l || '-';
       }
+      function formatPick(x,market) {
+        const p=market==='AH'?x.ah:x.ou;
+        if(!p||!p.pick)return '-';
+        const n=Number(p.line);
+        const line=Number.isFinite(n)?String(n):String(p.line??'').trim();
+        if(market==='AH'){
+          const v=String(p.pick).trim().toUpperCase();
+          const team=['CHỦ','HOME','1'].includes(v)?String(x.home||''):
+            ['KHÁCH','AWAY','2'].includes(v)?String(x.away||''):String(p.pick);
+          return team+' '+(Number.isFinite(n)&&n>0?'+':'')+line;
+        }
+        return String(p.pick).trim().toUpperCase()+(line?' '+line:'');
+      }
       function pickTxt(x) {
-        const market = bestMarket(x);
-        const p = market === 'AH' ? x.ah : x.ou;
-        const label = market === 'AH' ? 'AH' : 'T/X';
-        return (
-          '⚽ ' +
-          (x.home || '') +
-          ' - ' +
-          (x.away || '') +
-          '\n' +
-          comp(x) +
-          ' • ' +
-          timeVN(x.ts) +
-          '\nKÈO SÁNG NHẤT: ' +
-          label +
-          '\n' +
-          label +
-          ': ' +
-          (p?.pick || '-') +
-          ' ' +
-          (p?.line || '') +
-          '\nTỷ lệ ăn: ' +
-          (p?.price ?? '-') +
-          '\nTin cậy: ' +
-          (x.confidence_score ?? '-') +
-          '\n' +
-          bookText(x) +
-          '\nPP: ' +
-          methods(x) +
-          '\nNguồn: ' +
-          (x.provider || 'R55')
-        );
+        if(!x)return '';
+        const market=bestMarket(x),p=market==='AH'?x.ah:x.ou;
+        return '⚽ '+(x.home||'')+' - '+(x.away||'')+
+          '\n'+comp(x)+' • '+timeVN(x.ts)+
+          '\nKÈO SÁNG NHẤT: '+(market==='AH'?'KÈO CHẤP':'TÀI/XỈU')+
+          '\nCHỌN: '+formatPick(x,market)+
+          '\nTỷ lệ ăn: '+(p?.price??'-')+
+          '\nTin cậy tham khảo: '+(x.confidence_score??'-')+
+          '\n'+bookText(x)+'\nPP: '+methods(x)+
+          '\nNguồn: '+(x.provider||'R55');
       }
       async function cp(t) {
         try {
@@ -742,7 +734,7 @@
           a.length +
           '</b></div><div class="stat">Snapshot: <b>' +
           esc(META.model || '-') +
-          '</b></div><div class="stat">Tự học: <b class="learnon">BẬT</b></div>';
+          '</b></div><div class="stat">Thống kê: <b class="learnon">ĐANG THEO DÕI</b></div>';
         $('results').innerHTML =
           a
             .map(x => {
@@ -769,13 +761,8 @@
                 esc(bookText(x)) +
                 '</span></div><div class="picks"><div class="pick"><b>KÈO SÁNG NHẤT • ' +
                 marketLabel +
-                '</b><span class="market-line" style="color:#0757d5!important;font-weight:950!important">' +
-                esc(p?.pick || '-') +
-                (p?.line !== undefined &&
-                p?.line !== null &&
-                String(p.line) !== ''
-                  ? ' ' + esc(p.line)
-                  : '') +
+                '</b><span class="market-line" style="color:#ff172b!important;font-weight:950!important">' +
+                esc(formatPick(x,market)) +
                 '</span><div class="odds-line">Tỷ lệ ăn: <strong>' +
                 esc(p?.price ?? '-') +
                 '</strong></div></div></div><div class="small" style="margin-top:7px">Form: ' +
@@ -792,19 +779,17 @@
             .join('') ||
           '<div class="muted" style="padding:12px 0">Không có trận phù hợp.</div>';
       }
-      async function fetchMode(n, mode) {
-        const lim = n >= 100000 ? 5000 : n;
-        const r = await fetch(
-          API +
-            '&mode=' +
-            encodeURIComponent(mode) +
-            '&limit=' +
-            lim +
-            '&from_ts=0',
-          { cache: 'no-store' }
-        );
-        const j = await r.json();
-        if (!r.ok || !j.ok) throw Error(j.error || 'API lỗi');
+      async function fetchMode(n,mode) {
+        const lim=mode==='top'?5000:(n>=100000?5000:n);
+        const r=await fetch(API+'&mode='+encodeURIComponent(mode==='top'?'all':mode)+'&limit='+lim+'&from_ts=0',
+          {cache:'no-store',signal:AbortSignal.timeout(18000)});
+        const j=await r.json();
+        if(!r.ok||!j.ok)throw Error(j.error||'API không thể tải snapshot');
+        if(mode==='top'){
+          const priority=x=>/(premier league|la liga|serie a|bundesliga|ligue 1|champions league|europa league|libertadores|j1 league|j-league)/i.test(String(x?.league||''))?100:x?.top===true?90:0;
+          j.predictions=[...(j.predictions||[])]
+            .sort((a,b)=>priority(b)-priority(a)||Number(b.confidence_score||0)-Number(a.confidence_score||0)||Number(a.ts||0)-Number(b.ts||0)).slice(0,n);
+        }
         return j;
       }
       async function copyMode(n, mode, label) {
@@ -835,7 +820,7 @@
             (mode === 'featured' ? 'TRẬN LỚN • ' : '') +
             'Đã tải ' +
             ALL.length +
-            ' trận • cập nhật ' +
+            ' trận • kỳ ' + (j.date || '-') + (j.stale ? ' • CẢNH BÁO: SNAP CŨ' : '') + ' • cập nhật ' +
             (j.updated_at && Number.isFinite(new Date(j.updated_at).getTime())
               ? new Date(j.updated_at).toLocaleString('vi-VN')
               : 'chưa có');
