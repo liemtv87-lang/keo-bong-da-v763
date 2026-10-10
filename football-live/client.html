@@ -608,17 +608,20 @@
         }
         return v;
       }
+      // KQ247_BD_FP_UNIQUE_V2_20261011: browser characteristics alone are not a device ID.
+      // Include the persistent per-device ID to avoid collisions across identical phones.
+      // Keep device_hash unchanged so existing device bindings and expiry remain valid.
       async function ids() {
+        const deviceId = dev();
+        const traits = [
+          navigator.userAgent,
+          navigator.language,
+          screen.width + 'x' + screen.height,
+          Intl.DateTimeFormat().resolvedOptions().timeZone,
+        ].join('|');
         return {
-          device_hash: await sha(dev()),
-          fingerprint_hash: await sha(
-            [
-              navigator.userAgent,
-              navigator.language,
-              screen.width + 'x' + screen.height,
-              Intl.DateTimeFormat().resolvedOptions().timeZone,
-            ].join('|')
-          ),
+          device_hash: await sha(deviceId),
+          fingerprint_hash: await sha('kq247-bd-fingerprint-v2|' + deviceId + '|' + traits),
         };
       }
       async function post(action, body) {
