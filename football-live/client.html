@@ -553,7 +553,7 @@
         </div>
         <input id="code" placeholder="Nhập mã BD-..." autocomplete="off" />
         <div class="row">
-          <button class="btn" onclick="activate()">KÍCH HOẠT</button
+          <button class="btn" id="activateButton" onclick="activate()">KÍCH HOẠT</button
           ><button class="btn alt" onclick="copyBuy()">
             COPY LINK MUA TOOL
           </button>
@@ -656,33 +656,58 @@
           'Không kích hoạt được'
         );
       }
+      // KQ247_BD_GATE_RESILIENCE_20261011: keep the key and expiry unchanged on network/browser errors.
+      let ACTIVATION_IN_PROGRESS = false;
       async function activate() {
+        if (ACTIVATION_IN_PROGRESS) return;
         const raw = $('code').value.trim().toUpperCase();
         if (!raw) {
           $('msg').textContent = 'Nhập mã kích hoạt.';
           return;
         }
-        const h = await ids(),
-          ch = await sha(raw);
-        const [r, j] = await post('activate', {
-          product: PRODUCT,
-          code_hash: ch,
-          ...h,
-        });
-        if (j.ok) {
-          localStorage.setItem('kq247_football_code', ch);
-          localStorage.setItem('kq247_football_session', j.session_token || '');
-          unlock(j);
-          loadFeatured();
-        } else if (j.reason === 'fingerprint_matches_other_device') {
-          $('msg').textContent = reason(j.reason);
-          $('existingLicenseHelp').style.display = 'none';
-        } else if (j.reason === 'device_has_active_license') {
-          const prior = localStorage.getItem('kq247_football_code');
-          if (prior && prior !== ch && await check()) return;
-          $('msg').textContent = reason(j.reason);
-          $('existingLicenseHelp').style.display = 'block';
-        } else $('msg').textContent = reason(j.reason || j.error);
+        ACTIVATION_IN_PROGRESS = true;
+        const button = $('activateButton');
+        if (button) {
+          button.disabled = true;
+          button.textContent = 'ĐANG KIỂM TRA MÃ...';
+        }
+        $('msg').textContent = 'Đang xác minh mã bóng đá, vui lòng không bấm nhiều lần.';
+        $('existingLicenseHelp').style.display = 'none';
+        try {
+          const [h, ch] = await Promise.all([ids(), sha(raw)]);
+          const [r, j] = await post('activate', {
+            product: PRODUCT,
+            code_hash: ch,
+            ...h,
+          });
+          if (j.ok) {
+            localStorage.setItem('kq247_football_code', ch);
+            localStorage.setItem('kq247_football_session', j.session_token || '');
+            $('msg').textContent = '';
+            unlock(j);
+            loadFeatured();
+          } else if (j.reason === 'fingerprint_matches_other_device') {
+            $('msg').textContent = reason(j.reason);
+          } else if (j.reason === 'device_has_active_license') {
+            const prior = localStorage.getItem('kq247_football_code');
+            if (prior && prior !== ch && await check()) return;
+            $('msg').textContent = reason(j.reason);
+            $('existingLicenseHelp').style.display = 'block';
+          } else {
+            $('msg').textContent = reason(j.reason || j.error);
+          }
+        } catch (e) {
+          const msg = String(e && e.message || '');
+          $('msg').textContent = /storage|quota|security|access|permission|localStorage/i.test(msg)
+            ? 'Trình duyệt đang chặn lưu mã trên thiết bị. Hãy cho phép lưu dữ liệu trang web rồi thử lại; mã và hạn vẫn được giữ.'
+            : 'Lỗi kết nối hoặc trình duyệt khi kích hoạt. Mã vẫn được giữ trên máy chủ; vui lòng thử lại.';
+        } finally {
+          ACTIVATION_IN_PROGRESS = false;
+          if (button) {
+            button.disabled = false;
+            button.textContent = 'KÍCH HOẠT';
+          }
+        }
       }
       async function check() {
         const ch = localStorage.getItem('kq247_football_code');
@@ -1124,8 +1149,12 @@
         } catch {}
         return true;
       }
+      $('code').addEventListener('keydown', event => {
+        if (event.key === 'Enter') { event.preventDefault(); activate(); }
+      });
       (async () => {
-        if (await ensureLatestLink()) await check();
+        try { if (await ensureLatestLink()) await check(); }
+        catch (e) { $('msg').textContent = 'Không tải được trạng thái mã lúc này. Vui lòng nhập lại mã hoặc thử lại khi kết nối ổn định.'; }
       })();
     </script>
   
