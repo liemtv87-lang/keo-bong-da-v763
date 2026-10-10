@@ -822,6 +822,19 @@
                 : '')
           : 'Nhà cái tham chiếu: 0 • kèo mô hình';
       }
+      function formatPick(x, market) {
+        const p = market === 'AH' ? x.ah : x.ou;
+        if (!p || !p.pick) return '-';
+        const n = Number(p.line);
+        const line = Number.isFinite(n) ? String(n) : String(p.line ?? '').trim();
+        if (market === 'AH') {
+          const side = String(p.pick).trim().toUpperCase();
+          const team = ['CHỦ','HOME','1'].includes(side) ? String(x.home || '') :
+            ['KHÁCH','AWAY','2'].includes(side) ? String(x.away || '') : String(p.pick);
+          return team + ' ' + (Number.isFinite(n) && n > 0 ? '+' : '') + line;
+        }
+        return String(p.pick).trim().toUpperCase() + (line ? ' ' + line : '');
+      }
       function txt(x) {
         const market = bestMarket(x);
         const p = market === 'AH' ? x.ah : x.ou;
@@ -839,11 +852,9 @@
           '\n' +
           label +
           ': ' +
-          (p?.pick || '-') +
-          ' ' +
-          (p?.line || '') +
-          ' ' +
-          (p?.price || '') +
+          formatPick(x, market) +
+          ' • Tỷ lệ ăn: ' +
+          (p?.price ?? '-') +
           '\nTin cậy: ' +
           (x.confidence_score ?? '-') +
           '\n' +
@@ -956,7 +967,7 @@
                 esc(leagueLabel(x)) +
                 '</div><div class="kick">' +
                 time(x.ts) +
-                '</div><h3>' +
+                '</div><h3 style="color:#dc2626!important;font-weight:950!important">' +
                 esc(x.home || '') +
                 ' - ' +
                 esc(x.away || '') +
@@ -970,13 +981,8 @@
                 esc(bookText(x)) +
                 '</span></div><div class="picks"><div class="pick"><b>KÈO SÁNG NHẤT • ' +
                 marketLabel +
-                '</b><span class="market-line">' +
-                esc(p?.pick || '-') +
-                (p?.line !== undefined &&
-                p?.line !== null &&
-                String(p.line) !== ''
-                  ? ' ' + esc(p.line)
-                  : '') +
+                '</b><span class="market-line" style="color:#ff172b!important;font-weight:950!important">' +
+                esc(formatPick(x, market)) +
                 '</span><div class="odds-line">Tỷ lệ ăn: <strong>' +
                 esc(p?.price ?? '-') +
                 '</strong></div></div></div><div class="small" style="margin-top:7px">Form: ' +
