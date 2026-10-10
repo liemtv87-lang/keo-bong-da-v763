@@ -38,7 +38,7 @@ input{width:100%;padding:13px;border:1px solid #bacde5;border-radius:10px;font-s
 const API='https://br-divine-resonance-az0qxt8z-kq247auth.compute.c-3.ap-southeast-1.aws.neon.tech/';
 const qs=new URLSearchParams(location.search);
 const PRODUCT=qs.get('product')==='vietlott'?'vietlott':'lottery';
-const MAIN=PRODUCT==='vietlott'?'https://vietlott-r32-runner-free.onrender.com/?client=1':'https://br-divine-resonance-az0qxt8z-kq247full.compute.c-3.ap-southeast-1.aws.neon.tech/';
+const MAIN=PRODUCT==='vietlott'?'https://vietlott-r32-runner-free.onrender.com/?client=1':'https://br-divine-resonance-az0qxt8z-kq247site.compute.c-3.ap-southeast-1.aws.neon.tech/';
 const CODE_KEY=PRODUCT==='vietlott'?'kq247_vietlott_code':'kq247_lottery_code',DEVICE_KEY='kq247_dev',ACCESS_KEY=PRODUCT==='vietlott'?'kq247_vietlott_verified_v1':'kq247_lottery_verified_v1',TTL=8*60*60*1000;
 const el=id=>document.getElementById(id);
 const region=['xsmb','xsmt','xsmn'].includes(qs.get('region'))?qs.get('region'):'xsmb';
