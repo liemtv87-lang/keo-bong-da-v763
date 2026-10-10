@@ -868,7 +868,16 @@
       function refreshCurrent() {
         return load(current, currentMode);
       }
-      loadFeatured(5000);
+      // KQ247_R55_ALL_DEFAULT_SYNC_20261011: main and customer load all locked fixtures by default.
+      setInterval(() => {
+        if (document.visibilityState !== 'visible') return;
+        if (META?.date && META.date !== operationalDay()) refreshCurrent();
+        else render(); // Hide a kickoff automatically without rewriting its frozen record.
+      }, 60000);
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') refreshCurrent();
+      });
+      load(5000, 'all');
     </script>
 </body>
 </html>
