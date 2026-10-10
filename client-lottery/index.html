@@ -38,7 +38,7 @@ input{width:100%;padding:13px;border:1px solid #bacde5;border-radius:10px;font-s
 const API='https://br-divine-resonance-az0qxt8z-kq247auth.compute.c-3.ap-southeast-1.aws.neon.tech/';
 const qs=new URLSearchParams(location.search);
 const PRODUCT=qs.get('product')==='vietlott'?'vietlott':'lottery';
-const MAIN=PRODUCT==='vietlott'?'https://vietlott-auto-hoc.liemtv87.workers.dev/':'https://br-divine-resonance-az0qxt8z-kq247web.compute.c-3.ap-southeast-1.aws.neon.tech/';
+const MAIN=PRODUCT==='vietlott'?'https://vietlott-r32-runner-free.onrender.com/?client=1':'https://br-divine-resonance-az0qxt8z-kq247web.compute.c-3.ap-southeast-1.aws.neon.tech/';
 const CODE_KEY=PRODUCT==='vietlott'?'kq247_vietlott_code':'kq247_lottery_code',DEVICE_KEY='kq247_dev',ACCESS_KEY=PRODUCT==='vietlott'?'kq247_vietlott_verified_v1':'kq247_lottery_verified_v1',TTL=8*60*60*1000;
 const el=id=>document.getElementById(id);
 const region=['xsmb','xsmt','xsmn'].includes(qs.get('region'))?qs.get('region'):'xsmb';
@@ -46,7 +46,7 @@ if(PRODUCT==='vietlott'){document.title='KQ247 • Vietlott bản khách';docume
 const errors={invalid_code:'Mã không hợp lệ',expired:'Mã đã hết hạn',device_mismatch:'Mã đã khóa trên thiết bị khác',device_has_active_license:'Thiết bị đang dùng mã khác còn hạn',trial_already_used:'Thiết bị đã dùng thử 10 ngày',invalid_request:'Dữ liệu kích hoạt không hợp lệ'};
 async function sha(v){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));return Array.from(new Uint8Array(b),x=>x.toString(16).padStart(2,'0')).join('')}
 function device(){let d=localStorage.getItem(DEVICE_KEY);if(!d){d=crypto.randomUUID();localStorage.setItem(DEVICE_KEY,d)}return d}
-async function ids(){return{device_hash:await sha(device()),fingerprint_hash:await sha([navigator.userAgent,navigator.language,screen.width+'x'+screen.height,Intl.DateTimeFormat().resolvedOptions().timeZone].join('|'))}}
+async function ids(){const d=device(),traits=[navigator.userAgent,navigator.language,screen.width+'x'+screen.height,Intl.DateTimeFormat().resolvedOptions().timeZone].join('|');return{device_hash:await sha(d),fingerprint_hash:await sha('kq247-client-v2|'+d+'|'+traits)}}
 function where(){if(PRODUCT==='vietlott')return MAIN;const u=new URL(MAIN);for(const k of ['region','station','date','target'])if(qs.get(k))u.searchParams.set(k,qs.get(k));if(!u.searchParams.get('region'))u.searchParams.set('region',region);return u.toString()}
 function show(access){
   const exp=new Date(access.expires_at||access.session_expires_at);
