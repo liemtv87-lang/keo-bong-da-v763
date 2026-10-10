@@ -36,15 +36,18 @@ input{width:100%;padding:13px;border:1px solid #bacde5;border-radius:10px;font-s
 <script>
 'use strict';
 const API='https://br-divine-resonance-az0qxt8z-kq247auth.compute.c-3.ap-southeast-1.aws.neon.tech/';
-const MAIN='https://br-divine-resonance-az0qxt8z-kq247web.compute.c-3.ap-southeast-1.aws.neon.tech/';
-const CODE_KEY='kq247_lottery_code',DEVICE_KEY='kq247_dev',ACCESS_KEY='kq247_lottery_verified_v1',TTL=8*60*60*1000;
+const qs=new URLSearchParams(location.search);
+const PRODUCT=qs.get('product')==='vietlott'?'vietlott':'lottery';
+const MAIN=PRODUCT==='vietlott'?'https://vietlott-auto-hoc.liemtv87.workers.dev/':'https://br-divine-resonance-az0qxt8z-kq247web.compute.c-3.ap-southeast-1.aws.neon.tech/';
+const CODE_KEY=PRODUCT==='vietlott'?'kq247_vietlott_code':'kq247_lottery_code',DEVICE_KEY='kq247_dev',ACCESS_KEY=PRODUCT==='vietlott'?'kq247_vietlott_verified_v1':'kq247_lottery_verified_v1',TTL=8*60*60*1000;
 const el=id=>document.getElementById(id);
-const qs=new URLSearchParams(location.search),region=['xsmb','xsmt','xsmn'].includes(qs.get('region'))?qs.get('region'):'xsmb';
+const region=['xsmb','xsmt','xsmn'].includes(qs.get('region'))?qs.get('region'):'xsmb';
+if(PRODUCT==='vietlott'){document.title='KQ247 • Vietlott bản khách';document.querySelector('.brand').textContent='KQ247 • VIETLOTT KHÁCH NEON';document.querySelector('.panel h1').textContent='Tool Vietlott Mega 6/45 • Power 6/55';document.querySelector('.tabs').style.display='none';el('code').placeholder='Nhập mã Vietlott đã cấp';}
 const errors={invalid_code:'Mã không hợp lệ',expired:'Mã đã hết hạn',device_mismatch:'Mã đã khóa trên thiết bị khác',device_has_active_license:'Thiết bị đang dùng mã khác còn hạn',trial_already_used:'Thiết bị đã dùng thử 10 ngày',invalid_request:'Dữ liệu kích hoạt không hợp lệ'};
 async function sha(v){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));return Array.from(new Uint8Array(b),x=>x.toString(16).padStart(2,'0')).join('')}
 function device(){let d=localStorage.getItem(DEVICE_KEY);if(!d){d=crypto.randomUUID();localStorage.setItem(DEVICE_KEY,d)}return d}
 async function ids(){return{device_hash:await sha(device()),fingerprint_hash:await sha([navigator.userAgent,navigator.language,screen.width+'x'+screen.height,Intl.DateTimeFormat().resolvedOptions().timeZone].join('|'))}}
-function where(){const u=new URL(MAIN);for(const k of ['region','station','date','target'])if(qs.get(k))u.searchParams.set(k,qs.get(k));if(!u.searchParams.get('region'))u.searchParams.set('region',region);return u.toString()}
+function where(){if(PRODUCT==='vietlott')return MAIN;const u=new URL(MAIN);for(const k of ['region','station','date','target'])if(qs.get(k))u.searchParams.set(k,qs.get(k));if(!u.searchParams.get('region'))u.searchParams.set('region',region);return u.toString()}
 function show(access){
   const exp=new Date(access.expires_at||access.session_expires_at);
   if(!Number.isFinite(exp.getTime())||exp.getTime()<=Date.now()){el('msg').textContent='Mã đã hết hạn';return false}
@@ -66,14 +69,14 @@ async function call(action,body){
 async function activate(){
  const raw=el('code').value.trim().toUpperCase();if(!raw){el('msg').textContent='Nhập mã đã cấp.';return}
  el('msg').textContent='Đang xác thực...';
- const code_hash=await sha(raw),payload={product:'lottery',code_hash,...await ids()},v=await call('activate',payload);
+ const code_hash=await sha(raw),payload={product:PRODUCT,code_hash,...await ids()},v=await call('activate',payload);
  if(v.data.ok){localStorage.setItem(CODE_KEY,code_hash);localStorage.setItem('kq247_lottery_session',v.data.session_token||'');remember(v.data);show(v.data);el('msg').textContent=''}
  else el('msg').textContent=errors[v.data.reason||v.data.error]||v.data.error||'Chưa xác thực được';
 }
 async function check(){
  const hash=localStorage.getItem(CODE_KEY);if(!hash)return;
  const proof=cached();
- const v=await call('check',{product:'lottery',code_hash:hash,...await ids()});
+ const v=await call('check',{product:PRODUCT,code_hash:hash,...await ids()});
  if(v.data.ok){localStorage.setItem('kq247_lottery_session',v.data.session_token||'');remember(v.data);show(v.data);el('msg').textContent='';return}
  const temporary=v.status>=500||v.status===429||v.status===402||v.data.error==='service_unavailable';
  if(proof&&temporary)return;
