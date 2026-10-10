@@ -24,7 +24,7 @@ input{width:100%;padding:13px;border:1px solid #bacde5;border-radius:10px;font-s
 <div class="warn">Dự đoán chỉ mang tính tham khảo. Không đảm bảo kết quả.</div>
 <div class="bar"><div><div class="brand">KQ247 • BẢN KHÁCH NEON</div><div class="small">Mã và hạn sử dụng giữ nguyên</div></div>
 <div class="tabs"><button class="tab" data-region="xsmb">MB</button><button class="tab" data-region="xsmt">MT</button><button class="tab" data-region="xsmn">MN</button></div></div>
-<div id="expiry"></div><iframe id="frame" referrerpolicy="no-referrer"></iframe>
+<div id="expiry"></div><div id="latest" role="status" aria-live="polite" style="display:none;padding:12px;background:#fff;border-bottom:1px solid #cbd5e1"></div><iframe id="frame" referrerpolicy="no-referrer"></iframe>
 <div class="gate" id="gate"><div class="panel">
 <h1>Tool xổ số XSMB • XSMT • XSMN</h1>
 <div class="hint">Dùng mã đã cấp trước đây. Không cần mua mã mới. Mỗi mã được khóa với thiết bị kích hoạt ban đầu.</div>
@@ -38,7 +38,7 @@ input{width:100%;padding:13px;border:1px solid #bacde5;border-radius:10px;font-s
 const API='https://br-divine-resonance-az0qxt8z-kq247auth.compute.c-3.ap-southeast-1.aws.neon.tech/';
 const qs=new URLSearchParams(location.search);
 const PRODUCT=qs.get('product')==='vietlott'?'vietlott':'lottery';
-const MAIN=PRODUCT==='vietlott'?'https://vietlott-r32-runner-free.onrender.com/?client=1':'https://br-divine-resonance-az0qxt8z-kq247web.compute.c-3.ap-southeast-1.aws.neon.tech/';
+const MAIN=PRODUCT==='vietlott'?'https://vietlott-r32-runner-free.onrender.com/?client=1':'https://br-divine-resonance-az0qxt8z-kq247full.compute.c-3.ap-southeast-1.aws.neon.tech/';
 const CODE_KEY=PRODUCT==='vietlott'?'kq247_vietlott_code':'kq247_lottery_code',DEVICE_KEY='kq247_dev',ACCESS_KEY=PRODUCT==='vietlott'?'kq247_vietlott_verified_v1':'kq247_lottery_verified_v1',TTL=8*60*60*1000;
 const el=id=>document.getElementById(id);
 const region=['xsmb','xsmt','xsmn'].includes(qs.get('region'))?qs.get('region'):'xsmb';
@@ -54,7 +54,34 @@ function show(access){
   el('gate').classList.add('hidden');el('expiry').style.display='block';
   const left=exp.getTime()-Date.now();
   el('expiry').textContent='Còn '+(left<86400000?Math.ceil(left/3600000)+' giờ':Math.ceil(left/86400000)+' ngày')+' • Hết hạn '+exp.toLocaleString('vi-VN',{timeZone:'Asia/Ho_Chi_Minh'});
-  const frame=el('frame');if(frame.src!==where())frame.src=where();frame.style.display='block';return true;
+  const frame=el('frame');if(frame.src!==where())frame.src=where();frame.style.display='block';
+  if(PRODUCT==='lottery')renderLatest();
+  return true;
+}
+async function renderLatest(){
+ const target=el('latest');
+ if(PRODUCT!=='lottery'){target.style.display='none';return}
+ if(region!=='xsmb'){target.style.display='none';return}
+ target.style.display='block';target.textContent='Đang kiểm tra 3 lô XSMB đã khóa trên Neon...';
+ try{
+   const url=MAIN+'api/three?region=xsmb&_='+Date.now();
+   const res=await fetch(url,{cache:'no-store',signal:AbortSignal.timeout(12000)});
+   if(!res.ok)throw Error('HTTP '+res.status);
+   const d=await res.json();
+   if(!d.ok||!d.found||!d.locked||!Array.isArray(d.picks)||d.picks.length!==3)throw Error('Chưa có snapshot hợp lệ');
+   const title=document.createElement('div');
+   title.style.cssText='color:#b91c1c;font-size:14px;font-weight:900';
+   title.textContent='3 LÔ BẠCH THỦ XSMB - SNAPSHOT '+d.date+' (ĐÃ KHÓA)';
+   const nums=document.createElement('div');
+   nums.style.cssText='font-size:25px;font-weight:950;color:#0757d5;padding:8px 0';
+   nums.textContent=d.picks.join(' - ');
+   const src=document.createElement('div');
+   src.style.cssText='font-size:12px;color:#475569';
+   src.textContent='Nguồn: '+d.source_draws+' kỳ; cập nhật hết '+d.source_last_date+'. Dữ liệu V10 ở khung bên dưới là bản lưu riêng; không sử dụng bộ 3 lô cũ trong khung.';
+   target.replaceChildren(title,nums,src);
+ }catch(err){
+   target.textContent='Chưa kiểm tra được snapshot 3 lô mới. Không dùng số trong bản lưu cũ để thay thế. Nhấn tải lại trang để thử lại.';
+ }
 }
 function remember(r){const exp=Date.parse(r.expires_at||'');if(Number.isFinite(exp)&&exp>Date.now()){localStorage.setItem(ACCESS_KEY,JSON.stringify({code:localStorage.getItem(CODE_KEY),device:device(),exp,verified:Date.now()}))}}
 function cached(){
