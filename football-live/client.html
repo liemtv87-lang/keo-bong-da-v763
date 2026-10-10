@@ -580,7 +580,7 @@
     </div>
     <script>
       const API =
-          'https://wbegdefpdwctolawluzo.supabase.co/functions/v1/tool-customer-api',
+          'https://br-divine-resonance-az0qxt8z-kq247auth.compute.c-3.ap-southeast-1.aws.neon.tech/',
         PRODUCT = 'football',
         BUY = 'https://t.me/muatool_du_doan_bot?start=from_football_client';
       let current = 5000,
@@ -620,13 +620,24 @@
         };
       }
       async function post(action, body) {
-        try { const r = await fetch(API + '?action=' + action, {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify(body),
-          cache: 'no-store',
-        });
-        return [r, await r.json().catch(() => ({ok:false,error:'service_unavailable'}))]; } catch { return [{ok:false,status:503},{ok:false,error:'service_unavailable'}]; }
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 12000);
+        try {
+          const r = await fetch(API + '?action=' + encodeURIComponent(action), {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(body),
+            cache: 'no-store',
+            signal: controller.signal,
+          });
+          const j = await r.json().catch(() => ({ ok: false, error: 'service_unavailable' }));
+          if (!r.ok && !j.reason) j.error = 'service_unavailable';
+          return [r, j];
+        } catch {
+          return [{ ok: false, status: 503 }, { ok: false, error: 'service_unavailable' }];
+        } finally {
+          clearTimeout(timeout);
+        }
       }
       function reason(r) {
         return (
@@ -636,6 +647,7 @@
             device_mismatch: 'Mã đã khóa ở thiết bị khác',
             device_has_active_license: 'Thiết bị đang có mã khác còn hạn',
             trial_already_used: 'Thiết bị đã dùng Free 10 ngày',
+            service_unavailable: 'Không kết nối được hệ thống mã. Mã cũ vẫn được giữ, vui lòng thử lại.',
           }[r] ||
           r ||
           'Không kích hoạt được'
