@@ -688,7 +688,7 @@
             localStorage.setItem('kq247_football_session', j.session_token || '');
             $('msg').textContent = '';
             unlock(j);
-            loadFeatured();
+            load(5000, 'all');
           } else if (j.reason === 'fingerprint_matches_other_device') {
             $('msg').textContent = reason(j.reason);
           } else if (j.reason === 'device_has_active_license') {
@@ -724,7 +724,7 @@
         if (j.ok) {
           localStorage.setItem('kq247_football_session', j.session_token || '');
           unlock(j);
-          loadFeatured();
+          load(5000, 'all');
           return true;
         } else {
           $('msg').textContent = (j.error === 'service_unavailable' || r.status >= 500 || r.status === 402 || r.status === 429) ? 'API đang gián đoạn. Đã giữ nguyên mã, thiết bị và hạn dùng; vui lòng thử lại sau.' : reason(j.reason || j.error);
@@ -903,15 +903,33 @@
           methods(x)
         );
       }
+
+      // KQ247_CURRENT_WINDOW_V2: 12:05 VN rollover; old kickoff stays in audit, never sold as a live prediction.
+      function operationalDay() {
+        return new Date(Date.now() + 7 * 3600000 - (12 * 60 + 5) * 60000).toISOString().slice(0, 10);
+      }
+      function upcoming(x) {
+        return Number.isFinite(Number(x?.ts)) && Number(x.ts) > Date.now();
+      }
+      function cleanSnapshot(j) {
+        const snapDay = String(j.date || '');
+        const all = Array.isArray(j.predictions) ? j.predictions : [];
+        if (snapDay !== operationalDay()) {
+          return {...j, found:false, predictions:[], total:0, stale:true, error:'snapshot_expired', snapshot_total:all.length};
+        }
+        const fresh=all.filter(upcoming);
+        return {...j, predictions:fresh, total:fresh.length, snapshot_total:all.length, hidden_past:all.length-fresh.length};
+      }
       function visible() {
         const s = ($('q').value || '').toLowerCase().trim();
+        const relevant = META?.date === operationalDay() ? ALL.filter(upcoming) : [];
         const a = s
-          ? ALL.filter(x =>
+          ? relevant.filter(x =>
               ((x.home || '') + ' ' + (x.away || '') + ' ' + leagueLabel(x))
                 .toLowerCase()
                 .includes(s)
             )
-          : ALL;
+          : relevant;
         return [...a].sort((a, b) => Number(a.ts || 0) - Number(b.ts || 0));
       }
       function copyMatch(i) {
@@ -1075,13 +1093,13 @@
         try {
           const j = await fetchMode(n, mode);
           if (!j.found) {
-            $('summary').textContent = 'Chưa có snapshot hôm nay.';
+            $('summary').textContent = j.stale ? 'Snapshot cũ đã hết kỳ 12:05. Đang chờ snapshot mới được khóa.' : 'Chưa có snapshot hôm nay.';
             ALL = [];
             render();
             return;
           }
           META = j.data || {};
-          ALL = [...(META.predictions || [])].sort(
+          ALL = [...(META.predictions || [])].filter(upcoming).sort(
             (a, b) => Number(a.ts || 0) - Number(b.ts || 0)
           );
           $('summary').innerHTML =
@@ -1089,7 +1107,7 @@
             (mode === 'featured' ? 'TRẬN LỚN • ' : '') +
             '<b>' +
             ALL.length +
-            ' trận</b> • cập nhật ' +
+            ' trận sắp diễn ra</b> • đã ẩn ' + Number(j.hidden_past || 0) + ' trận quá giờ • cập nhật ' +
             (j.updated_at && Number.isFinite(new Date(j.updated_at).getTime())
               ? new Date(j.updated_at).toLocaleString('vi-VN')
               : 'chưa có');
@@ -1152,6 +1170,14 @@
         } catch {}
         return true;
       }
+      setInterval(() => {
+        if (document.visibilityState !== 'visible' || $('gate').classList.contains('hidden') === false) return;
+        if (META?.date && META.date !== operationalDay()) refreshCurrent();
+        else render();
+      }, 60000);
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible' && $('gate').classList.contains('hidden')) refreshCurrent();
+      });
       $('code').addEventListener('keydown', event => {
         if (event.key === 'Enter') { event.preventDefault(); activate(); }
       });
