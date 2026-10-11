@@ -582,7 +582,7 @@
     <script>
       const API =
           'https://br-divine-resonance-az0qxt8z-kq247auth.compute.c-3.ap-southeast-1.aws.neon.tech/',
-        PICKS_API = 'https://br-divine-resonance-az0qxt8z-kq247bdapi.compute.c-3.ap-southeast-1.aws.neon.tech/?action=football-predictions',
+        PICKS_API = 'https://kq247-r55-football.hatchable.site/api/main-football',
         PRODUCT = 'football',
         BUY = 'https://t.me/muatool_du_doan_bot?start=from_football_client';
       let current = 5000,
@@ -906,13 +906,19 @@
       function operationalDay() {
         return new Date(Date.now() + 7 * 3600000 - (12 * 60 + 5) * 60000).toISOString().slice(0, 10);
       }
+      function calendarDay() {
+        return new Date(Date.now() + 7 * 3600000).toISOString().slice(0, 10);
+      }
+      function expectedDay(j) {
+        return j?.provisional === true ? calendarDay() : operationalDay();
+      }
       function upcoming(x) {
         return Number.isFinite(Number(x?.ts)) && Number(x.ts) > Date.now();
       }
       function cleanSnapshot(j) {
         const snapDay = String(j.date || '');
         const all = Array.isArray(j.predictions) ? j.predictions : [];
-        if (snapDay !== operationalDay()) {
+        if (snapDay !== expectedDay(j)) {
           return {...j, found:false, predictions:[], total:0, stale:true, error:'snapshot_expired', snapshot_total:all.length};
         }
         const fresh=all.filter(upcoming);
@@ -920,7 +926,7 @@
       }
       function visible() {
         const s = ($('q').value || '').toLowerCase().trim();
-        const relevant = META?.date === operationalDay() ? ALL.filter(upcoming) : [];
+        const relevant = META?.date === expectedDay(META) ? ALL.filter(upcoming) : [];
         const a = s
           ? relevant.filter(x =>
               ((x.home || '') + ' ' + (x.away || '') + ' ' + leagueLabel(x))
@@ -1054,18 +1060,19 @@
           '<div class="muted" style="padding:12px 0">Không có trận phù hợp.</div>';
       }
       async function fetchMode(n, mode) {
-        // Authentication stays on the Neon customer API. The locked predictions
-        // are read from the same public Neon snapshot endpoint as the main site.
+        // Neon exclusively verifies existing customer codes and expiry.
+        // Predictions always come from the exact same Bongdalu R55 API as the Hatchable main site;
+        // before 13h it marks them provisional, then switches to the locked snapshot.
         const r = await fetch(
           PICKS_API +
-            '&mode=' + encodeURIComponent(mode) +
+            '?mode=' + encodeURIComponent(mode) +
             '&limit=' + encodeURIComponent(n) +
             '&from_ts=0',
           { cache: 'no-store', signal: AbortSignal.timeout(15000) }
         );
         const j = await r.json().catch(() => ({}));
         if (!r.ok || !j.ok) throw Error(j.error || 'Không tải được snapshot bóng đá');
-        if (j.found && !j.locked) throw Error('Snapshot chưa khóa, chưa thể hiển thị');
+        if (j.found && !j.locked && !j.provisional) throw Error('Snapshot chưa khóa và chưa có dự đoán tạm tính');
         const verified = cleanSnapshot(j);
         return { ...verified, data: verified };
       }
@@ -1100,7 +1107,7 @@
             (a, b) => Number(a.ts || 0) - Number(b.ts || 0)
           );
           $('summary').innerHTML =
-            (j.locked ? '🔒 ĐÃ KHÓA • ' : '✅ ') +
+            (j.locked ? '🔒 ĐÃ KHÓA • ' : j.provisional ? '🕒 DỰ ĐOÁN TẠM TÍNH • CHỜ KHÓA 13H • ' : '✅ ') +
             (mode === 'featured' ? 'TRẬN LỚN • ' : '') +
             '<b>' +
             ALL.length +
@@ -1169,7 +1176,7 @@
       }
       setInterval(() => {
         if (document.visibilityState !== 'visible' || $('gate').classList.contains('hidden') === false) return;
-        if (META?.date && META.date !== operationalDay()) refreshCurrent();
+        if (META?.provisional || (META?.date && META.date !== expectedDay(META))) refreshCurrent();
         else render();
       }, 60000);
       document.addEventListener('visibilitychange', () => {
