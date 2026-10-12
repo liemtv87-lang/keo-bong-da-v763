@@ -20,7 +20,35 @@ input{width:100%;padding:13px;border:1px solid #bacde5;border-radius:10px;font-s
 .row{display:flex;gap:8px}.row button{flex:1}.secondary{background:#e9f1fc;color:#16509c}
 #msg{min-height:21px;margin:9px 0;color:#bd2331;font-size:13px}.links{font-size:13px;line-height:2;margin-top:12px}
 .links a{color:#d31920;font-weight:850;text-decoration:none}
-</style></head><body>
+</style>
+<script>
+// KQ247_XS_LEGACY_VPS_HANDOFF_20261012.
+// Preserve the browser's existing code hash, device, session and verified expiry;
+// transfer through the URL fragment (not HTTP requests) to the new same-code UI.
+(function(){
+ try{
+  var params=new URLSearchParams(location.search);
+  if(params.get('product')==='vietlott')return;
+  var next=new URL('https://64-120-92-172.sslip.io/xoso-khach');
+  ['region','station','date','target'].forEach(function(k){
+   if(params.has(k))next.searchParams.set(k,params.get(k));
+  });
+  if(!next.searchParams.has('region'))next.searchParams.set('region','xsmb');
+  var state={
+   dev:localStorage.getItem('kq247_dev')||'',
+   code:localStorage.getItem('kq247_lottery_code')||'',
+   session:localStorage.getItem('kq247_lottery_session')||''
+  };
+  try{state.access=JSON.parse(localStorage.getItem('kq247_lottery_verified_v1')||'null')}catch(e){}
+  if(state.dev||state.code||state.session||state.access){
+   var bytes=new TextEncoder().encode(JSON.stringify(state));
+   var bin='';for(var i=0;i<bytes.length;i++)bin+=String.fromCharCode(bytes[i]);
+   next.hash='kq247='+btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  }
+  location.replace(next.toString());
+ }catch(e){console.warn('KQ247 migration waiting for browser storage permission');}
+})();
+</script></head><body>
 <div class="warn">Dự đoán chỉ mang tính tham khảo. Không đảm bảo kết quả.</div>
 <div class="bar"><div><div class="brand">KQ247 • BẢN KHÁCH NEON</div><div class="small">Mã và hạn sử dụng giữ nguyên</div></div>
 <div class="tabs"><button class="tab" data-region="xsmb">MB</button><button class="tab" data-region="xsmt">MT</button><button class="tab" data-region="xsmn">MN</button></div></div>
