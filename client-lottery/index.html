@@ -28,7 +28,21 @@ input{width:100%;padding:13px;border:1px solid #bacde5;border-radius:10px;font-s
 (function(){
  try{
   var params=new URLSearchParams(location.search);
-  if(params.get('product')==='vietlott')return;
+  if(params.get('product')==='vietlott'){
+   var vnext=new URL('https://vietlott.64-120-92-172.sslip.io/client.html');
+   var vstate={
+    dev:localStorage.getItem('kq247_dev')||'',
+    code:localStorage.getItem('kq247_vietlott_code')||'',
+    session:localStorage.getItem('kq247_vietlott_session')||localStorage.getItem('kq247_lottery_session')||''
+   };
+   if(vstate.dev||vstate.code||vstate.session){
+    var vbytes=new TextEncoder().encode(JSON.stringify(vstate));
+    var vbin='';for(var vi=0;vi<vbytes.length;vi++)vbin+=String.fromCharCode(vbytes[vi]);
+    vnext.hash='kq247='+btoa(vbin).replace(/\\+/g,'-').replace(/\\//g,'_').replace(/=+$/,'');
+   }
+   location.replace(vnext.toString());
+   return;
+  }
   var next=new URL('https://64-120-92-172.sslip.io/xoso-khach');
   ['region','station','date','target'].forEach(function(k){
    if(params.has(k))next.searchParams.set(k,params.get(k));
