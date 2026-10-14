@@ -343,8 +343,8 @@
         <div class="row" style="margin-top: 8px">
           <button onclick="loadFeatured(5000)">
             🔥 LẤY TRẬN LỚN NHẤT TRONG NGÀY</button
-          ><button onclick="load(20, 'top')">LẤY 20 TRẬN</button
-          ><button onclick="load(30, 'top')">LẤY 30 TRẬN</button
+          ><button onclick="load(20)">LẤY 20 TRẬN</button
+          ><button onclick="load(30)">LẤY 30 TRẬN</button
           ><button onclick="load(100000)">LẤY TẤT CẢ TRẬN</button
           ><button class="green" onclick="refreshCurrent()">CẬP NHẬT</button
           ><button class="secondary" onclick="toggleCollapse()">
@@ -352,9 +352,9 @@
           </button>
         </div>
         <div class="row" style="margin-top: 8px">
-          <button class="copy" onclick="copyMode(20, 'top', '20 TRẬN')">
+          <button class="copy" onclick="copyMode(20, 'all', '20 TRẬN')">
             COPY TOÀN BỘ 20 TRẬN</button
-          ><button class="copy" onclick="copyMode(30, 'top', '30 TRẬN')">
+          ><button class="copy" onclick="copyMode(30, 'all', '30 TRẬN')">
             COPY TOÀN BỘ 30 TRẬN</button
           ><button
             class="copy"
@@ -428,9 +428,10 @@
         </div>
       </div>
     </div>
-    <script>
+    <span id="learningState" style="display:none" aria-hidden="true"></span>
+<script>
       const API =
-          'https://br-divine-resonance-az0qxt8z-kq247bdapi.compute.c-3.ap-southeast-1.aws.neon.tech/?action=football-predictions',
+          'https://64-120-92-172.sslip.io/api/main-football?data=1',
         TZ = 'Asia/Ho_Chi_Minh';
       let ALL = [],
         current = 5000,
@@ -543,73 +544,89 @@
           return 'UEFA Nations League • ' + l;
         return l || '-';
       }
-      function formatPick(x,market) {
-        const p=market==='AH'?x.ah:x.ou;
-        if(!p||!p.pick)return '-';
-        const n=Number(p.line);
-        const line=Number.isFinite(n)?String(n):String(p.line??'').trim();
-        if(market==='AH'){
-          const v=String(p.pick).trim().toUpperCase();
-          const team=['CHỦ','HOME','1'].includes(v)?String(x.home||''):
-            ['KHÁCH','AWAY','2'].includes(v)?String(x.away||''):String(p.pick);
-          return team+' '+(Number.isFinite(n)&&n >= 0?'+':'')+line;
+      function chosenTeamOrSide(x, market, p) {
+        const pick = String(p?.pick || '').trim().toUpperCase();
+        if (market === 'AH') {
+          if (['CHỦ', 'HOME', '1'].includes(pick)) return String(x.home || 'CHỦ');
+          if (['KHÁCH', 'AWAY', '2'].includes(pick)) return String(x.away || 'KHÁCH');
+          return String(p?.pick || '-');
         }
-        return String(p.pick).trim().toUpperCase()+(line?' '+line:'');
+        if (['OVER', 'TÀI', 'TAI'].includes(pick)) return 'TÀI';
+        if (['UNDER', 'XỈU', 'XIU'].includes(pick)) return 'XỈU';
+        return String(p?.pick || '-');
+      }
+      function signedMarketLine(market, p) {
+        const raw = p?.line;
+        if (raw === null || raw === undefined || String(raw).trim() === '') return '';
+        const n = Number(raw);
+        if (!Number.isFinite(n)) return '';
+        // AH uses the chosen team's signed handicap, not the home team's handicap.
+        if (market === 'AH') return (n < 0 ? '-' : '+') + String(Math.abs(n));
+        return String(n);
       }
       function pickTxt(x) {
-        if(!x)return '';
-        const market=bestMarket(x),p=market==='AH'?x.ah:x.ou;
-        return '⚽ '+(x.home||'')+' - '+(x.away||'')+
-          '\n'+comp(x)+' • '+timeVN(x.ts)+
-          '\nKÈO SÁNG NHẤT: '+(market==='AH'?'KÈO CHẤP':'TÀI/XỈU')+
-          '\nCHỌN: '+formatPick(x,market)+
-          '\nTỷ lệ ăn: '+(p?.price??'-')+
-          '\nTin cậy tham khảo: '+(x.confidence_score??'-')+
-          '\n'+bookText(x)+'\nPP: '+methods(x)+
-          '\nNguồn: '+(x.provider||'R55');
+        const market = bestMarket(x);
+        const p = market === 'AH' ? x.ah : x.ou;
+        const label = market === 'AH' ? 'AH' : 'T/X';
+        return (
+          '⚽ ' +
+          (x.home || '') +
+          ' - ' +
+          (x.away || '') +
+          '\n' +
+          comp(x) +
+          ' • ' +
+          timeVN(x.ts) +
+          '\nKÈO SÁNG NHẤT: ' +
+          label +
+          '\n' +
+          label +
+          ': ' +
+          chosenTeamOrSide(x, market, p) +
+          ' ' +
+          signedMarketLine(market, p) +
+          '\nTỷ lệ ăn: ' +
+          (p?.price ?? '-') +
+          '\n' +
+          bookText(x) +
+          '\nPP: ' +
+          methods(x) +
+          '\nNguồn: ' +
+          (x.provider || 'R55')
+        );
       }
       async function cp(t) {
+        if (!String(t || '').trim()) throw Error('Không có trận để sao chép.');
         try {
+          if (!navigator.clipboard?.writeText) throw Error('clipboard_unavailable');
           await navigator.clipboard.writeText(t);
         } catch {
           const a = document.createElement('textarea');
           a.value = t;
           document.body.appendChild(a);
           a.select();
-          document.execCommand('copy');
+          const ok = document.execCommand('copy');
           a.remove();
+          if (!ok) throw Error('Không sao chép được. Hãy kiểm tra quyền clipboard.');
         }
       }
       function copyMatch(i) {
-        cp(pickTxt(ALL[i]));
+        cp(pickTxt(ALL[i])).catch(e => { $('runStatus').textContent = '❌ ' + e.message; });
       }
-
-      // KQ247_CURRENT_WINDOW_V2: 12:05 VN rollover; old kickoff stays in audit, never sold as a live prediction.
-      function operationalDay() {
-        return new Date(Date.now() + 7 * 3600000 - (12 * 60 + 5) * 60000).toISOString().slice(0, 10);
-      }
-      function upcoming(x) {
-        return Number.isFinite(Number(x?.ts)) && Number(x.ts) > Date.now();
-      }
-      function cleanSnapshot(j) {
-        const snapDay = String(j.date || '');
-        const all = Array.isArray(j.predictions) ? j.predictions : [];
-        if (snapDay !== operationalDay()) {
-          return {...j, found:false, predictions:[], total:0, stale:true, error:'snapshot_expired', snapshot_total:all.length};
-        }
-        const fresh=all.filter(upcoming);
-        return {...j, predictions:fresh, total:fresh.length, snapshot_total:all.length, hidden_past:all.length-fresh.length};
+      function upcomingOnly(rows) {
+        const now = Date.now();
+        return (rows || []).filter(x => Number.isFinite(Number(x.ts)) && Number(x.ts) > now);
       }
       function visible() {
         const s = ($('q').value || '').toLowerCase().trim();
-        const relevant = META?.date === operationalDay() ? ALL.filter(upcoming) : [];
+        const active = upcomingOnly(ALL);
         const a = s
-          ? relevant.filter(x =>
+          ? active.filter(x =>
               ((x.home || '') + ' ' + (x.away || '') + ' ' + comp(x))
                 .toLowerCase()
                 .includes(s)
             )
-          : relevant;
+          : active;
         return [...a].sort((a, b) => Number(a.ts || 0) - Number(b.ts || 0));
       }
       function toggleCollapse() {
@@ -752,7 +769,9 @@
           a.length +
           '</b></div><div class="stat">Snapshot: <b>' +
           esc(META.model || '-') +
-          '</b></div><div class="stat">Thống kê: <b class="learnon">ĐANG THEO DÕI</b></div>';
+          '</b></div><div class="stat">Tự học: <b class="learnon">' +
+          (META.learning_ready ? 'ĐỦ MẪU' : 'CHỜ DỮ LIỆU') +
+          '</b></div>';
         $('results').innerHTML =
           a
             .map(x => {
@@ -765,22 +784,24 @@
                 esc(comp(x)) +
                 '</div><div class="kick">' +
                 timeVN(x.ts) +
-                '</div><h3 style="color:#dc2626!important;font-weight:950!important">' +
+                '</div><h3 style="color:#ff1010!important;font-weight:950!important">' +
                 esc(x.home || '') +
                 ' - ' +
                 esc(x.away || '') +
-                '</h3><div><span class="badge">Tin cậy ' +
-                esc(x.confidence_score ?? '-') +
-                '</span> <span class="badge ' +
+                '</h3><div><span class="badge ' +
                 (x.trusted_pick ? 'good' : '') +
                 '">' +
-                ((x.ah_release === true || x.ou_release === true) ? '✅ 1 kèo tham khảo' : '⛔ Bỏ kèo') +
+                ((x.ah_release === true || x.ou_release === true) ? '✅ Có kèo đạt chuẩn' : '⛔ Bỏ kèo') +
                 '</span> <span class="badge">' +
                 esc(bookText(x)) +
                 '</span></div><div class="picks"><div class="pick"><b>KÈO SÁNG NHẤT • ' +
                 marketLabel +
-                '</b><span class="market-line" style="color:#ff172b!important;font-weight:950!important">' +
-                esc(formatPick(x,market)) +
+                '</b><span class="market-line"><strong class="choice-red">' +
+                esc(chosenTeamOrSide(x, market, p)) +
+                '</strong>' +
+                (signedMarketLine(market, p)
+                  ? '<strong class="line-signed">' + esc(signedMarketLine(market, p)) + '</strong>'
+                  : '') +
                 '</span><div class="odds-line">Tỷ lệ ăn: <strong>' +
                 esc(p?.price ?? '-') +
                 '</strong></div></div></div><div class="small" style="margin-top:7px">Form: ' +
@@ -797,36 +818,31 @@
             .join('') ||
           '<div class="muted" style="padding:12px 0">Không có trận phù hợp.</div>';
       }
-      async function fetchMode(n,mode) {
-        const lim=mode==='top'?5000:(n>=100000?5000:n);
-        const r=await fetch(API+'&mode='+encodeURIComponent(mode==='top'?'all':mode)+'&limit='+lim+'&from_ts=0',
-          {cache:'no-store',signal:AbortSignal.timeout(18000)});
-        const j=await r.json();
-        if(!r.ok||!j.ok)throw Error(j.error||'API không thể tải snapshot');
-        Object.assign(j, cleanSnapshot(j));
-        if(mode==='top'){
-          const avoid=/\b(?:nb iii|iii liga|third division|4th division|division 3|division 4|div 3|3\.liga|4\.liga|liga 3|liga 4|tercera|youth|u19|u20|u21|u23|reserves|reserve|revelacao|rfe[f]?|division b|kakkonen|national league north|national league south)\b/i;
-          const priority=x=>{
-            const l=String(x?.league||'').toLowerCase();
-            if(/uefa champions league|uefa europa league|copa libertadores/.test(l))return 250;
-            if(/english premier league|england premier league/.test(l))return 240;
-            if(/spanish la liga|^la liga$|italian serie a|^serie a$|^german bundesliga$|french ligue 1/.test(l))return 230;
-            if(/japan j1 league|j-league|j1 league/.test(l))return 210;
-            if(/turkey super lig|eredivisie|primeira liga|belgian pro league/.test(l))return 180;
-            if(/ukrainian premier league|russia premier league|belarusian premier league|kazakhstan premier league|thai league 1|v\.league 1/.test(l))return 130;
-            if(/bundesliga 2|championship|liga portugal 2|first league|league 1/.test(l))return 75;
-            return 30;
-          };
-          j.predictions=[...(j.predictions||[])]
-            .filter(x=>!avoid.test(String(x?.league||'')))
-            .sort((a,b)=>priority(b)-priority(a)||Number(b.confidence_score||0)-Number(a.confidence_score||0)||Number(a.ts||0)-Number(b.ts||0)).slice(0,n);
+      async function fetchMode(n, mode) {
+        const lim = n >= 100000 ? 5000 : n;
+        const r = await fetch(
+          API +
+            '&mode=' +
+            encodeURIComponent(mode) +
+            '&limit=' +
+            lim +
+            '&from_ts=' + Date.now(),
+          { cache: 'no-store' }
+        );
+        const type = String(r.headers.get('content-type') || '').toLowerCase();
+        if (!type.includes('application/json')) {
+          throw Error(r.status === 401 || r.status === 403
+            ? 'Phiên đăng nhập không có quyền xem API.'
+            : 'Máy chủ trả trang HTML thay vì dữ liệu JSON. Hãy tải lại trang.');
         }
+        const j = await r.json();
+        if (!r.ok || !j.ok) throw Error(j.error || 'API lỗi');
         return j;
       }
       async function copyMode(n, mode, label) {
         try {
           const j = await fetchMode(n, mode);
-          const a = [...(j.predictions || [])].sort(
+          const a = upcomingOnly(j.predictions || []).sort(
             (a, b) => Number(a.ts || 0) - Number(b.ts || 0)
           );
           await cp(a.map(pickTxt).join('\n\n'));
@@ -843,40 +859,42 @@
         try {
           const j = await fetchMode(n, mode);
           META = j;
-          ALL = [...(j.predictions || [])].filter(upcoming).sort(
+          ALL = upcomingOnly(j.predictions || []).sort(
             (a, b) => Number(a.ts || 0) - Number(b.ts || 0)
           );
           $('runStatus').textContent =
-            (j.locked ? '🔒 ĐÃ KHÓA • ' : '✅ ') +
-            (mode === 'featured' ? 'TRẬN LỚN • ' : '') +
-            'Đã tải ' +
-            ALL.length +
-            ' trận sắp diễn ra • ẩn ' + Number(j.hidden_past || 0) + ' trận quá giờ • kỳ ' + (j.date || '-') + (j.stale ? ' • CẢNH BÁO: SNAP CŨ' : '') + ' • cập nhật ' +
-            (j.updated_at && Number.isFinite(new Date(j.updated_at).getTime())
-              ? new Date(j.updated_at).toLocaleString('vi-VN')
-              : 'chưa có');
+            (!j.found
+              ? '⚠️ Chưa có snapshot kèo đã khóa cho ngày ' + (j.date || 'hôm nay') + '. Đã tải thống kê cũ, chưa có kèo mới.'
+              : (j.provisional ? '🕒 DỰ ĐOÁN TẠM THỜI • 13H QUÉT LẠI & KHÓA • ' : (j.locked ? '🔒 ĐÃ KHÓA • ' : '✅ ')) +
+                (mode === 'featured' ? 'TRẬN LỚN • ' : '') +
+                'Đã tải ' + ALL.length + ' trận chưa bắt đầu • ' +
+                (j.provisional && j.scan_progress && !j.scan_progress.complete ?
+                  'ĐANG QUÉT ' + j.scan_progress.checked + '/' + j.scan_progress.marketPool + ' trận • ' : '') +
+                'cập nhật ' +
+                (j.updated_at && Number.isFinite(new Date(j.updated_at).getTime())
+                  ? new Date(j.updated_at).toLocaleString('vi-VN') : 'chưa có'));
           renderDaily(j.daily_stats);
           renderMethods(j.method_performance);
+          $('learningState').textContent = j.learning_ready
+            ? '● ĐÃ ĐỦ MẪU HỒI KIỂM; ĐANG THEO DÕI HIỆU SUẤT THỰC'
+            : '● ĐANG THU THẬP VÀ CHẤM KẾT QUẢ THẬT • CHƯA ĐỦ MẪU TỰ HỌC';
           render();
         } catch (e) {
           $('runStatus').textContent = '❌ ' + e.message;
+          $('dailyStats').innerHTML = '<div class="muted">Không tải được thống kê. Bấm CẬP NHẬT để thử lại.</div>';
+          $('methodStats').innerHTML = '<div class="muted">Không tải được hiệu suất phương pháp.</div>';
+          $('learningState').textContent = '● KẾT NỐI TẠM THỜI GIÁN ĐOẠN';
         }
       }
       function loadFeatured(n) {
-        return load(Math.min(n,20), 'top');
+        return load(n, 'featured');
       }
       function refreshCurrent() {
         return load(current, currentMode);
       }
-      // KQ247_R55_ALL_DEFAULT_SYNC_20261011: main and customer load all locked fixtures by default.
-      setInterval(() => {
-        if (document.visibilityState !== 'visible') return;
-        if (META?.date && META.date !== operationalDay()) refreshCurrent();
-        else render(); // Hide a kickoff automatically without rewriting its frozen record.
-      }, 60000);
-      document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible') refreshCurrent();
-      });
+      // Recheck kickoff against the current clock so an open page also hides started matches.
+      setInterval(render, 30000);
+      // On first load show all not-yet-started predictions; snapshot is never rewritten.
       load(5000, 'all');
     </script>
 </body>
